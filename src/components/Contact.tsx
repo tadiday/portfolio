@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Footer from "@/components/Footer";
 import { FaArrowRight, FaArrowUp } from "react-icons/fa";
 
 const Contact = () => {
@@ -152,7 +151,7 @@ const Contact = () => {
                   </div>
                   <div className="bg-gray-700 rounded-lg p-3 max-w-xs">
                     <p className="text-gray-200 text-sm font-space-grotesk">
-                      Hello! I'm here to help with your projects and answer any questions you might have.
+                      Hello! I&apos;m here to help with your projects and answer any questions you might have.
                     </p>
                   </div>
                 </div>

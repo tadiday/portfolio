@@ -8,6 +8,7 @@ import About from "@/components/About";
 import Project from "@/components/project/Projects";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
+import AIChat from "@/components/ai/AIChat";
 
 export default function Main() {
   // About Section Scaling (Zoom in when entering)
@@ -91,6 +92,7 @@ export default function Main() {
         </motion.div>
         <Contact />
       </div>
+      <AIChat />
     </div>
   );
 }
