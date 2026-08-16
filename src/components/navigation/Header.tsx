@@ -1,51 +1,38 @@
-import React from 'react';
 import { motion } from "framer-motion";
-import { FaRegCopyright } from "react-icons/fa";
-import Link from 'next/link';  // Import Link from Next.js
+import Link from "next/link";
 
-const Header = () => {
-    return (
-        <header className="grid sm:grid-cols-25 items-start absolute z-50 w-full px-[5%] sm:px-[10%] py-10 max-w-screen">
-            {/* Left Side: Copyright */}
-            <motion.div
-                className="col-start-1 col-span-4 font-semibold text-[18px] sm:text-[22px] flex items-center font-mono"
-                initial={{ opacity: 0, y: 10, z: 10 }} // Start with invisible text
-                animate={{ opacity: 1, y: 0, z: 10 }} // Fade-in after delay
-                transition={{ delay: 1.25, duration: 1, ease: "easeOut" }} // Delayed fade-in
-            >
-                <FaRegCopyright className="flex mr-2" /> 2025 Peter Cao
-            </motion.div>
+const links = [
+  ["Home", "#home"],
+  ["About", "#about"],
+  ["Experience", "#experience"],
+  ["Projects", "#projects"],
+  ["Contact", "#contact"],
+];
 
-            {/* Right Side: Navigation Links */}
-            <motion.ul
-                className=" hidden col-end-24 col-span-6 text-[22px] sm:flex space-x-6 font-light text-right font-mono"
-                initial={{ opacity: 0, y: 10, z: 10 }} // Start with invisible text
-                animate={{ opacity: 1, y: 0, z: 10 }} // Fade-in after delay
-                transition={{ delay: 1.25, duration: 1, ease: "easeOut" }} // Delayed fade-in
-            >
-                <li>
-                    <Link href="#about" className="hover:text-[#ffffff] flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:translate-x-1 origin-left">
-                        About
-                    </Link>
-                </li>
-                <li>
-                    <Link href="#projects" className="hover:text-[#ffffff] flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:translate-x-1 origin-left">
-                        Projects
-                    </Link>
-                </li>
-                <li>
-                    <Link href="#experience" className="hover:text-[#ffffff] flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:translate-x-1 origin-left">
-                        Experience
-                    </Link>
-                </li>
-                <li>
-                    <Link href="#contact" className="hover:text-[#ffffff] flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:translate-x-1 origin-left">
-                        Contact
-                    </Link>
-                </li>
-            </motion.ul>
-        </header>
-    );
+export default function Header() {
+  return (
+    <motion.header
+      className="absolute inset-x-0 top-0 z-20 grid h-[var(--home-header-height)] grid-cols-2 items-center border-b border-[var(--home-border)] bg-[rgba(8,9,10,0.94)] px-3.5 font-mono text-[9px] uppercase tracking-[0.08em] text-[#c1c3c6] sm:px-[clamp(18px,2.1vw,34px)] sm:text-[11px] min-[901px]:grid-cols-[1fr_auto_1fr]"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55 }}
+    >
+      <p>Portfolio_build: V1.1 _</p>
+      <nav className="hidden h-full min-[901px]:block" aria-label="Primary navigation">
+        <ul className="flex h-full items-center gap-[clamp(24px,4vw,64px)]">
+          {links.map(([label, href], index) => (
+            <li className="h-full" key={label}>
+              <Link
+                href={href}
+                className={`relative grid h-full items-center transition-colors hover:text-[var(--home-text)] ${index === 0 ? "text-[var(--home-text)] after:absolute after:inset-x-0 after:bottom-[-1px] after:h-0.5 after:bg-[var(--home-text)] after:content-['']" : ""}`}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <p className="justify-self-end text-[8px] sm:text-[11px]">Last updated: 08.12.26</p>
+    </motion.header>
+  );
 }
-
-export default Header;

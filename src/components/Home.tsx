@@ -1,290 +1,134 @@
-import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { ArrowDown, ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 
-const Home = () => {
-  const [, setScrollPosition] = useState<number>(0);
-  const [opacity, setOpacity] = useState<number>(1);
-  const [scale, setScale] = useState<number>(1);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/tadiday", icon: Github },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/petercao03", icon: Linkedin },
+  { label: "Email", href: "mailto:petercao03@gmail.com", icon: Mail },
+];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const position = window.scrollY;
-      setScrollPosition(position);
-      setOpacity(Math.max(0, 1 - position / 700));
-      setScale(Math.max(0.8, 1 - position / 4000));
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const [localTime, setLocalTime] = useState<string | null>(null);
-  useEffect(() => {
-    const updateTime = () => setLocalTime(new Date().toLocaleTimeString());
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Starry background effect
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const stars: { x: number; y: number; radius: number; speed: number }[] = [];
-    const numStars = 100;
-
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        radius: Math.random() * 2,
-        speed: Math.random() * 0.5,
-      });
-    }
-
-    const drawStars = () => {
-      if (!ctx || !canvas) return;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-
-      stars.forEach((star) => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fill();
-        star.y += star.speed;
-        if (star.y > canvas.height) {
-          star.y = 0;
-          star.x = Math.random() * canvas.width;
-        }
-      });
-
-      requestAnimationFrame(drawStars);
-    };
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    drawStars();
-  }, []);
-
-  return (
-    <section className="h-[100svh] sm:h-screen max-w-screen sticky top-0 px-[5%] pt-[35%] md:px-[10%] md:pt-[10%] pb-20 text-color-section bg-black bg-center bg-no-repeat z-0"
-      style={{
-        opacity: opacity === 0 ? 0 : opacity,
-        // transform: `scale(${scale})`,
-        transition: "all 0.3s ease-out",
-      }}
-    >
-      {/* Starry Background Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full pointer-events-none z-20"
-        style={{
-          opacity,
-          transform: `scale(${scale})`,
-          transition: "all 0.3s ease-out",
-          display: opacity === 0 ? "none" : "block",
-        }}
-      />
-
-      {/* Animated background overlay */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_#726c64_0%,_#2c2926_100%)] z-0"
-        initial={{ y: "100%", borderRadius: "100%" }}
-        animate={{ y: "0%", borderRadius: "0%" }}
-        transition={{ duration: 1.5, ease: [0.25, 0.8, 0.25, 1] }}
-      />
-
-      <div className="flex flex-col w-full">
-        <div className="w-full">
-          {/* Name Section */}
-
-          <div className="sm:flex sm:justify-center sm:gap-4 sm:items-center relative">
-            <motion.h1
-              initial="initial"
-              animate="visible"
-              className="overflow-hidden whitespace-nowrap text-[90px] sm:text-[100px] md:text-[190px] lg:text-[250px] font-bold text-white"
-              style={{
-                lineHeight: 1.5,
-                opacity,
-                transform: `scale(${scale})`,
-                transition: "all 0.3s ease-out",
-              }}
-            >
-              <span className="sr-only">Peter Cao</span>
-              {/* Desktop version: one line */}
-              {"PETER".split("").map((l, i) => (
-                <motion.span
-                  key={i}
-                  className="inline-block"
-                  variants={{ initial: { y: "100%" }, visible: { y: 0 } }}
-                  transition={{
-                    duration: 0.5,
-                    ease: "easeInOut",
-                    delay: 0.5 + 0.025 * i,
-                  }}
-                >
-                  {l}
-                </motion.span>
-              ))}
-            </motion.h1>
-            <h1 className="hidden sm:flex sm:overflow-hidden sm:whitespace-nowrap text-[80px] sm:text-[100px] md:text-[190px] lg:text-[250px]">
-              {"\u00A0"}
-            </h1>
-
-            <motion.h1
-              initial="initial"
-              animate="visible"
-              className="overflow-hidden whitespace-nowrap text-[90px] sm:text-[100px] md:text-[190px] lg:text-[250px] font-bold text-white flex items-center"
-              style={{
-                lineHeight: 1.5,
-                opacity,
-                transform: `scale(${scale})`,
-                transition: "all 0.3s ease-out",
-              }}
-            >
-              {"CAO".split("").map((l, i) => (
-                <motion.span
-                  key={i}
-                  className="inline-block"
-                  variants={{ initial: { y: "100%" }, visible: { y: 0 } }}
-                  transition={{
-                    duration: 0.5,
-                    ease: "easeInOut",
-                    delay: 0.5 + 0.025 * i,
-                  }}
-                >
-                  {l}
-                </motion.span>
-              ))}
-
-              {/* Mobile version: Availability */}
-              <motion.div
-                initial={{ opacity: 0, y: 10, z: 10 }}
-                animate={{ opacity: 1, y: 0, z: 10 }}
-                transition={{ delay: 1.25, duration: 1, ease: "easeOut" }}
-                className="sm:hidden text-[13px] sm:text-[30px] md:text-[30px] lg:text-[30px] col-start-1 col-span-1 md:col-start-2 md:col-span-1 font-mono font-light w-full justify-between flex "
-              >
-                <div
-                  className="w-full "
-                  style={{
-                    opacity,
-                    transform: `scale(${scale})`,
-                    transition: "all 0.3s ease-out",
-                  }}
-                >
-                  <div
-                    className="font-mono font-bold w-full text-right"
-                    style={{
-                      opacity,
-                      transform: `scale(${scale})`,
-                      transition: "all 0.3s ease-out",
-                    }}
-                  >
-                    <p className="font-light">ACTIVELY SEEKING FOR</p>
-                    <div className="text-[30px] sm:text-[70px] md:text-[70px] lg:text-[70px] ]">
-                      FULL-TIME
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.h1>
-          </div>
-
-          {/* Subtitle Section */}
-          <div className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 text-white">
-            <motion.div
-              initial={{ opacity: 0, y: 10, z: 10 }}
-              animate={{ opacity: 1, y: 0, z: 10 }}
-              transition={{ delay: 1.25, duration: 1, ease: "easeOut" }}
-              className="font-mono text-[15px] sm:text-[30px] md:text-[30px] lg:text-[30px] col-start-1 col-span-1 md:col-start-1 md:col-span-1 font-light w-full justify-between flex "
-            >
-              <div
-                className="w-full"
-                style={{
-                  opacity,
-                  transform: `scale(${scale})`,
-                  transition: "all 0.3s ease-out",
-                }}
-              >
-                <h3 className="md:text-left text-[20px] sm:text-xl lg:text-[30px] mb-2">
-                  An Upcoming Software Engineer
-                </h3>
-                <p className="md:text-left md:mt-5 font-light text-[16px] sm:text-[20px] md:text-[20px] lg:text-[20px] text-balance">
-                  Passionate about building scalable software, solving complex
-                  problems, and creating innovative solutions.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Desktop version: Availability */}
-            <motion.div
-              initial={{ opacity: 0, y: 10, z: 10 }}
-              animate={{ opacity: 1, y: 0, z: 10 }}
-              transition={{ delay: 1.25, duration: 1, ease: "easeOut" }}
-              className="hidden text-[15px] sm:text-[30px] md:text-[30px] lg:text-[30px] col-start-1 col-span-1 md:col-start-2 md:col-span-1 font-mono font-light w-full justify-between sm:flex "
-            >
-              <div
-                className="w-full "
-                style={{
-                  opacity,
-                  transform: `scale(${scale})`,
-                  transition: "all 0.3s ease-out",
-                }}
-              >
-                <div
-                  className="font-mono font-bold w-full text-right"
-                  style={{
-                    opacity,
-                    transform: `scale(${scale})`,
-                    transition: "all 0.3s ease-out",
-                  }}
-                >
-                  <p className="font-light">ACTIVELY SEEKING FOR</p>
-                  <div className="text-[34px] sm:text-[70px] md:text-[70px] lg:text-[70px] ]">
-                    FULL-TIME
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Location and Local Time */}
-            <motion.div
-              className="absolute bottom-3 left-0 right-0 px-[5%] md:px-[10%] font-mono text-[15px] sm:text-[22px] md:text-[22px] lg:text-[22px] font-light flex justify-between text-white z-40"
-              initial={{ opacity: 0, y: 10, z: 10 }}
-              animate={{ opacity: 1, y: 0, z: 10 }}
-              transition={{ delay: 1.25, duration: 1, ease: "easeOut" }}
-            // style={{
-            //   opacity,
-            //   transform: `scale(${scale})`,
-            //   transition: "all 0.3s ease-out",
-            // }}
-            >
-              <div style={{
-                opacity,
-                transform: `scale(${scale})`,
-                transition: "all 0.3s ease-out",
-              }}>
-                38.7439° N, 77.2405° W
-              </div>
-              <div style={{
-                opacity,
-                transform: `scale(${scale})`,
-                transition: "all 0.3s ease-out",
-              }}>
-                {localTime}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+const reveal = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
 };
 
-export default Home;
+function HeroDecorations() {
+  return (
+    <>
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="hero-axis hidden sm:block" aria-hidden="true" />
+      <div className="hero-texture" aria-hidden="true" />
+      <div className="hero-hud hidden sm:block" aria-hidden="true">
+        <span className="hero-crosshair hero-crosshair-left">+</span>
+        <span className="hero-crosshair hero-crosshair-top">+</span>
+        <span className="hero-crosshair hero-crosshair-bottom">+</span>
+        <span className="hero-ticks" />
+      </div>
+    </>
+  );
+}
+
+function HeroTitle() {
+  return (
+    <>
+      <motion.div
+        className="hero-name-frame relative w-full px-2.5 py-6 sm:px-[clamp(22px,4vw,58px)] sm:py-[clamp(26px,4vw,58px)]"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <span className="hero-bracket hero-bracket-top-left" aria-hidden="true" />
+        <span className="hero-bracket hero-bracket-top-right" aria-hidden="true" />
+        <h1 id="home-title" className="hero-name text-[clamp(3.6rem,20vw,6rem)] sm:text-[clamp(4rem,11.2vw,10.75rem)]">
+          PETER CAO
+        </h1>
+        <span className="hero-bracket hero-bracket-bottom-left" aria-hidden="true" />
+        <span className="hero-bracket hero-bracket-bottom-right" aria-hidden="true" />
+      </motion.div>
+
+      <motion.p
+        className="mt-2 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.17em] text-[var(--home-accent)] sm:gap-[clamp(22px,3.5vw,52px)] sm:text-[clamp(12px,1.35vw,18px)] sm:tracking-[0.32em] max-[900px]:tracking-[0.22em]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <span className="text-lg tracking-normal text-[var(--home-muted)]" aria-hidden="true">+</span>
+        Software Engineer
+        <span className="text-lg tracking-normal text-[var(--home-muted)]" aria-hidden="true">+</span>
+      </motion.p>
+    </>
+  );
+}
+
+function HeroActions() {
+  const buttonBase = "flex h-[46px] w-full items-center justify-between border border-[#85888d] px-[26px] font-mono text-xs uppercase tracking-[0.06em] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
+
+  return (
+    <motion.div
+      className="mt-[clamp(22px,3.4vh,38px)] flex w-[min(280px,90vw)] flex-col gap-3 sm:w-auto sm:flex-row sm:gap-7"
+      {...reveal}
+      transition={{ delay: 0.8, duration: 0.5 }}
+    >
+      <a className={`${buttonBase} bg-[var(--home-text)] text-[var(--home-bg)] hover:bg-[var(--home-accent)] hover:text-[var(--home-text)]`} href="#projects">
+        View my work <ArrowRight className="w-[17px]" aria-hidden="true" />
+      </a>
+      <a className={`${buttonBase} bg-[rgba(8,9,10,0.55)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`} href="/assets/documents/resume.pdf" download>
+        Download resume <ArrowDown className="w-[17px]" aria-hidden="true" />
+      </a>
+    </motion.div>
+  );
+}
+
+function HomeFooter() {
+  return (
+    <footer className="absolute inset-x-0 bottom-0 z-[3] flex h-[var(--home-status-height)] items-center justify-between border-t border-[var(--home-border)] bg-[rgba(8,9,10,0.94)] px-4 font-mono text-[9px] uppercase tracking-[0.09em] text-[#b7babf] sm:px-[clamp(26px,3vw,48px)] sm:text-[11px]">
+      <p className="flex items-center gap-2 sm:gap-3.5">
+        <span className="h-2 w-2 rounded-full bg-[var(--home-accent)] shadow-[0_0_8px_rgba(93,167,255,0.38)]" aria-hidden="true" />
+        Washington, DC
+      </p>
+      <div className="flex items-center">
+        {socialLinks.map(({ label, href, icon: Icon }, index) => (
+          <a
+            key={label}
+            className={`grid w-9 place-items-center text-[#b7babf] transition-colors hover:text-[var(--home-accent)] sm:w-[54px] ${index ? "border-l border-[var(--home-border)]" : ""}`}
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel="noreferrer"
+            aria-label={label}
+          >
+            <Icon className="w-[15px] sm:w-[18px]" aria-hidden="true" />
+          </a>
+        ))}
+      </div>
+    </footer>
+  );
+}
+
+export default function Home() {
+  return (
+    <section className="home-page sticky top-0 grid min-h-[100svh] overflow-hidden bg-[var(--home-bg)] text-[var(--home-text)] [isolation:isolate]" aria-labelledby="home-title">
+      <HeroDecorations />
+
+      <main className="home-content z-[2] flex w-[91vw] max-w-[1080px] place-self-center flex-col items-center pb-[calc(var(--home-status-height)+10px)] pt-[calc(var(--home-header-height)+28px)] text-center sm:w-[88vw] sm:pb-[calc(var(--home-status-height)+18px)]">
+        <HeroTitle />
+        <motion.p
+          className="mt-[clamp(20px,3vh,34px)] w-[min(340px,90vw)] font-mono text-[clamp(11px,1.05vw,15px)] leading-[1.65] tracking-[0.025em] text-[#b7babf] sm:w-auto sm:leading-[1.8]"
+          {...reveal}
+          transition={{ delay: 0.65, duration: 0.5 }}
+        >
+          I build robust, scalable, and beautiful web applications
+          <br className="hidden sm:block" /> with a focus on clean code and great user experiences.
+        </motion.p>
+        <HeroActions />
+      </main>
+
+      <div className="scroll-indicator hidden sm:flex" aria-hidden="true">
+        <span>Scroll</span>
+        <span className="mt-2 h-7 w-px bg-[#a5a8ad]" />
+        <span className="h-[5px] w-[5px] rounded-full bg-[var(--home-text)]" />
+      </div>
+
+      <HomeFooter />
+    </section>
+  );
+}
