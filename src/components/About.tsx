@@ -3,12 +3,12 @@
 import { useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, BriefcaseBusiness, FolderGit2, Gamepad2, Languages, MapPin, Plane } from "lucide-react";
-import { SiAmazonwebservices, SiDocker, SiFigma, SiGit, SiNodedotjs, SiPostgresql, SiPython, SiReact, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { SiDocker, SiGit, SiJavascript, SiJunit5, SiMysql, SiNodedotjs, SiOpenjdk, SiPython, SiReact, SiTypescript } from "react-icons/si";
 
 const skills = [
-  ["Python", SiPython], ["TypeScript", SiTypescript], ["React.js", SiReact],
-  ["Node.js", SiNodedotjs], ["Tailwind CSS", SiTailwindcss], ["PostgreSQL", SiPostgresql],
-  ["Docker", SiDocker], ["Git", SiGit], ["AWS", SiAmazonwebservices], ["Figma", SiFigma],
+  ["React.js", SiReact], ["JavaScript", SiJavascript], ["TypeScript", SiTypescript],
+  ["Python", SiPython], ["MySQL", SiMysql], ["Node.js", SiNodedotjs],
+  ["Docker", SiDocker], ["Java", SiOpenjdk], ["Git", SiGit], ["JUnit", SiJunit5],
 ] as const;
 
 const hobbies = [
@@ -51,18 +51,18 @@ function QuickStats() {
 }
 
 function LocationAndWork() {
-  return <Panel className="h-full">
+  return <Panel className="flex h-full flex-col">
     <div className="grid grid-cols-2 gap-4">
       <div className="border-r border-white/10 pr-4">
         <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#d0d3d6]"><MapPin className="h-4 w-4 text-[var(--home-accent)]" aria-hidden="true" />Location</p>
-        <p className="mt-4 text-xl font-bold leading-tight text-white">Washington, DC</p><p className="mt-1 text-[13px] text-[#b7bbc0]">United States</p>
+        <p className="mt-4 text-l font-bold leading-tight text-white">Washington, DC</p><p className="mt-1 text-[15px] text-[#b7bbc0]">United States</p>
       </div>
       <div>
         <p className="font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#d0d3d6]">Work style</p>
-        <div className="mt-4 space-y-3">{[["Remote", "bg-[#2bd576]"], ["Hybrid", "bg-[#2bd576]"], ["On-site", "bg-[#e5bd31]"]].map(([style, color]) => <div key={style} className="flex items-center justify-between text-sm font-bold text-[#f2f2f2]"><span>{style}</span><span className={`h-2.5 w-2.5 ${color}`} /></div>)}</div>
+        <div className="mt-4 space-y-3">{["Remote", "Hybrid", "On-site"].map((style) => <div key={style} className="flex items-center justify-between text-sm font-bold text-[#f2f2f2]"><span>{style}</span><span className="h-2.5 w-2.5 bg-[#2bd576]" aria-label="Available" /></div>)}</div>
       </div>
     </div>
-    <div className="mt-5 border border-[#3d5368] px-3 py-3">
+    <div className="mt-auto border border-[#3d5368] px-3 py-3">
       <p className="font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--home-accent)]">Availability</p>
       <div className="mt-2 flex flex-wrap gap-2 font-mono text-[9px] font-semibold uppercase text-[#d5d7da]"><span className="border border-[#3d5368] px-2 py-1">Open to relocation</span><span className="border border-[#3d5368] px-2 py-1">ET (UTC−5)</span></div>
     </div>
@@ -105,13 +105,13 @@ function SkillsPanel() {
       <button type="button" onClick={() => setTab("skills")} aria-pressed={tab === "skills"} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.07em] transition-colors ${tab === "skills" ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0] hover:text-white"}`}>Top skills</button>
       <button type="button" onClick={() => setTab("learning")} aria-pressed={tab === "learning"} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.07em] transition-colors ${tab === "learning" ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0] hover:text-white"}`}>Currently learning</button>
     </div>
-    {tab === "skills" ? <div className="mt-4 grid min-h-[352px] grid-cols-2 content-start gap-2 md:min-h-[280px] md:grid-cols-3 xl:min-h-[136px] xl:grid-cols-5">{skills.map(([label, Icon]) => <div key={label} className="relative grid h-16 min-w-0 place-items-center border border-[#4c5054] p-2"><Icon className="text-xl text-[#eceeed]" aria-hidden="true" /><span className="font-mono text-[9px] font-semibold uppercase text-[#e0e2e4]">{label}</span><span className="absolute left-1 top-1 h-1.5 w-1.5 border-l border-t border-white/55" /><span className="absolute bottom-1 right-1 h-1.5 w-1.5 border-b border-r border-white/55" /></div>)}</div>
-      : <div className="mt-4 grid min-h-[352px] grid-cols-2 content-start gap-2 md:min-h-[280px] md:grid-cols-4 xl:min-h-[136px]">{learning.map(([label, progress]) => <div key={label} className="relative border border-[#3d4146] px-3 py-4"><p className="font-mono text-[10px] font-semibold uppercase text-[#e0e2e4]">{label}</p><div className="mt-4 grid grid-cols-10 gap-1">{Array.from({ length: 10 }, (_, index) => <span key={index} className={`h-1 ${index < progress ? "bg-[var(--home-accent)]" : "bg-[#30343a]"}`} />)}</div><span className="absolute left-1 top-1 h-1.5 w-1.5 border-l border-t border-white/55" /><span className="absolute bottom-1 right-1 h-1.5 w-1.5 border-b border-r border-white/55" /></div>)}</div>}
+    {tab === "skills" ? <div className="mt-4 grid min-h-[472px] grid-cols-2 content-start gap-2 md:min-h-[376px] md:grid-cols-3 xl:min-h-[184px] xl:grid-cols-5">{skills.map(([label, Icon]) => <div key={label} className="relative grid h-[88px] min-w-0 place-items-center border border-[#4c5054] p-3"><Icon className="text-3xl text-[#f2f2f2]" aria-hidden="true" /><span className="font-mono text-[10px] font-bold uppercase text-[#e8eaec]">{label}</span><span className="absolute left-1 top-1 h-1.5 w-1.5 border-l border-t border-white/55" /><span className="absolute bottom-1 right-1 h-1.5 w-1.5 border-b border-r border-white/55" /></div>)}</div>
+      : <div className="mt-4 grid min-h-[472px] grid-cols-2 content-start gap-2 md:min-h-[376px] md:grid-cols-4 xl:min-h-[184px]">{learning.map(([label, progress]) => <div key={label} className="relative min-h-[88px] border border-[#3d4146] px-3 py-4"><p className="font-mono text-[10px] font-semibold uppercase text-[#e0e2e4]">{label}</p><div className="mt-5 grid grid-cols-10 gap-1">{Array.from({ length: 10 }, (_, index) => <span key={index} className={`h-1 ${index < progress ? "bg-[var(--home-accent)]" : "bg-[#30343a]"}`} />)}</div><span className="absolute left-1 top-1 h-1.5 w-1.5 border-l border-t border-white/55" /><span className="absolute bottom-1 right-1 h-1.5 w-1.5 border-b border-r border-white/55" /></div>)}</div>}
   </Panel>;
 }
 
 function Hobbies() {
-  return <Panel className="h-full"><Label>Hobbies</Label>
+  return <Panel><Label>Hobbies</Label>
     <div className="mt-4 grid gap-2 md:grid-cols-3">{hobbies.map(([label, description, Icon]) => <div key={label} className="relative flex min-h-16 items-center gap-3 border border-[#3d4146] px-3 py-2"><Icon className="h-5 w-5 shrink-0 text-[#c5c8cc]" strokeWidth={1.5} aria-hidden="true" /><div className="min-w-0"><p className="text-xs font-bold text-white">{label}</p><p className="mt-1 text-[10px] font-medium leading-4 text-[#b7bbc0]">{description}</p></div><span className="absolute right-2 top-2 font-mono text-[11px] text-[var(--home-accent)]">↓</span></div>)}</div>
   </Panel>;
 }
@@ -134,8 +134,8 @@ export default function About() {
   return <section className="relative z-30 min-h-screen overflow-hidden border-t border-[#34383d] bg-[#08090a] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8" aria-labelledby="about-title">
     <motion.main className="relative mx-auto w-full max-w-[1440px] space-y-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.55 }}>
       <section className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,35fr)_minmax(0,20fr)_minmax(0,27fr)_minmax(0,18fr)]"><AboutIntro /><QuickStats /><LocationAndWork /><LanguagesPanel /></section>
-      <section className="grid items-stretch gap-3 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="grid h-full grid-rows-[auto_1fr] gap-3"><SkillsPanel /><Hobbies /></div>
+      <section className="grid items-start gap-3 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div className="grid gap-3"><SkillsPanel /><Hobbies /></div>
         <div className="grid h-full grid-rows-[auto_1fr] gap-3"><LatestNews /><ProjectActivity /></div>
       </section>
     </motion.main>
