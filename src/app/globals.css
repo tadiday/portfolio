@@ -183,8 +183,8 @@ code {
   --home-muted: #92979f;
   --home-border: #34383d;
   --home-accent: #5da7ff;
-  --home-header-height: 64px;
-  --home-status-height: 64px;
+  --home-header-height: 88px;
+  --home-status-height: 0px;
   --home-rail-x: clamp(30px, 3.2vw, 52px);
 }
 
@@ -350,8 +350,8 @@ code {
 
 @media (max-height: 800px) {
   :root {
-    --home-header-height: 58px;
-    --home-status-height: 55px;
+    --home-header-height: 88px;
+    --home-status-height: 0px;
   }
 
   .home-content {
@@ -364,10 +364,16 @@ code {
   }
 }
 
+@media (max-width: 1099px) {
+  :root {
+    --home-header-height: 70px;
+  }
+}
+
 @media (max-width: 600px) {
   :root {
-    --home-header-height: 54px;
-    --home-status-height: 54px;
+    --home-header-height: 62px;
+    --home-status-height: 0px;
   }
 
   .hero-grid {

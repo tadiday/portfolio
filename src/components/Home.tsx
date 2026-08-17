@@ -1,11 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Github, Linkedin, Mail } from "lucide-react";
-
-const socialLinks = [
-  { label: "GitHub", href: "https://github.com/tadiday", icon: Github },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/petercao03", icon: Linkedin },
-  { label: "Email", href: "mailto:petercao03@gmail.com", icon: Mail },
-];
+import { ArrowDown, ArrowRight } from "lucide-react";
 
 const reveal = {
   initial: { opacity: 0, y: 12 },
@@ -61,7 +55,20 @@ function HeroTitle() {
 }
 
 function HeroActions() {
-  const buttonBase = "flex h-[46px] w-full items-center justify-between border border-[#85888d] px-[26px] font-mono text-xs uppercase tracking-[0.06em] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
+  const buttonBase = "group relative flex h-[46px] w-full items-center justify-between border border-[#85888d] px-[26px] font-mono text-xs uppercase tracking-[0.06em] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
+
+  const CornerMarks = ({ dark = false }: { dark?: boolean }) => {
+    const color = dark ? "border-[#171819]" : "border-[#e7e8e8]";
+
+    return (
+      <>
+        <span className={`absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 ${color}`} aria-hidden="true" />
+        <span className={`absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 ${color}`} aria-hidden="true" />
+        <span className={`absolute bottom-1.5 left-1.5 h-1.5 w-1.5 border-b-2 border-l-2 ${color}`} aria-hidden="true" />
+        <span className={`absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b-2 border-r-2 ${color}`} aria-hidden="true" />
+      </>
+    );
+  };
 
   return (
     <motion.div
@@ -70,37 +77,14 @@ function HeroActions() {
       transition={{ delay: 0.8, duration: 0.5 }}
     >
       <a className={`${buttonBase} bg-[var(--home-text)] text-[var(--home-bg)] hover:bg-[var(--home-accent)] hover:text-[var(--home-text)]`} href="#projects">
+        <CornerMarks dark />
         View my work <ArrowRight className="w-[17px]" aria-hidden="true" />
       </a>
       <a className={`${buttonBase} bg-[rgba(8,9,10,0.55)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`} href="/assets/documents/resume.pdf" download>
+        <CornerMarks />
         Download resume <ArrowDown className="w-[17px]" aria-hidden="true" />
       </a>
     </motion.div>
-  );
-}
-
-function HomeFooter() {
-  return (
-    <footer className="absolute inset-x-0 bottom-0 z-[3] flex h-[var(--home-status-height)] items-center justify-between border-t border-[var(--home-border)] bg-[rgba(8,9,10,0.94)] px-4 font-mono text-[9px] uppercase tracking-[0.09em] text-[#b7babf] sm:px-[clamp(26px,3vw,48px)] sm:text-[11px]">
-      <p className="flex items-center gap-2 sm:gap-3.5">
-        <span className="h-2 w-2 rounded-full bg-[var(--home-accent)] shadow-[0_0_8px_rgba(93,167,255,0.38)]" aria-hidden="true" />
-        Washington, DC
-      </p>
-      <div className="flex items-center">
-        {socialLinks.map(({ label, href, icon: Icon }, index) => (
-          <a
-            key={label}
-            className={`grid w-9 place-items-center text-[#b7babf] transition-colors hover:text-[var(--home-accent)] sm:w-[54px] ${index ? "border-l border-[var(--home-border)]" : ""}`}
-            href={href}
-            target={href.startsWith("http") ? "_blank" : undefined}
-            rel="noreferrer"
-            aria-label={label}
-          >
-            <Icon className="w-[15px] sm:w-[18px]" aria-hidden="true" />
-          </a>
-        ))}
-      </div>
-    </footer>
   );
 }
 
@@ -127,8 +111,6 @@ export default function Home() {
         <span className="mt-2 h-7 w-px bg-[#a5a8ad]" />
         <span className="h-[5px] w-[5px] rounded-full bg-[var(--home-text)]" />
       </div>
-
-      <HomeFooter />
     </section>
   );
 }
