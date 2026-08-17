@@ -12,7 +12,7 @@ const links = [
 export default function Header() {
   return (
     <motion.header
-      className="absolute inset-x-0 top-0 z-20 h-[var(--home-header-height)] border-b border-white/15 bg-[#070809] px-2 pt-2 min-[1100px]:px-3 min-[1100px]:pt-[14px]"
+      className="fixed inset-x-0 top-0 z-50 h-[var(--home-header-height)] border-b border-white/15 bg-[#070809] px-2 pt-2 min-[1100px]:px-3 min-[1100px]:pt-[14px]"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55 }}
