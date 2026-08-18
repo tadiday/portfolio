@@ -1,428 +1,246 @@
-import {} from "react";
+"use client";
+
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { FaGraduationCap } from "react-icons/fa";
-import { MdOutlineWork } from "react-icons/md";
-import { GoArrowUpRight } from "react-icons/go";
+import { ChevronDown, ExternalLink } from "lucide-react";
+import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
+import { experiences, type ExperienceItem, type ExperienceKind } from "@/data/experience";
 
-const Experience = () => {
-  const experiences = {
-    personal: [
-      {
-        company: "Virginia Tech",
-        date: "Aug 2021 - May 2025",
-        title: "B.S. in Computer Science",
-        location: "Blacksburg, VA",
-        courses: `Data Structures and Algorithms, Artificial Intelligence, Database Management Systems, Web Development, Computer
-          Graphics, Computer Network Architecture, Computer Systems`,
-        awards:
-          "Dean’s List (Fall 2022, Spring 2023, Fall 2023, Sprint 2024), Virginia Tech Merit-Based Scholarships, VT Peraton DeepRacer 2023",
-        description: [
-          "Courses: Data Structures and Algorithms, Artificial Intelligence, Database Management Systems, Web Development, Computer Graphics, Computer Network Architecture, Computer Systems",
-          "Awards: Dean’s List (Fall 2022, Spring 2023, Fall 2023, Sprint 2024), Virginia Tech Merit-Based Scholarships, VT Peraton DeepRacer 2023",
-        ],
-        skills: [
-          "Computer Systems",
-          "Data Structure & Algorithms",
-          "Computer Graphics",
-          "Web Development",
-          "",
-        ],
-        image: FaGraduationCap,
-      },
-    ],
-    professional: [
-      {
-        company: "Virginia Tech",
-        date: "May 2023 - May 2025",
-        title: "Undergraduate Teaching Assistant",
-        link: "https://cs.vt.edu/",
-        location: "Blacksburg, VA",
-        description: `
-          Provide academic support to students by hosting office hours, troubleshooting technical issues, and offering personalized guidance.
-          Facilitate interactive discussions through online forums to enhance student engagement.
-          Assist in teaching Computer Organization, Computer Systems, and Comparative Languages.`,
-        mobile_description: [
-          "Hosting office hours, troubleshooting technical issues, and offering personalized guidance.",
-          "Facilitate interactive discussions through online forums to enhance student engagement.",
-          "Assist in teaching Computer Organization, Computer Systems, and Comparative Languages.",
-        ],
-        skills: ["C", "x86", "RISC-V", "Rust", "Haskell", "Prolog", "Ruby"],
-        image: FaGraduationCap,
-      },
-      {
-        company: "Peraton",
-        date: "Aug - Dec 2024",
-        title: "Software Engineer Co-op",
-        link: "https://www.peraton.com/",
-        location: "Blacksburg, VA",
-        description: `
-          Contributed to the development and maintenance of a cyber-threat intelligence platform.
-          Improved system performance by enhancing build processes, resolving issues, and updating dependencies.
-          Collaborated with cross-functional teams to document and address functionality improvements, ensuring a more secure and reliable platform.`,
-        mobile_description: [
-          "Improved a cyber-threat intelligence platform by enhancing build processes, resolving issues, and updating dependencies.",
-          "Collaborated with cross-functional ensuring a more secure and reliable platform.",
-        ],
-        skills: ["JavaScript", "Maven", "Java", "Junit", "Docker"],
-        image: MdOutlineWork,
-      },
-      {
-        company: "Virginia Tech IDPro",
-        date: "Jan - Dec 2024",
-        title: "Rural Trash Collection",
-        link: "https://idpro.enge.vt.edu/",
-        location: "Blacksburg, VA",
-        description: `
-          Developed an automated trash collection robot enabling remote monitoring and operation,
-          integrating essential sensors for autonomous navigation and efficient waste collection.
-          Researched and implemented algorithms for path planning, obstacle avoidance, safety measures,
-          and optimized trash collection to enhance functionality and reliability.`,
-        mobile_description: [
-          "Developed an automated trash collection robot enabling remote monitoring and operation.",
-          "Researched and implemented algorithms for path planning, obstacle avoidance, safety measures, and optimized trash collection.",
-        ],
-        skills: ["Python", "ROS", "OpenCV", "Raspberry Pi"],
-        image: FaGraduationCap,
-      },
-      {
-        company: "Virginia Tech IDPro",
-        date: "Sep - Dec 2023",
-        title: "SMART Research",
-        link: "https://idpro.enge.vt.edu/",
-        location: "Blacksburg, VA",
-        description: `
-          Designed and developed a Software Managed Arduino-based Residential Toolkit (SMART) to enhance home automation,
-          integrating a Raspberry Pi for improved connectivity and optimized system performance.
-          Built a Swift-based mobile application to enable remote control and real-time monitoring of smart devices, ensuring a seamless and user-friendly experience.`,
-        mobile_description: [
-          "Designed and developed a Raspberry Pi smart home device for security and convenience.",
-          "Built a Swift-based mobile application to enable remote control and real-time monitoring of smart devices",
-        ],
-        skills: ["Swift", "Arduino", "Raspberry Pi", "Xcode"],
-        image: FaGraduationCap,
-      },
-      {
-        company: "Card Isle",
-        date: "Sep - Nov 2023",
-        title: "Front-end Developer Intern",
-        link: "https://cardisle.com/",
-        location: "Blacksburg, VA",
-        description: `
-          Improved the company’s website by adding new features and enhancing UI layouts to create a more engaging user experience.
-          Redesigned key interface elements such as search bars, buttons, and page structures using Alpine.js to improve usability.
-          Conducted thorough testing with Playwright to ensure functionality and reliability across the platform.`,
-        mobile_description: [
-          "Improved the company’s website by adding new features and enhancing UI layouts to create a more engaging user experience.",
-          "Redesigned key interface elements such as search bars, buttons, and page structures using Alpine.js to improve usability.",
-          "Conducted thorough testing with Playwright to ensure functionality and reliability across the platform.",
-        ],
-        skills: ["Alpine.js", "Playwright", "Node.js", "CSS"],
-        image: MdOutlineWork,
-      },
-    ],
-  };
+const experienceFilters = ["All experience", "Professional", "Academic"] as const;
+type ExperienceFilter = (typeof experienceFilters)[number];
 
-  const sectionTitle = "CAREER ADVENTURE";
+function getExperienceGroup(type: ExperienceKind): Exclude<ExperienceFilter, "All experience"> {
+  return type === "Research" || type === "Education" ? "Academic" : "Professional";
+}
 
+function getEndTimestamp(value: string) {
+  return value === "Present" ? Number.POSITIVE_INFINITY : Date.parse(`1 ${value}`);
+}
+
+function getExperienceYear(experience: ExperienceItem) {
+  const yearSource = experience.end === "Present" ? experience.start : experience.end;
+  return yearSource.match(/\d{4}/)?.[0] ?? "Earlier";
+}
+
+function ExperienceHeader() {
   return (
-    <section
-      id="experience"
-      className="h-full min-h-[500px] max-w-screen  bg-section rounded-b-3xl p-4 flex flex-col items-center z-30 text-color-section"
+    <div className="relative flex min-h-[210px] flex-col justify-center px-4 py-7 sm:px-8 lg:[&>span:first-child]:left-[26px] lg:[&>span:nth-child(3)]:left-[26px] xl:flex-row xl:items-center xl:gap-10">
+      <CornerMarks />
+      <h2 className="hero-name text-[clamp(3.8rem,7vw,6.7rem)]">EXPERIENCE</h2>
+      <div className="mt-5 max-w-[46ch] xl:mt-0">
+        <p className="font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">
+          {"// Work + academics"}
+        </p>
+        <p className="mt-5 font-mono text-[13px] font-medium leading-6 text-[#d0d3d6]">
+          Professional roles, research, teaching, and academic milestones.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+type ExperienceFiltersProps = {
+  selectedFilter: ExperienceFilter;
+  onSelect: (filter: ExperienceFilter) => void;
+};
+
+function ExperienceFilters({ selectedFilter, onSelect }: ExperienceFiltersProps) {
+  return (
+    <DashboardPanel className="p-5">
+      <DashboardLabel className="text-xs font-bold">Filter experience</DashboardLabel>
+      <div className="mt-4 space-y-1">
+        {experienceFilters.map((filter) => {
+          const count = filter === "All experience"
+            ? experiences.length
+            : experiences.filter((experience) => getExperienceGroup(experience.type) === filter).length;
+
+          return (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => onSelect(filter)}
+              className={`flex w-full items-center justify-between px-3 py-2 font-mono text-[10px] font-bold uppercase transition-colors ${
+                selectedFilter === filter
+                  ? "bg-[var(--home-accent)] text-[#08090a]"
+                  : "text-[#d8dade] hover:bg-white/5"
+              }`}
+            >
+              <span>{filter}</span>
+              <span>{String(count).padStart(2, "0")}</span>
+            </button>
+          );
+        })}
+      </div>
+    </DashboardPanel>
+  );
+}
+
+function ExperienceDetails({ experience, open, id }: { experience: ExperienceItem; open: boolean; id: string }) {
+  return (
+    <div
+      id={id}
+      className={`grid transition-[grid-template-rows,opacity] duration-300 ${
+        open ? "mt-5 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+      }`}
     >
-      <div className="relative z-20 w-full overflow-x-clip">
-        <div className="flex flex-col w-full gap-y-space-lg md:gap-y-space-2xl">
-          <div className="mx-5 sm:mx-0 grid grid-cols-12 sm:gap-x-2 md:grid md:grid-cols-20 text-color-section">
-            {/* Section Title*/}
-            <motion.h2
-              initial="initial"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }} // Ensures animation only triggers when in view
-              className="relative block overflow-hidden whitespace-nowrap col-span-12 col-start-1 md:col-span-20 md:col-start-2 w-full
-              text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-bold justify-center"
-            >
-              <div>
-                {/* Place Holder */}
-                <motion.span
-                  variants={{
-                    initial: { y: 100, opacity: 0 },
-                    visible: { y: 0, opacity: 1 },
-                  }}
-                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  className="inline-block"
-                >
-                  {/* {sectionTitle} */}
-                </motion.span>
-              </div>
-
-              {/* Animated letters */}
-              <div className="sm:absolute inset-0 leading-tight">
-                {sectionTitle.split(" ").map((word, i) => (
-                  <span key={i} className="inline">
-                    {i === 1 ? (
-                      <>
-                        <span className="hidden sm:inline">&nbsp;</span>
-                        <br className="sm:hidden"></br>
-                        {word.split("").map((l, j) => (
-                          <motion.span
-                            key={`${i}-${j}`}
-                            variants={{
-                              initial: { y: "100%", opacity: 0 },
-                              visible: { y: 0, opacity: 1 },
-                            }}
-                            transition={{
-                              duration: 0.5,
-                              ease: "easeInOut",
-                              delay: 0.03 * (i * 10 + j),
-                            }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            className="inline-block"
-                          >
-                            {l}
-                          </motion.span>
-                        ))}
-                      </>
-                    ) : (
-                      word.split("").map((l, j) => (
-                        <motion.span
-                          key={`${i}-${j}`}
-                          variants={{
-                            initial: { y: "100%", opacity: 0 },
-                            visible: { y: 0, opacity: 1 },
-                          }}
-                          transition={{
-                            duration: 0.5,
-                            ease: "easeInOut",
-                            delay: 0.03 * (i * 10 + j),
-                          }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, amount: 0.3 }}
-                          className="inline-block"
-                        >
-                          {l}
-                        </motion.span>
-                      ))
-                    )}
-                  </span>
-                ))}
-              </div>
-            </motion.h2>
-
-            <motion.span
-              className="hidden sm:flex text-[25px] font-thin text-color-section col-span-6 col-start-9"
-              initial={{ opacity: 0, y: 10 }} // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              &quot;Innovating through collaboration and growths.&quot;
-            </motion.span>
-            <div className="h-full hidden sm:flex col-span-3 col-start-15 w-full items-center">
-              <motion.div
-                className="h-[1px] color-line w-full origin-right"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
-              />{" "}
-            </div>
-            <div className="hidden sm:flex h-full col-span-3 col-start-9 w-full items-center">
-              <motion.div
-                className="h-[1px] color-line w-full origin-left"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
-              />
-            </div>
-            <motion.span
-              className="hidden sm:flex text-[25px] font-thin text-color-section col-span-7 col-start-12"
-              initial={{ opacity: 0, y: 10 }} // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.6, delay: 1.6 }}
-            >
-              &quot;Transforming challenges into impactful solutions.&quot;
-            </motion.span>
-
-            <div className="h-full hidden sm:flex col-span-2 col-start-9 w-full items-center">
-              <motion.div
-                className="h-[1px] color-line w-full origin-left"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 2.0, ease: "easeOut" }}
-              />
-            </div>
-            <motion.span
-              className="hidden sm:flex text-[25px] font-thin text-color-section col-span-4 col-start-11 justify-center"
-              initial={{ opacity: 0, y: 10 }} // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.6, delay: 2.5 }}
-            >
-              &quot;Working smarter, not harder.&quot;
-            </motion.span>
-
-            <div className="h-full hidden sm:flex col-span-3 col-start-15 w-full items-center">
-              <motion.div
-                className="h-[1px] color-line w-full origin-right"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 2.0, ease: "easeOut" }}
-              />
-            </div>
-
-            {/*Mobile Quotes*/}
-            <motion.span
-              className="flex flex-rows flex-wrap sm:hidden text-[16px] font-normal text-color-section col-span-12 col-start-1 pt-10"
-              initial={{ opacity: 0, y: 10 }} // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.75, delay: 1.5 }}
-            >
-              Innovating through collaboration and growths. Work smarter not
-              harder; focus on what matters.
-            </motion.span>
-          </div>
-        </div>
-
-        <div className="pr-[5%] pb-[10%] pl-[5%] rounded-b-3xl min-h-screen experience-text ">
-          <div className="w-full pt-16 ">
-            <div className="top-0 flex py-5 flex-col bg-section border-t border-[var(--color-primary)] gap-y-10 sm:gap-y-4 group">
-              {experiences.professional.map((job, index) => (
-                <div key={"profession" + index} className="">
-                  <div
-                    className="justify-start gap-x-2 text-left text-[14px] md:text-[25px] sm:p-[2%]
-                    font-semibold md:grid md:grid-cols-12 md:justify-between md:gap-x-4 
-                    hover:shadow-md transition-all duration-300 ease-in-out hover:opacity-100 "
-                  >
-                    <span className="sm:col-span-3 sm:col-start-1 gap-x-5 sm:py-4">
-                      <motion.div
-                        initial={{ opacity: 0, x: 100 }} // Start offscreen to the right
-                        whileInView={{ opacity: 1, x: 0 }} // Animate when in viewport
-                        viewport={{ once: true, amount: 0.2 }} // Only animates once, triggers at 20% visibility
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                        className="top-0 flex items-center col-span-5 col-start-1 gap-x-5 font-mono justify-between sm:justify-start sm:items-center group/title  "
-                      >
-
-                        <span className="block sm:hidden text-[#967A54]">
-                          {job.company}
-                        </span>
-
-                        <span className="hidden sm:flex ">
-                          {job.image && (
-                            <job.image className="experience-symbol" />
-                          )}
-                        </span>
-                        <span className="block sm:hidden experience-mobile-text">
-                          {job.date}
-                        </span>
-                        <span className="hidden sm:block experience-text">
-                          {job.date}
-                        </span>
-                      </motion.div>
-                    </span>
-
-                    <motion.h3
-                      initial={{ opacity: 0, x: 100 }} // Start offscreen to the right
-                      whileInView={{ opacity: 1, x: 0 }} // Animate when in viewport
-                      viewport={{ once: true, amount: 0.2 }} // Only animates once, triggers at 20% visibility
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="sm:col-span-7 sm:col-start-4 sm:py-4 sm:pl-10"
-                    >
-                      <a
-                        className="space-x-2 group/link group/title font-mono"
-                        href={job.link}
-                        target="_blank"
-                      >
-                        <span className="inline-block group-hover/title:text-[#967A54]">
-                          {job.title}
-                        </span>
-                        <span className="hidden sm:inline-block group-hover/title:text-[#967A54]">
-                          @
-                        </span>
-                        <span className="hidden sm:inline-block  group-hover/title:text-[#967A54]">
-                          {job.company}
-                          <GoArrowUpRight
-                            className="inline-block text-[#745f4e] group-hover/title:text-[#967A54]
-                            transition-transform duration-300 ease-in-out group-hover/link:-translate-y-1 group-hover/link:translate-x-1"
-                          />
-                        </span>
-                      </a>
-                      <div className="flex flex-col w-full col-span-6 col-start-6 text-lg sm:gap-y-4">
-                        <p className="hidden sm:flex font-thin font-mono text-[1rem] sm:text-[18px]">
-                          {job.description}
-                        </p>
-                        <ul className="flex flex-col sm:hidden font-thin text-[14px] sm:text-[18px] list-disc pl-4 gap-y-2">
-                          {job.mobile_description.map((item, index) => (
-                            <li key={index}>{item}</li>
-                          ))}
-                        </ul>
-                        <div className="flex flex-col col-span-7 col-start-6 pt-4 border-gray-700 divide-y divide-gray-700">
-                          <div className="flex flex-wrap items-center gap-3">
-                            {job.skills.map((tech, index) => (
-                              <span
-                                key={index}
-                                className="flex justify-center rounded-full bg-border font-mono text-[#8b8b8b] px-2 py-0.5 sm:px-3 sm:py-1 min-w-[3em] text-[0.75rem] sm:text-[18px]"
-                              >
-                                <span className="w-full text-center">
-                                  {tech}
-                                </span>
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.h3>
-
-                    <motion.div
-                      initial={{ opacity: 0, x: 100 }} // Start offscreen to the right
-                      whileInView={{ opacity: 1, x: 0 }} // Animate when in viewport
-                      viewport={{ once: true, amount: 0.2 }} // Only animates once, triggers at 20% visibility
-                      transition={{ duration: 1, ease: "easeOut" }}
-                      className="flex flex-col w-full col-span-6 col-start-6 pl-10 text-lg gap-y-4"
-                    ></motion.div>
-                  </div>
-                </div>
-              ))}
-
-              <div
-                className="flex justify-start gap-x-2 text-left text-[25px] p-[2%]
-                    font-semibold md:grid md:grid-cols-12 md:justify-between md:gap-x-4
-                    hover:shadow-md transition-all duration-300 ease-in-out hover:opacity-100 group/link group/title "
-              >
-                <a
-                  href="/assets/documents/resume.pdf"
-                  target="_blank"
-                  className="w-full pt-16 col-span-2 col-start-6 text-[25px]"
-                >
-                  <span className="inline-block group-hover/title:text-[#967A54] text-[25px] font-mono">
-                    View Résumé
-                  </span>
-                  <GoArrowUpRight
-                    className="inline-block text-[#745f4e] group-hover/title:text-[#967A54]
-                          transition-transform duration-300 ease-in-out group-hover/link:-translate-y-1 group-hover/link:translate-x-1"
-                  />
-                    <div className="flex flex-col h-full mt-2 col-span-2 col-start-6">
-                      <div className="flex flex-col h-full -mb-5">
-                        <div className="w-[80%] h-[2px] color-line-2"></div>
-                      </div>
-                      <div className="flex flex-col h-full">
-                        <div className=" w-[50%] h-[2px] color-line-2"></div>
-                      </div>
-                    </div>
-                </a>
-              </div>
-            </div>
+      <div className="overflow-hidden">
+        <div className="border-t border-white/10 pt-5">
+          <DashboardLabel className="mb-3 text-[10px] font-bold">Contributions</DashboardLabel>
+          <ul className="space-y-2">
+            {experience.bullets.map((bullet) => (
+              <li key={bullet} className="flex gap-3 text-[13px] font-medium leading-5 text-[#d0d3d6]">
+                <span className="text-[var(--home-accent)]">+</span>
+                {bullet}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {experience.skills.map((skill) => (
+              <span key={skill} className="border border-[#3d4146] px-2 py-1 font-mono text-[10px] font-bold uppercase text-[#dde0e2]">
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ExperienceCard({ experience, index }: { experience: ExperienceItem; index: number }) {
+  const [open, setOpen] = useState(false);
+  const detailsId = `experience-details-${index}`;
+  const categoryLabel = experience.type === "Co-op" || experience.type === "Internship"
+    ? "Internship"
+    : experience.type;
+
+  return (
+    <motion.article
+      className="group relative"
+      initial={{ opacity: 0, x: 16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.2) }}
+    >
+      <span
+        className={`absolute -left-[53px] top-[43px] z-10 hidden h-3 w-3 -translate-y-1/2 lg:block ${
+          experience.end === "Present"
+            ? "bg-[#35d07f] shadow-[0_0_10px_rgba(53,208,127,.45)]"
+            : "bg-[var(--home-accent)] shadow-[0_0_10px_rgba(93,167,255,.35)]"
+        }`}
+        aria-hidden="true"
+      />
+      <span className="absolute -left-[41px] top-[43px] hidden h-px w-[41px] -translate-y-1/2 bg-[#4b5055] lg:block" aria-hidden="true" />
+
+      <DashboardPanel className="p-4">
+        <div className="grid gap-3 lg:grid-cols-[165px_minmax(0,1fr)_180px] lg:items-center lg:gap-5">
+          <div className="whitespace-nowrap font-mono text-[11px] font-bold uppercase leading-6 text-white lg:flex lg:h-full lg:items-center lg:border-r lg:border-white/15 lg:pr-5">
+            <p>{experience.start} - {experience.end}</p>
+          </div>
+
+          <div className="min-w-0">
+            <h3 className="text-xl font-bold text-white">{experience.title}</h3>
+            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] font-bold uppercase tracking-[0.05em]">
+              <a href={experience.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[var(--home-accent)] hover:text-white">
+                {experience.company}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              <span className="text-[#858b91]">/</span>
+              <span className="text-[#c0c4c8]">{experience.location}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-4 border-white/10 font-mono uppercase lg:border-l lg:pl-5">
+            <span className="inline-block border border-[#4b5055] px-3 py-2 text-[10px] font-bold text-white">{categoryLabel}</span>
+            <button
+              type="button"
+              onClick={() => setOpen((current) => !current)}
+              aria-expanded={open}
+              aria-controls={detailsId}
+              aria-label={`${open ? "Hide" : "Show"} details for ${experience.title}`}
+              className="grid h-9 w-9 shrink-0 place-items-center border border-[#4b5055] text-[var(--home-accent)] hover:border-[var(--home-accent)]"
+            >
+              <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+        </div>
+
+        <ExperienceDetails experience={experience} open={open} id={detailsId} />
+      </DashboardPanel>
+    </motion.article>
+  );
+}
+
+export default function Experience() {
+  const [filter, setFilter] = useState<ExperienceFilter>("All experience");
+  const filteredExperiences = useMemo(
+    () => [...experiences]
+      .filter((experience) => filter === "All experience" || getExperienceGroup(experience.type) === filter)
+      .sort((a, b) => getEndTimestamp(b.end) - getEndTimestamp(a.end)),
+    [filter],
+  );
+  const experiencesByYear = useMemo(() => {
+    return filteredExperiences.reduce<Array<{ year: string; items: ExperienceItem[] }>>((groups, experience) => {
+      const year = getExperienceYear(experience);
+      const currentGroup = groups.at(-1);
+
+      if (currentGroup?.year === year) {
+        currentGroup.items.push(experience);
+      } else {
+        groups.push({ year, items: [experience] });
+      }
+
+      return groups;
+    }, []);
+  }, [filteredExperiences]);
+
+  return (
+    <section id="experience" className="relative z-30 min-h-screen overflow-hidden border-t border-[#34383d] bg-[#08090a] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
+      <motion.main
+        className="mx-auto w-full max-w-[1440px]"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.06 }}
+        transition={{ duration: 0.55 }}
+      >
+        <header className="grid gap-3 lg:grid-cols-[minmax(0,1.6fr)_minmax(230px,.4fr)]">
+          <ExperienceHeader />
+          <ExperienceFilters selectedFilter={filter} onSelect={setFilter} />
+        </header>
+
+        <div className="relative mt-3 lg:pl-20">
+          <div className="absolute bottom-0 left-8 top-0 hidden w-px bg-[#4b5055] lg:block" aria-hidden="true" />
+          <div className="space-y-12">
+            {experiencesByYear.map((group, groupIndex) => (
+              <section key={group.year} aria-labelledby={`experience-year-${group.year}`}>
+                <div className="relative mb-4 flex items-center gap-4">
+                  <span className="absolute -left-14 top-1/2 hidden h-4 w-4 -translate-y-1/2 border border-[var(--home-accent)] bg-[#08090a] lg:block" aria-hidden="true" />
+                  <h3
+                    id={`experience-year-${group.year}`}
+                    className="border border-[var(--home-accent)] bg-[var(--home-accent)] px-4 py-1.5 font-mono text-sm font-black leading-6 tracking-[0.12em] text-[#08090a]"
+                  >
+                    {group.year}
+                  </h3>
+                  <span className="h-px flex-1 bg-gradient-to-r from-[#4b5055] to-transparent" aria-hidden="true" />
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#858b91]">
+                    {String(group.items.length).padStart(2, "0")} {group.items.length === 1 ? "entry" : "entries"}
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  {group.items.map((experience, itemIndex) => (
+                    <ExperienceCard
+                      key={`${experience.company}-${experience.title}`}
+                      experience={experience}
+                      index={groupIndex * 10 + itemIndex}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </div>
+      </motion.main>
     </section>
   );
-};
-
-export default Experience;
+}

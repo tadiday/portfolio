@@ -1,256 +1,135 @@
-import { } from "react";
+"use client";
+
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { BookOpen, BriefcaseBusiness, FolderGit2, Gamepad2, Languages, MapPin, Plane } from "lucide-react";
+import { SiDocker, SiGit, SiJavascript, SiJunit5, SiMysql, SiNodedotjs, SiOpenjdk, SiPython, SiReact, SiTypescript } from "react-icons/si";
+import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
 
-const Home = () => {
+const skills = [
+  ["React.js", SiReact], ["JavaScript", SiJavascript], ["TypeScript", SiTypescript],
+  ["Python", SiPython], ["MySQL", SiMysql], ["Node.js", SiNodedotjs],
+  ["Docker", SiDocker], ["Java", SiOpenjdk], ["Git", SiGit], ["JUnit", SiJunit5],
+] as const;
 
-  const sectionTitle = "WHO AM I?";
+const hobbies = [
+  ["Reading books", "Stories, ideas, and new perspectives.", BookOpen],
+  ["Traveling", "Exploring new cities, food, and cultures.", Plane],
+  ["Video games", "Strategy, competition, and good stories.", Gamepad2],
+] as const;
+const learning = [["System design", 7], ["Go (Golang)", 5], ["Kubernetes", 6], ["Next.js", 7]] as const;
+const activity = Array.from({ length: 364 }, (_, index) => (index * 17 + Math.floor(index / 7) * 11) % 4);
 
-  return (
-    <section
-      id="about"
-      className="min-h-screen  sm:h-full max-w-screen rounded-t-3xl bg-section p-4 z-30 text-color-section bg-fixed"
-    >
-      <div className="relative z-20 w-full bg-section ">
-        <div className="flex flex-col w-full gap-y-space-lg md:gap-y-space-2xl">
-          <div className='mx-5 sm:mx-0 grid sm:gap-x-2 grid-cols-4 md:grid md:grid-cols-20 text-color-section'>            {/* Section Title*/}
-            <motion.h2
-              initial="initial"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3, }} // Ensures animation only triggers when in view
-              className="relative block whitespace-nowrap col-span-4 col-start-1 md:col-span-20 md:col-start-2 w-full 
-              text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-bold justify-center"
-            >
-              <div>
-                {/* Place Holder */}
-                <motion.span
-                  variants={{ initial: { y: 100, opacity: 0 }, visible: { y: 0, opacity: 1 } }}
-                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3, }}
-                  className="inline-block"
-                >
-                  {/* {sectionTitle} */}
-                </motion.span>
-              </div>
+function Panel({ children, className = "" }: React.ComponentProps<typeof DashboardPanel>) {
+  return <DashboardPanel className={`p-5 lg:p-6 ${className}`}>{children}</DashboardPanel>;
+}
 
-              {/* Animated letters */}
-              <div className="absolute inset-0">
-                {sectionTitle.split("").map((l, i) => (
-                  <motion.span
-                    key={i}
-                    variants={{ initial: { y: "100%", opacity: 0 }, visible: { y: 0, opacity: 1 } }}
-                    transition={{ duration: 0.5, ease: "easeInOut", delay: 0.03 * i }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3, }}
-                    className="inline-block"
-                  >
-                    {l === " " ? "\u00A0" : l} {/* Keeps spaces visible */}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.h2>
+function Label({ children, className = "" }: React.ComponentProps<typeof DashboardLabel>) {
+  return <DashboardLabel className={`text-[11px] font-semibold ${className}`}>{children}</DashboardLabel>;
+}
 
+function AboutIntro() {
+  return <div className="relative flex min-w-0 flex-col justify-center px-3 py-7 sm:px-6 xl:py-5">
+    <CornerMarks />
+    <h2 id="about-title" className="hero-name text-[clamp(3.5rem,5vw,5.25rem)]">ABOUT ME</h2>
+    <p className="mt-4 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.22em] text-[var(--home-accent)]">Get to know me <span className="text-lg text-[#858a90]">+</span></p>
+    <p className="mt-4 max-w-[52ch] font-mono text-[13px] font-medium leading-[1.75] text-[#d1d3d6]">I&apos;m a software engineer who enjoys turning complex problems into clean, reliable web experiences. I recently graduated from Virginia Tech, where I worked on system optimization, automation tools, and user-interface development.</p>
+  </div>;
+}
 
-            {/* Quotes Section */}
-            <motion.span
-              className="text-[18px] font-thin text-color-section col-span-2 col-start-1 
-                         sm:col-span-2 sm:col-start-10 hidden sm:flex sm:text-[25px]"
-              initial={{ opacity: 0, y: 10 }}  // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.75, delay: 0 }}
-            >
-              An UI Designer
-            </motion.span>
-            <div className="h-full col-span-2 col-start-3 hidden sm:flex w-full items-center 
-                            sm:col-span-3 sm:col-start-12"
-            >
-              <motion.div
-                className="h-[1px] color-line w-full origin-right"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
-              />
-            </div>
+function QuickStats() {
+  const stats = [["Projects built", "5+"], ["Internships", "2"], ["Degree earned", "B.S."]];
+  return <Panel className="h-full"><Label>Quick stats</Label><div className="mt-4">{stats.map(([label, value]) => <div key={label} className="flex items-center justify-between border-b border-white/10 py-2.5 font-mono uppercase"><span className="text-xs font-semibold text-[#d0d3d6]">{label}</span><span className="text-base font-bold text-white">{value}</span></div>)}</div><div className="mt-5 border-l-2 border-[var(--home-accent)] pl-3 font-mono uppercase"><p className="text-[10px] font-semibold tracking-[0.08em] text-[#b7bbc0]">Currently pursuing</p><p className="mt-1 text-[13px] font-bold text-white">M.S. Computer Science</p></div></Panel>;
+}
 
-
-            <div className="h-full col-span-2 col-start-1 hidden sm:flex w-full items-center sm:col-span-3 sm:col-start-10">
-              <motion.div
-                className="h-[1px] color-line w-full origin-left"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 1.1, ease: "easeOut" }}
-              />
-            </div>
-            <motion.span
-              className="hidden sm:flex text-[18px] col-span-2 col-start-3 font-thin text-color-section justify-end
-                         sm:justify-center sm:text-[25px] sm:col-span-2 sm:col-start-13"
-              initial={{ opacity: 0, y: 10 }}  // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.75, delay: 0.75 }}
-            >
-              A SW Engineer
-            </motion.span>
-
-            <motion.span
-              className="text-[18px] font-thin text-color-section col-span-2 col-start-1 
-                         sm:col-span-2 sm:col-start-10 hidden sm:flex sm:text-[25px]"
-              initial={{ opacity: 0, y: 10 }}  // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.75, delay: 0 }}
-            >
-              A Programmer
-            </motion.span>
-            <div className="h-full col-span-2 col-start-3 hidden sm:flex w-full items-center 
-                            sm:col-span-3 sm:col-start-12"
-            >
-              <motion.div
-                className="h-[1px] color-line w-full origin-right"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
-              />
-            </div>
-
-            <motion.span
-              className="flex sm:hidden text-[16px] font-normal text-color-section col-span-12 col-start-1 justify-center pt-10 text-balance"
-              initial={{ opacity: 0, y: 10 }}  // Start offscreen to the right
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in viewport
-              viewport={{ once: true, amount: 0.1 }} // Only animates once, triggers at 20% visibility
-              transition={{ duration: 0.75, delay: 0.5 }}
-            >
-              I specialize in creating user-friendly user interface and integrating them with robust back-end systems to deliver impactful user experiences.
-
-            </motion.span>
-
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className='pr-[5%] pb-[5%] pl-[5%] rounded-b-3xl min-h-screen text-color-section '>
-          <div className="w-full pt-16">
-            <div className="flex flex-col justify-between gap-y-16 sm:border-t sm:border-[var(--color-line)] sm:p-5 ">
-              <div className="grid gap-x-8 relative h-full min-h-[30vh] flex-col place-items-start pt-1 md:grid md:min-h-[40vh] md:grid-cols-16 ">
-
-                {/* Image Section: TODO: Animation*/}
-                <motion.div
-                  className="flex object-contain w-full shadow-md sm:grayscale sm:col-span-5 sm:col-start-1 py-4 pl-2 hover:grayscale-0 hover:scale-105 duration-[0.5s]"
-                  initial={{ opacity: 0 }}  // Start with invisible container
-                  animate={{ opacity: 1 }}  // Fade in the container
-                  transition={{ duration: 1 }} // Fade-in duration
-                >
-                  <div className="relative">
-                    <motion.img
-                      className="object-contain w-full border-gray-700 rounded-2xl shadow-md contrast-125"
-                      src="../assets/me/me2.avif"
-                      alt="LA Peter"
-                      initial={{ clipPath: "inset(0 0 100% 0)" }}  // Initially, hide the image by clipping it from the bottom
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      whileInView={{ clipPath: "inset(0 0 0 0)" }}  // Always animate when in view
-                      viewport={{ once: true }}  // Trigger animation once when image is in view
-                      width={500}  // Specify width
-                      height={500}  // Specify height
-                    />
-
-                    <motion.div className="absolute py-4 pl-2 rounded-2xl inset-0 bg-striped-lines opacity-5"
-                      initial={{ clipPath: "inset(0 0 100% 0)" }}  // Initially, hide the image by clipping it from the bottom
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      whileInView={{ clipPath: "inset(0 0 0 0)" }}  // Always animate when in view
-                      viewport={{ once: true }}  // Trigger animation once when image is in view
-                      >
-                    </motion.div>
-                  </div>
-
-                </motion.div>
-
-                {/* Text Section */}
-                <motion.div
-                  className='flex flex-col sm:col-span-10 sm:col-start-7 text-[20px] font-thin gap-y-10 sm:py-4'
-                  initial={{ opacity: 0, y: 10, z: 10 }}
-                  whileInView={{ opacity: 1, y: 0, z: 10 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}>
-
-                  {/* Introduction Section */}
-                  <p className="hidden sm:flex text-[16px] sm:text-[30px] md:text-[30px] lg:text-[25px] font-mono font-medium">
-                    With a passion for full-stack development, I specialize in creating user-friendly front-end designs and
-                    integrating them with robust back-end systems—combining creativity and technical expertise to deliver impactful user experiences.
-                  </p>
-
-                  {/* About Section */}
-                  <div className="hidden sm:flex flex-col gap-x-10 gap-y-space-sm lg:flex-row text-[20px]">
-                    <span className='flex h-fit font-mono font-bold tracking-mono flex-grow max-w-[150px]'>
-                      <span className="h-full text-nowrap">(About Me)</span>
-                    </span>
-                    <p className="max-w-[50ch] font-normal font-mono">
-                      I recently graduated from Virginia Tech, where I contributed to projects involving system optimization,
-                      automation tools, and user interface development. Currently looking for full-time opportunities.
-                      
-                    </p>
-                  </div>
-
-                  <div className="flex sm:hidden flex-col gap-x-10 gap-y-space-sm lg:flex-row text-[14px] sm:text-[20px] md:text-[20px] lg:text-[20px]">
-                    <span className='flex h-fit font-mono font-bold tracking-mono flex-grow max-w-[150px]'>
-                      <span className="h-full text-nowrap">(About Me)</span>
-                    </span>
-                    <p className="sm:max-w-[40ch] sm:text-balance font-normal font-mono ">
-                      I recently graduated from Virginia Tech. I&apos;ve worked on projects involving system optimization,
-                      automation tools, and user interface development.
-                    </p>
-                  </div>
-
-                  {/* Hobbies Section */}
-                  <div className="flex flex-col gap-x-10 gap-y-space-sm lg:flex-row text-[14px] sm:text-[20px] md:text-[20px] lg:text-[20px]">
-                    <span className='flex h-fit font-mono font-bold tracking-mono flex-grow max-w-[150px]'>
-                      <span className="h-full text-nowrap ">(Hobbies)</span>
-                    </span>
-                    <p className="sm:max-w-[50ch] font-normal font-mono">
-                      When I&apos;m not coding, I enjoy playing games and watching anime. I also love cooking, trying new restaurants, and traveling.
-                      Currently, my travel bucket list includes Seattle, Miami, Austin, and Las Vegas.
-
-
-                    </p>
-                  </div>
-
-
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          {/* Button Section */}
-          <div className="flex border-[#524D47] justify-start gap-x-2 text-left text-[25px] p-[2%] 
-                    font-semibold md:grid md:grid-cols-12 md:justify-between md:gap-x-4
-                    hover:shadow-md transition-all duration-300 ease-in-out hover:opacity-100 group/link group/title ">
-            <a href="/assets/documents/resume.pdf"
-              target="_blank"
-              className="w-full pt-16 col-span-2 col-start-6 text-[25px] font-mono">
-              {/* <span className="inline-block group-hover/title:text-[#967A54] text-[25px] ">View Vlog</span> */}
-              {/* <GoArrowUpRight className='inline-block text-[#745f4e] group-hover/title:text-[#967A54] 
-                          transition-transform duration-300 ease-in-out group-hover/link:-translate-y-1 group-hover/link:translate-x-1' /> */}
-
-              {/* Animated underline */}
-              {/* <div className="flex flex-col h-full mt-2 col-span-2 col-start-6">
-                  <div className="flex flex-col h-full -mb-5">
-                    <div className=" w-[80%] h-[2px] color-line">
-                    </div>
-                  </div>
-                  <div className="flex flex-col h-full">
-                    <div className=" w-[50%] h-[2px] color-line">
-                    </div>
-                  </div>
-                </div> */}
-            </a>
-          </div>
-        </div>
+function LocationAndWork() {
+  return <Panel className="flex h-full flex-col">
+    <div className="grid grid-cols-2 gap-4">
+      <div className="border-r border-white/10 pr-4">
+        <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#d0d3d6]"><MapPin className="h-4 w-4 text-[var(--home-accent)]" aria-hidden="true" />Location</p>
+        <p className="mt-4 text-l font-bold leading-tight text-white">Washington, DC</p><p className="mt-1 text-[15px] text-[#b7bbc0]">United States</p>
       </div>
-    </section>
-  );
-};
+      <div>
+        <p className="font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#d0d3d6]">Work style</p>
+        <div className="mt-4 space-y-3">{["Remote", "Hybrid", "On-site"].map((style) => <div key={style} className="flex items-center justify-between text-sm font-bold text-[#f2f2f2]"><span>{style}</span><span className="h-2.5 w-2.5 bg-[#2bd576]" aria-label="Available" /></div>)}</div>
+      </div>
+    </div>
+    <div className="mt-auto border border-[#3d5368] px-3 py-3">
+      <p className="font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--home-accent)]">Availability</p>
+      <div className="mt-2 flex flex-wrap gap-2 font-mono text-[9px] font-semibold uppercase text-[#d5d7da]"><span className="border border-[#3d5368] px-2 py-1">Open to relocation</span><span className="border border-[#3d5368] px-2 py-1">ET (UTC−5)</span></div>
+    </div>
+  </Panel>;
+}
 
-export default Home;
+function LanguagesPanel() {
+  return <Panel className="flex h-full flex-col">
+    <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#d0d3d6]"><Languages className="h-4 w-4 text-[var(--home-accent)]" aria-hidden="true" />Languages</p>
+    <div className="mt-4 divide-y divide-white/10">
+      <div className="flex items-center justify-between gap-3 py-3"><span className="text-base font-bold text-white">English</span><span className="font-mono text-[10px] font-semibold uppercase text-[var(--home-accent)]">Fluent</span></div>
+      <div className="flex items-center justify-between gap-3 py-3"><span className="text-base font-bold text-white">Vietnamese</span><span className="font-mono text-[10px] font-semibold uppercase text-[var(--home-accent)]">Native</span></div>
+    </div>
+    <p className="mt-auto border-t border-white/10 pt-3 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-[#d0d3d6]">Bilingual communication</p>
+  </Panel>;
+}
+
+function LatestNews() {
+  const [tab, setTab] = useState<"project" | "experience">("project");
+  const project = tab === "project";
+
+  return <Panel className="min-h-[190px]">
+    <div className="flex items-center gap-1 border-b border-white/10 pb-3">
+      <button type="button" onClick={() => setTab("project")} aria-pressed={project} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.07em] transition-colors ${project ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0] hover:text-white"}`}>Latest project</button>
+      <button type="button" onClick={() => setTab("experience")} aria-pressed={!project} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.07em] transition-colors ${!project ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0] hover:text-white"}`}>Latest experience</button>
+    </div>
+    <div className="grid min-h-[104px] items-center gap-4 pt-4 sm:grid-cols-[68px_44px_minmax(0,1fr)]">
+      <p className="font-mono text-xs uppercase text-white">{project ? "Aug 2026" : "May 2025"}</p>
+      <div className="grid h-11 w-11 place-items-center border border-[#36597a] text-[var(--home-accent)]">{project ? <FolderGit2 className="h-5 w-5" aria-hidden="true" /> : <BriefcaseBusiness className="h-5 w-5" aria-hidden="true" />}</div>
+      <div className="min-w-0">{project ? <><h3 className="text-base font-bold text-white sm:text-lg">The Odd One</h3><p className="mt-1 font-mono text-[9px] font-semibold uppercase tracking-[0.05em] text-[var(--home-accent)]">Personal project · Latest release</p><p className="mt-2 text-xs font-medium leading-5 text-[#d0d3d6]">I recently created The Odd One, the newest addition to my growing collection of software projects.</p></> : <><h3 className="text-base font-bold text-white sm:text-lg">Undergraduate Teaching Assistant</h3><p className="mt-1 font-mono text-[9px] font-semibold uppercase tracking-[0.05em] text-[var(--home-accent)]">Virginia Tech · May 2023—May 2025</p><p className="mt-2 text-xs font-medium leading-5 text-[#d0d3d6]">Supported students through office hours, technical troubleshooting, and instruction across core computer science courses.</p></>}</div>
+    </div>
+  </Panel>;
+}
+
+function SkillsPanel() {
+  const [tab, setTab] = useState<"skills" | "learning">("skills");
+
+  return <Panel>
+    <div className="flex items-center gap-1 border-b border-white/10 pb-3">
+      <button type="button" onClick={() => setTab("skills")} aria-pressed={tab === "skills"} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.07em] transition-colors ${tab === "skills" ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0] hover:text-white"}`}>Top skills</button>
+      <button type="button" onClick={() => setTab("learning")} aria-pressed={tab === "learning"} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.07em] transition-colors ${tab === "learning" ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0] hover:text-white"}`}>Currently learning</button>
+    </div>
+    {tab === "skills" ? <div className="mt-4 grid min-h-[472px] grid-cols-2 content-start gap-2 md:min-h-[376px] md:grid-cols-3 xl:min-h-[184px] xl:grid-cols-5">{skills.map(([label, Icon]) => <div key={label} className="relative grid h-[88px] min-w-0 place-items-center border border-[#4c5054] p-3"><Icon className="text-3xl text-[#f2f2f2]" aria-hidden="true" /><span className="font-mono text-[10px] font-bold uppercase text-[#e8eaec]">{label}</span><span className="absolute left-1 top-1 h-1.5 w-1.5 border-l border-t border-white/55" /><span className="absolute bottom-1 right-1 h-1.5 w-1.5 border-b border-r border-white/55" /></div>)}</div>
+      : <div className="mt-4 grid min-h-[472px] grid-cols-2 content-start gap-2 md:min-h-[376px] md:grid-cols-4 xl:min-h-[184px]">{learning.map(([label, progress]) => <div key={label} className="relative min-h-[88px] border border-[#3d4146] px-3 py-4"><p className="font-mono text-[10px] font-semibold uppercase text-[#e0e2e4]">{label}</p><div className="mt-5 grid grid-cols-10 gap-1">{Array.from({ length: 10 }, (_, index) => <span key={index} className={`h-1 ${index < progress ? "bg-[var(--home-accent)]" : "bg-[#30343a]"}`} />)}</div><span className="absolute left-1 top-1 h-1.5 w-1.5 border-l border-t border-white/55" /><span className="absolute bottom-1 right-1 h-1.5 w-1.5 border-b border-r border-white/55" /></div>)}</div>}
+  </Panel>;
+}
+
+function Hobbies() {
+  return <Panel><Label>Hobbies</Label>
+    <div className="mt-4 grid gap-2 md:grid-cols-3">{hobbies.map(([label, description, Icon]) => <div key={label} className="relative flex min-h-16 items-center gap-3 border border-[#3d4146] px-3 py-2"><Icon className="h-5 w-5 shrink-0 text-[#c5c8cc]" strokeWidth={1.5} aria-hidden="true" /><div className="min-w-0"><p className="text-xs font-bold text-white">{label}</p><p className="mt-1 text-[10px] font-medium leading-4 text-[#b7bbc0]">{description}</p></div><span className="absolute right-2 top-2 font-mono text-[11px] text-[var(--home-accent)]">↓</span></div>)}</div>
+  </Panel>;
+}
+
+function ProjectActivity() {
+  const [tab, setTab] = useState<"github" | "leetcode">("github");
+  const github = tab === "github";
+  const months = ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
+  return <Panel className="flex h-full flex-col">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-1"><button type="button" onClick={() => setTab("github")} aria-pressed={github} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase ${github ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0]"}`}>GitHub</button><button type="button" onClick={() => setTab("leetcode")} aria-pressed={!github} className={`border px-3 py-2 font-mono text-[10px] font-semibold uppercase ${!github ? "border-[var(--home-accent)] bg-[var(--home-accent)] text-[#08090a]" : "border-[#3d4146] text-[#b7bbc0]"}`}>LeetCode</button></div>
+      <a href={github ? "https://github.com/tadiday" : "https://leetcode.com/"} target="_blank" rel="noreferrer" className="font-mono text-[11px] font-semibold uppercase text-[var(--home-accent)] hover:text-white">View {github ? "GitHub" : "LeetCode"} →</a>
+    </div>
+    <div className="my-auto py-6"><div className="mb-3 flex justify-between font-mono text-[9px] font-semibold uppercase text-[#c0c3c7]">{months.map((month, index) => <span key={`${month}-${index}`}>{month}</span>)}</div><div className="grid grid-flow-col grid-rows-7 grid-cols-[repeat(52,minmax(3px,1fr))] gap-px sm:gap-[2px]">{activity.map((level, index) => { const displayLevel = github ? level : (level + index * 3) % 4; return <span key={index} className={`h-2.5 min-w-0 ${displayLevel === 3 ? "bg-[#5da7ff]" : displayLevel === 2 ? "bg-[#3974ad]" : displayLevel === 1 ? "bg-[#263f57]" : "bg-[#252a30]"}`} />; })}</div></div>
+    <div className="flex justify-between border-t border-white/10 pt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.04em] text-[#d0d3d6]"><span>{github ? "Building in public" : "Problem solving"}</span><span className="text-[var(--home-accent)]">{github ? "Always learning" : "Consistent practice"}</span></div>
+  </Panel>;
+}
+
+export default function About() {
+  return <section className="relative z-30 min-h-screen overflow-hidden border-t border-[#34383d] bg-[#08090a] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8" aria-labelledby="about-title">
+    <motion.main className="relative mx-auto w-full max-w-[1440px] space-y-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.55 }}>
+      <section className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,35fr)_minmax(0,20fr)_minmax(0,27fr)_minmax(0,18fr)]"><AboutIntro /><QuickStats /><LocationAndWork /><LanguagesPanel /></section>
+      <section className="grid items-start gap-3 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div className="grid gap-3"><SkillsPanel /><Hobbies /></div>
+        <div className="grid h-full grid-rows-[auto_1fr] gap-3"><LatestNews /><ProjectActivity /></div>
+      </section>
+    </motion.main>
+  </section>;
+}
