@@ -14,6 +14,7 @@ const config = {
         header: ['Montserrat Subrayada', 'Fjalla One', 'sans-serif'],
         rale: ['Raleway', 'sans-serif'],
         orbitron: 'var(--font-orbitron)',
+        'space-grotesk': 'var(--font-space-grotesk)',
         dm: 'var(--font-dm-sans)',
 
       },

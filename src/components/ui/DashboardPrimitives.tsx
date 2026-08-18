@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ClassNameProps = {
   className?: string;
@@ -21,10 +21,36 @@ type DashboardPanelProps = ClassNameProps & {
 
 export function DashboardPanel({ children, className = "" }: DashboardPanelProps) {
   return (
-    <div className={`relative min-w-0 border border-[#494d51] bg-[#090a0b] ${className}`}>
+    <div className={`relative min-w-0 border border-[var(--border-strong)] bg-[var(--surface)] ${className}`}>
       <CornerMarks />
       {children}
     </div>
+  );
+}
+
+type DashboardButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+
+export function DashboardButton({ className = "", type = "button", ...props }: DashboardButtonProps) {
+  return (
+    <button
+      type={type}
+      className={`border border-[var(--border)] font-mono uppercase transition-colors duration-150 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
+      {...props}
+    />
+  );
+}
+
+type DashboardTagProps = ClassNameProps & {
+  children: ReactNode;
+};
+
+export function DashboardTag({ children, className = "" }: DashboardTagProps) {
+  return (
+    <span
+      className={`border border-[var(--border)] px-2.5 py-1 font-mono text-[10px] font-bold uppercase text-[var(--text-soft)] ${className}`}
+    >
+      {children}
+    </span>
   );
 }
 

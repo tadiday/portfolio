@@ -1,174 +1,172 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Footer from "@/components/Footer";
+import { ArrowRight, ArrowUp, ExternalLink, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
 
 const WEB3FORMS_ACCESS_KEY = "be249f55-0454-44a6-b6ab-d35527daa8db";
-const formControlClassName = "p-2 sm:p-4 w-full rounded-lg contact-border focus:outline-none focus:contact-border-focus focus:ring-2 focus:ring-[#967A54] focus:ring-offset-0 text-lg";
 
-type Web3FormsResponse = {
-  success: boolean;
-  message: string;
-};
+const contactLinks = [
+  { label: "Email", value: "petercao49@gmail.com", href: "mailto:petercao49@gmail.com", Icon: Mail },
+  { label: "LinkedIn", value: "linkedin.com/in/petercao03", href: "https://www.linkedin.com/in/petercao03", Icon: Linkedin },
+  { label: "GitHub", value: "github.com/tadiday", href: "https://github.com/tadiday", Icon: Github },
+] as const;
 
-export default function Contact() {
-  const [result, setResult] = useState("");
+const availability = [
+  { label: "Full-time roles", note: "Open to new opportunities" },
+  { label: "Internships", note: "Spring & Summer 2027" },
+  { label: "Freelance projects", note: "Open to contributions" },
+  { label: "Collaborations", note: "Open to ideas" },
+] as const;
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+const inputClassName = "w-full border border-[#3d4146] bg-[#08090a] px-3 py-3 font-mono text-[13px] text-white outline-none transition-colors placeholder:text-[#626970] focus:border-[var(--home-accent)]";
+
+function ContactIntro() {
+  return (
+    <div className="relative min-w-0 overflow-hidden px-3 py-5 sm:px-7 sm:py-8">
+      <CornerMarks />
+      <h2 className="hero-name section-title">CONTACT</h2>
+      <p className="mt-5 font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">
+        {"// Let's build something great together"}
+      </p>
+      <p className="mt-5 max-w-[52ch] font-mono text-[13px] font-medium leading-6 text-[#d0d3d6]">
+        I&apos;m always open to discussing new opportunities, collaborations, or ideas involving software and technology.
+      </p>
+    </div>
+  );
+}
+
+function ContactDirectory() {
+  return (
+    <DashboardPanel className="p-4 sm:p-5">
+      <DashboardLabel className="mb-3 text-[11px] font-bold">Get in touch</DashboardLabel>
+      <div>
+        {contactLinks.map(({ label, value, href, Icon }) => (
+          <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="group grid grid-cols-[36px_70px_minmax(0,1fr)_20px] items-center gap-3 border-t border-white/10 py-2.5 first:border-t-0">
+            <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[#d9dcdf] group-hover:border-[var(--home-accent)] group-hover:text-[var(--home-accent)]">
+              <Icon className="h-4 w-4" strokeWidth={1.5} />
+            </span>
+            <span className="font-mono text-[10px] font-black uppercase text-white">{label}</span>
+            <span className="truncate font-mono text-[10px] text-[#b4b8bd]">{value}</span>
+            <ExternalLink className="h-3.5 w-3.5 text-[#858b91] group-hover:text-[var(--home-accent)]" />
+          </a>
+        ))}
+        <div className="grid grid-cols-[36px_70px_minmax(0,1fr)] items-center gap-3 border-t border-white/10 py-2.5">
+          <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[#d9dcdf]"><MapPin className="h-4 w-4" strokeWidth={1.5} /></span>
+          <span className="font-mono text-[10px] font-black uppercase text-white">Location</span>
+          <span className="font-mono text-[10px] leading-4 text-[#b4b8bd]">Washington, DC<br />United States</span>
+        </div>
+      </div>
+    </DashboardPanel>
+  );
+}
+
+function ContactForm() {
+  const [status, setStatus] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setResult("Sending....");
-
     const form = event.currentTarget;
     const formData = new FormData(form);
-
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    setSending(true);
+    setStatus("");
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await response.json() as Web3FormsResponse;
-
-    if (data.success) {
-      setResult("I WILL GET IN TOUCH SOON!");
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });
+      const data = await response.json() as { success: boolean; message?: string };
+      if (!data.success) throw new Error(data.message || "Unable to send message.");
       form.reset();
-    } else {
-      console.log("Error", data);
-      setResult(data.message);
+      setStatus("Message received. I'll be in touch soon.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Unable to send message.");
+    } finally {
+      setSending(false);
     }
   };
 
   return (
-    <section
-      id="contact"
-      className="bg-gradient-to-b from-[var(--contact-bg)] max-w-screen to-[var(--contact-bg-2)] min-h-screen z-20 pb-[5%]"
-    >
-      <div className="relative z-20 w-full overflow-x-clip">
-        <div className="flex flex-col w-full gap-y-space-lg md:gap-y-space-2xl">
-          <div className="grid gap-x-2 grid-cols-1 md:grid md:grid-cols-20 text-color-section">
-            <motion.h2
-              className="col-start-1 sm:col-span-12 sm:col-start-5  text-center text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-semibold text-color-section justify-center items-center flex"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.6, delay: 0 }}
-            >
-              LET&apos;S CONNECT
-            </motion.h2>
+    <DashboardPanel className="h-full p-5 sm:p-7">
+      <DashboardLabel className="mb-7 text-[11px] font-bold">Send a message</DashboardLabel>
+      <form onSubmit={submitForm} className="grid gap-5">
+        <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+          Name
+          <input name="name" required autoComplete="name" placeholder="Your name" className={inputClassName} />
+        </label>
+        <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+          Email
+          <input name="email" type="email" required autoComplete="email" placeholder="you@email.com" className={inputClassName} />
+        </label>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+            Subject
+            <select name="subject" required defaultValue="" className={inputClassName}>
+              <option value="" disabled>Select a subject</option>
+              <option>Job opportunity</option>
+              <option>Collaboration</option>
+              <option>Project feedback</option>
+              <option>General inquiry</option>
+            </select>
+          </label>
+          <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+            Location (optional)
+            <input name="location" placeholder="Your location" className={inputClassName} />
+          </label>
+        </div>
+        <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+          Message
+          <textarea name="message" required rows={5} placeholder="Write your message here..." className={`${inputClassName} resize-y`} />
+        </label>
+        <div className="flex flex-wrap items-center gap-4">
+          <button type="submit" disabled={sending} className="inline-flex min-w-[175px] items-center justify-between gap-6 border border-white bg-white px-4 py-3 font-mono text-[11px] font-black uppercase text-[#08090a] transition-colors hover:border-[var(--home-accent)] hover:bg-[var(--home-accent)] disabled:cursor-wait disabled:opacity-60">
+            {sending ? "Transmitting..." : "Send message"}<ArrowRight className="h-4 w-4" />
+          </button>
+          <p aria-live="polite" className="font-mono text-[12px] text-[var(--home-accent)]">{status}</p>
+        </div>
+      </form>
+    </DashboardPanel>
+  );
+}
 
-            <div className="hidden h-full sm:flex col-start-1 sm:col-span-2 sm:col-start-6 w-full items-center">
-              <motion.div
-                className="h-[1px] bg-section w-full origin-left"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
-              />
-            </div>
-
-            <motion.span
-              className="flex text-[16px] sm:text-[25px] font-normal sm:font-thin text-color-section sm:col-span-6 sm:col-start-8 justify-center"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.75, delay: 0 }}
-            >
-              &quot;Great connections spark endless possibilities.&quot;
-            </motion.span>
-
-            <div className="hidden h-full sm:flex sm:col-span-2 sm:col-start-14 w-full items-center">
-              <motion.div
-                className="h-[1px] bg-section w-full origin-right"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
-              />
-            </div>
-
-            <motion.span
-              className="flex text-[16px] sm:text-[25px] font-normal sm:font-thin text-color-section sm:col-span-6 sm:col-start-8 justify-center"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.75, delay: 0.75 }}
-            >
-              &quot;Collaboration is the key to innovation.&quot;
-            </motion.span>
-
-            <div
-              id="contact-container"
-              className="w-full sm:col-span-18 sm:col-start-2 text-black overflow-hidden pt-16"
-            >
-              <div className="grid sm:gap-x-4 sm:gap-y-20 grid-cols-1 sm:grid-cols-[repeat(20,minmax(0,1fr))] px-6 pt-8 sm:px-0 sm:pt-16">
-                <div className="flex flex-col col-start-1 col-span-1 sm:col-start-4 sm:col-span-14 gap-6 w-full h-full p-8 bg-section rounded-3xl text-color-section shadow-lg">
-                  <span className="w-full font-bold items-center justify-center flex">
-                    DROP ME A MESSAGE!
-                  </span>
-
-                  <form
-                    onSubmit={onSubmit}
-                    className="flex flex-col gap-4 sm:gap-6"
-                    action="https://api.web3forms.com/submit"
-                    method="POST"
-                  >
-                    <input
-                      type="hidden"
-                      name="access_key"
-                      value={WEB3FORMS_ACCESS_KEY}
-                    />
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Your Name"
-                        className={formControlClassName}
-                        required
-                      />
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="Your Email"
-                        className={formControlClassName}
-                        required
-                      />
-                    </div>
-
-                    <input
-                      type="text"
-                      name="subject"
-                      placeholder="Subject"
-                      className={formControlClassName}
-                      required
-                    />
-
-                    <textarea
-                      name="message"
-                      placeholder="Your Message"
-                      className={`${formControlClassName} h-40`}
-                      required
-                    ></textarea>
-
-                    <button
-                      type="submit"
-                      className="contact-button py-4 rounded-lg font-semibold text-xl hover:bg-[var(--contact-button-hover)] transition-all duration-300 shadow-md cursor-pointer"
-                    >
-                      Send Message
-                    </button>
-                  </form>
-                  <span className="w-full font-bold items-center justify-center flex">
-                    {result}
-                  </span>
-                </div>
-
-                <div className="col-start-1 col-span-20">
-                  <Footer />
-                </div>
-              </div>
+function AvailabilityPanel() {
+  return (
+    <DashboardPanel className="mt-3 p-5">
+      <DashboardLabel className="mb-5 text-[11px] font-bold">Currently available for</DashboardLabel>
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-[repeat(4,minmax(0,1fr))_180px]">
+        {availability.map((item) => (
+          <div key={item.label} className="grid grid-cols-[8px_1fr] gap-3 border-white/10 xl:border-r xl:pr-4">
+            <span className="mt-1 h-2 w-2 bg-[#35d07f] shadow-[0_0_8px_rgba(53,208,127,.45)]" />
+            <div>
+              <p className="font-mono text-[10px] font-black uppercase text-white">{item.label}</p>
+              <p className="mt-2 font-mono text-[10px] text-[#9da2a7]">{item.note}</p>
             </div>
           </div>
+        ))}
+        <div className="pl-1 font-mono text-[10px] uppercase xl:pl-4">
+          <p className="font-black text-[var(--home-accent)]">Response time</p>
+          <p className="mt-2 text-white">Usually within 24–48 hours</p>
         </div>
       </div>
+    </DashboardPanel>
+  );
+}
+
+export default function Contact() {
+  return (
+    <section id="contact" className="relative z-30 overflow-hidden bg-[#08090a] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
+      <motion.div className="mx-auto w-full max-w-[1440px]" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.06 }} transition={{ duration: 0.55 }}>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]">
+          <div className="grid min-w-0 content-start gap-3"><ContactIntro /><ContactDirectory /></div>
+          <ContactForm />
+        </div>
+        <AvailabilityPanel />
+        <div className="mt-3 flex items-center justify-between border border-[#494d51] bg-[#090a0b] px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#858b91]">
+          <p>Design &amp; build by Peter Cao / 2026</p>
+          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="inline-flex items-center gap-3 text-white hover:text-[var(--home-accent)]">Back to top <ArrowUp className="h-3.5 w-3.5" /></button>
+        </div>
+      </motion.div>
     </section>
   );
 }

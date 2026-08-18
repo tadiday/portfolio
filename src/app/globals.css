@@ -4,33 +4,37 @@
 @tailwind utilities;
 
 :root {
-  /* Palette */
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #08090a;
+  --foreground: #f2f2f0;
+  --surface: #090a0b;
+  --surface-raised: #0f1113;
+  --border: #3d4146;
+  --border-strong: #565b61;
+  --text: #f2f2f0;
+  --text-soft: #d0d3d6;
+  --text-muted: #92979f;
+  --accent: #5da7ff;
+  --success: #35d07f;
+  --interaction-duration: 150ms;
+  --interaction-easing: ease-out;
 
-  --color-primary: #524D47;    /* primary / borders */
-  --color-secondary: #080807;    /* section background */
-  --color-border: #524D47;    /* primary / borders */
-
-  --color-text-home: #ffffff;      /* muted text */
-  --color-text-section: #bebebe;      /* muted text */
-
-  --color-line: #524D47;     /* accents */
-
-
-  --contact-bg: #524D47; /* button hover */
-  --contact-bg-2: #080807; /* button hover */
-  --contact-button: #866a44; 
-  --contact-button-hover: #524D47; /* button hover */
+  /* Legacy aliases retained for older, inactive components. */
+  --color-primary: #524d47;
+  --color-secondary: var(--background);
+  --color-border: #524d47;
+  --color-text-home: var(--text);
+  --color-text-section: #bebebe;
+  --color-line: #524d47;
+  --contact-bg: #524d47;
+  --contact-bg-2: #080807;
+  --contact-button: #866a44;
+  --contact-button-hover: #524d47;
   --contact-button-hover-rgb: 82 77 71;
-  --contact-border: #524D47;
-  --contact-border-focus: #967A54;
-
-  --footer-text: #80776d;   /* footer text */
-  --footer-text-hover: #967A54;   /* hover / highlight */
+  --contact-border: #524d47;
+  --contact-border-focus: #967a54;
+  --footer-text: #80776d;
+  --footer-text-hover: #967a54;
   --color-white: #ffffff;
-
-  /* Effects */
   --noise-opacity: 0.12;
 }
 @theme inline {
@@ -41,11 +45,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-
   .sm\:color-border {
     border-top: 1px solid var(--color-border);
   }
@@ -53,6 +52,8 @@
 
 body {
   margin: 0;
+  background: var(--background);
+  color: var(--foreground);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -66,7 +67,7 @@ code {
 }
 
 /* colors */
-.bg-home{
+.bg-home {
   background-color: var(--color-primary);
 }
 
@@ -86,15 +87,15 @@ code {
   background-color: var(--contact-button);
 }
 
-.contact-button-hover{
+.contact-button-hover {
   background-color: var(--contact-button-hover);
 }
 
-.contact-border{
+.contact-border {
   border: 1px solid var(--contact-border);
 }
 
-.contact-border-focus{
+.contact-border-focus {
   border: 1px solid var(--contact-border-focus);
 }
 
@@ -110,18 +111,40 @@ code {
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--home-header-height);
   }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+#about,
+#projects,
+#experience,
+#contact {
+  scroll-margin-top: var(--home-header-height);
 }
 
 
 /* Home-only visual effects */
 :root {
-  --home-bg: #08090a;
-  --home-text: #f2f2f0;
-  --home-muted: #92979f;
-  --home-border: #34383d;
-  --home-accent: #5da7ff;
-  --home-header-height: 88px;
+  --home-bg: var(--background);
+  --section-bg: var(--background);
+  --home-text: var(--text);
+  --home-muted: var(--text-muted);
+  --home-border: var(--border);
+  --home-accent: var(--accent);
+  --home-header-height: 60px;
   --home-status-height: 0px;
   --home-rail-x: clamp(30px, 3.2vw, 52px);
 }
@@ -197,6 +220,10 @@ code {
   text-shadow:
     0 0 14px rgba(255, 255, 255, 0.28),
     0 0 40px rgba(255, 255, 255, 0.12);
+}
+
+.section-title {
+  font-size: clamp(3.5rem, 6.2vw, 6.5rem);
 }
 
 .hero-bracket {
@@ -288,7 +315,7 @@ code {
 
 @media (max-height: 800px) {
   :root {
-    --home-header-height: 88px;
+    --home-header-height: 60px;
     --home-status-height: 0px;
   }
 
@@ -304,13 +331,13 @@ code {
 
 @media (max-width: 1099px) {
   :root {
-    --home-header-height: 70px;
+    --home-header-height: 56px;
   }
 }
 
 @media (max-width: 600px) {
   :root {
-    --home-header-height: 62px;
+    --home-header-height: 50px;
     --home-status-height: 0px;
   }
 

@@ -1,69 +1,95 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { FaRegCopyright } from "react-icons/fa";
 
-const socialLinks = [
-  { label: "Linkedin", href: "https://www.linkedin.com/in/petercao03" },
-  { label: "Instagram", href: "https://www.instagram.com/fat_cao" },
-  { label: "GitHub", href: "https://github.com/tadiday" },
-] as const;
-
-const socialLinkClassName =
-  "inline-block transition-transform duration-300 hover:translate-x-1 hover:scale-105 hover:text-[var(--footer-text-hover)]";
-
-function FooterHeading({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <h3 className="mb-2 font-bold">{children}</h3>
-      <div className="color-line mb-2 mt-2 h-px w-full" />
-    </>
-  );
-}
-
-function useLocalTime() {
-  const [localTime, setLocalTime] = useState<string | null>(null);
-
+const Footer = () => {
+  const [localTime, setLocalTime] = useState<string | null>(null); // Time state
   useEffect(() => {
     const updateTime = () => setLocalTime(new Date().toLocaleTimeString());
-    updateTime();
-    const interval = window.setInterval(updateTime, 1000);
-    return () => window.clearInterval(interval);
+    updateTime(); // Set initial value after mount
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
   }, []);
-
-  return localTime;
-}
-
-export default function Footer() {
-  const localTime = useLocalTime();
-
   return (
-    <footer className="footer-text grid grid-cols-2 gap-x-4 gap-y-5 pb-25 pt-16 text-[14px] sm:grid-cols-[repeat(20,minmax(0,1fr))] sm:gap-y-20 sm:pb-0 sm:text-[16px] md:grid md:grid-cols-14">
-      <div className="col-span-2 col-start-1 w-full font-mono sm:col-span-6">
-        <FooterHeading>Information</FooterHeading>
+    <footer className="pb-25 sm:pb-0 grid gap-x-4 gap-y-5 sm:gap-y-20 grid-cols-2 sm:grid-cols-[repeat(20,minmax(0,1fr))] md:grid md:grid-cols-14 footer-text pt-16 text-[14px] sm:text-[16px]">
+      <div className="w-full col-start-1 col-span-2 sm:col-span-6 font-mono">
+        <h3 className="font-bold mb-2">Information</h3>
+        <div className="h-[1px] w-full color-line mt-2 mb-2"></div>
         <ul className="space-y-1">
-          <li>{localTime} Fairfax, VA</li>
-          <li className="flex items-center font-bold"><FaRegCopyright /> &nbsp;2025 Peter Cao. All rights reserved.</li>
-          <li>Built with Next.js and Tailwind CSS, deployed with Vercel.</li>
+          <li className="">{localTime} Fairfax, VA</li>
+
+          <li className="flex items-center font-bold">
+            <FaRegCopyright className="" /> &nbsp;Design & Build by Peter Cao
+          </li>
+          <li className="">
+            Built with Next.js and Tailwind CSS, deployed with Vercel.
+          </li>
         </ul>
       </div>
 
-      <div className="col-span-1 col-start-1 w-full font-mono sm:col-span-4 sm:col-start-7">
-        <FooterHeading>Socials</FooterHeading>
-        <ul className="space-y-1">
-          {socialLinks.map(({ label, href }) => (
-            <li key={label}>
-              <a href={href} target="_blank" rel="noreferrer" className="block pointer-events-none">
-                <span className={`${socialLinkClassName} pointer-events-auto`}>{label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="col-span-1 col-start-2 w-full font-mono sm:col-span-4 sm:col-start-11">
-        <FooterHeading>Resources</FooterHeading>
+      {/* Socials Section */}
+      <div className="w-full col-start-1 col-span-1 sm:col-start-7 sm:col-span-4 font-mono">
+        <h3 className="font-bold mb-2">Socials</h3>
+        <div className="h-[1px] w-full color-line mt-2 mb-2"></div>
         <ul className="space-y-1">
           <li>
-            <a href="/assets/documents/resume.pdf" target="_blank" rel="noreferrer" className="flex origin-left items-center gap-2 transition-transform duration-300 hover:translate-x-1 hover:scale-105 hover:text-[var(--footer-text-hover)]">
+            <a
+              href="https://www.linkedin.com/in/petercao03"
+              target="_blank"
+              className="block"
+              style={{ pointerEvents: "none" }} // Disables interaction on empty space
+            >
+              <span
+                className="hover:text-[var(--footer-text-hover)] hover:scale-105 hover:translate-x-1 transition-transform duration-300 inline-block"
+                style={{ pointerEvents: "auto" }} // Enables interaction on the text
+              >
+                Linkedin
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/fat_cao"
+              target="_blank"
+              className="block"
+              style={{ pointerEvents: "none" }}
+            >
+              <span
+                className="hover:text-[var(--footer-text-hover)] hover:scale-105 hover:translate-x-1 transition-transform duration-300 inline-block"
+                style={{ pointerEvents: "auto" }}
+              >
+                Instagram
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/tadiday"
+              target="_blank"
+              className="block"
+              style={{ pointerEvents: "none" }}
+            >
+              <span
+                className="hover:text-[var(--footer-text-hover)] hover:scale-105 hover:translate-x-1 transition-transform duration-300 inline-block"
+                style={{ pointerEvents: "auto" }}
+              >
+                GitHub
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Resources Section */}
+      <div className="w-full col-start-2 col-span-1 sm:col-start-11 sm:col-span-4 font-mono">
+        <h3 className="font-bold mb-2">Resources</h3>
+        <div className="h-[1px] w-full color-line mt-2 mb-2"></div>
+        <ul className="space-y-1">
+          <li>
+            <a
+              href="/assets/documents/resume.pdf"
+              target="_blank"
+              className="hover:text-[var(--footer-text-hover)] flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:translate-x-1 origin-left"
+            >
               Résumé
             </a>
           </li>
@@ -71,4 +97,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

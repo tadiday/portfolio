@@ -1,0 +1,11 @@
+[
+  {
+    "school": "Virginia Tech",
+    "degree": "B.S. in Computer Science",
+    "dates": "August 2021 - May 2025",
+    "location": "Blacksburg, VA",
+    "coursework": ["Data Structures and Algorithms", "Artificial Intelligence", "Database Management Systems", "Web Development", "Computer Graphics", "Computer Network Architecture", "Computer Systems"],
+    "awards": ["Dean's List (Fall 2022, Spring 2023, Fall 2023, Spring 2024)", "Virginia Tech merit-based scholarships", "VT Peraton DeepRacer 2023"],
+    "note": "Replace or add verified education entries here."
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "languages": ["C", "CSS", "Haskell", "Java", "JavaScript", "Prolog", "Python", "Ruby", "Rust", "Swift", "TypeScript", "x86", "RISC-V"],
+  "frameworksAndLibraries": ["Alpine.js", "Express.js", "Flask", "Framer Motion", "Next.js", "Node.js", "OpenCV", "Playwright", "React.js", "React Native", "ROS", "Tailwind CSS"],
+  "toolsAndPlatforms": ["Arduino", "Docker", "Google Maps API", "JUnit", "Maven", "MySQL", "Raspberry Pi", "Xcode"],
+  "note": "Only add skills Peter can substantiate. The assistant treats this file as factual."
+}
