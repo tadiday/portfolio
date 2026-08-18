@@ -1,279 +1,172 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaArrowRight, FaArrowUp } from "react-icons/fa";
+import { ArrowRight, ArrowUp, ExternalLink, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
 
-const Contact = () => {
-  const [currentTime, setCurrentTime] = useState('');
+const WEB3FORMS_ACCESS_KEY = "be249f55-0454-44a6-b6ab-d35527daa8db";
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const estTime = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'America/New_York',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      }).format(now);
-      setCurrentTime(estTime);
-    };
+const contactLinks = [
+  { label: "Email", value: "petercao49@gmail.com", href: "mailto:petercao49@gmail.com", Icon: Mail },
+  { label: "LinkedIn", value: "linkedin.com/in/petercao03", href: "https://www.linkedin.com/in/petercao03", Icon: Linkedin },
+  { label: "GitHub", value: "github.com/tadiday", href: "https://github.com/tadiday", Icon: Github },
+] as const;
 
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
+const availability = [
+  { label: "Full-time roles", note: "Open to new opportunities" },
+  { label: "Internships", note: "Spring & Summer 2027" },
+  { label: "Freelance projects", note: "Open to contributions" },
+  { label: "Collaborations", note: "Open to ideas" },
+] as const;
 
-    return () => clearInterval(interval);
-  }, []);
+const inputClassName = "w-full border border-[#3d4146] bg-[#08090a] px-3 py-3 font-mono text-[13px] text-white outline-none transition-colors placeholder:text-[#626970] focus:border-[var(--home-accent)]";
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+function ContactIntro() {
+  return (
+    <div className="relative min-w-0 overflow-hidden px-3 py-5 sm:px-7 sm:py-8">
+      <CornerMarks />
+      <h2 className="hero-name section-title">CONTACT</h2>
+      <p className="mt-5 font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">
+        {"// Let's build something great together"}
+      </p>
+      <p className="mt-5 max-w-[52ch] font-mono text-[13px] font-medium leading-6 text-[#d0d3d6]">
+        I&apos;m always open to discussing new opportunities, collaborations, or ideas involving software and technology.
+      </p>
+    </div>
+  );
+}
+
+function ContactDirectory() {
+  return (
+    <DashboardPanel className="p-4 sm:p-5">
+      <DashboardLabel className="mb-3 text-[11px] font-bold">Get in touch</DashboardLabel>
+      <div>
+        {contactLinks.map(({ label, value, href, Icon }) => (
+          <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="group grid grid-cols-[36px_70px_minmax(0,1fr)_20px] items-center gap-3 border-t border-white/10 py-2.5 first:border-t-0">
+            <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[#d9dcdf] group-hover:border-[var(--home-accent)] group-hover:text-[var(--home-accent)]">
+              <Icon className="h-4 w-4" strokeWidth={1.5} />
+            </span>
+            <span className="font-mono text-[10px] font-black uppercase text-white">{label}</span>
+            <span className="truncate font-mono text-[10px] text-[#b4b8bd]">{value}</span>
+            <ExternalLink className="h-3.5 w-3.5 text-[#858b91] group-hover:text-[var(--home-accent)]" />
+          </a>
+        ))}
+        <div className="grid grid-cols-[36px_70px_minmax(0,1fr)] items-center gap-3 border-t border-white/10 py-2.5">
+          <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[#d9dcdf]"><MapPin className="h-4 w-4" strokeWidth={1.5} /></span>
+          <span className="font-mono text-[10px] font-black uppercase text-white">Location</span>
+          <span className="font-mono text-[10px] leading-4 text-[#b4b8bd]">Washington, DC<br />United States</span>
+        </div>
+      </div>
+    </DashboardPanel>
+  );
+}
+
+function ContactForm() {
+  const [status, setStatus] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    setSending(true);
+    setStatus("");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });
+      const data = await response.json() as { success: boolean; message?: string };
+      if (!data.success) throw new Error(data.message || "Unable to send message.");
+      form.reset();
+      setStatus("Message received. I'll be in touch soon.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Unable to send message.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
-    <section
-      id="contact"
-      className="relative z-30 min-h-screen w-full overflow-hidden border-t border-[#34383d] bg-black text-white flex flex-col font-sans pt-[var(--home-header-height)]"
-    >
-      {/* Header with Contact Title and Social Links */}
-      <div className="w-full px-8 pt-8">
-        <div className="w-full flex justify-between items-center pb-8 border-b border-gray-800">
-          {/* Left side - Contact Title */}
-          <div className="flex flex-col">
-            <h1 className="text-sm font-mono font-space-grotesk font-bold leading-none tracking-wider">
-              <span>{"< CONTACT >"}</span>
-            </h1>
-          </div>
-
-          {/* Center - Social Links */}
-          <div className="hidden md:flex space-x-8 text-sm font-mono">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-            >
-              <span>INSTAGRAM</span>
-              <FaArrowRight className="transform -rotate-45 text-xs" />
-            </a>
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-            >
-              <span>GITHUB</span>
-              <FaArrowRight className="transform -rotate-45 text-xs" />
-            </a>
-            <a
-              href="https://linkedin.com" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-            >
-              <span>LINKEDIN</span>
-              <FaArrowRight className="transform -rotate-45 text-xs" />
-            </a>
-          </div>
-
-          {/* Right side - Back to Top */}
-          <button
-            onClick={scrollToTop}
-            className="text-sm font-mono flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-          >
-            <span>{"< BACK TO TOP >"}</span>
-            <FaArrowUp className="text-xs" />
+    <DashboardPanel className="h-full p-5 sm:p-7">
+      <DashboardLabel className="mb-7 text-[11px] font-bold">Send a message</DashboardLabel>
+      <form onSubmit={submitForm} className="grid gap-5">
+        <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+          Name
+          <input name="name" required autoComplete="name" placeholder="Your name" className={inputClassName} />
+        </label>
+        <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+          Email
+          <input name="email" type="email" required autoComplete="email" placeholder="you@email.com" className={inputClassName} />
+        </label>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+            Subject
+            <select name="subject" required defaultValue="" className={inputClassName}>
+              <option value="" disabled>Select a subject</option>
+              <option>Job opportunity</option>
+              <option>Collaboration</option>
+              <option>Project feedback</option>
+              <option>General inquiry</option>
+            </select>
+          </label>
+          <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+            Location (optional)
+            <input name="location" placeholder="Your location" className={inputClassName} />
+          </label>
+        </div>
+        <label className="grid gap-2 font-mono text-[10px] font-black uppercase text-[#d8dade]">
+          Message
+          <textarea name="message" required rows={5} placeholder="Write your message here..." className={`${inputClassName} resize-y`} />
+        </label>
+        <div className="flex flex-wrap items-center gap-4">
+          <button type="submit" disabled={sending} className="inline-flex min-w-[175px] items-center justify-between gap-6 border border-white bg-white px-4 py-3 font-mono text-[11px] font-black uppercase text-[#08090a] transition-colors hover:border-[var(--home-accent)] hover:bg-[var(--home-accent)] disabled:cursor-wait disabled:opacity-60">
+            {sending ? "Transmitting..." : "Send message"}<ArrowRight className="h-4 w-4" />
           </button>
+          <p aria-live="polite" className="font-mono text-[12px] text-[var(--home-accent)]">{status}</p>
         </div>
-        
-        {/* Mobile Social Links */}
-        <div className="md:hidden flex justify-center space-x-6 text-sm font-mono pt-4 pb-4">
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-          >
-            <span>INSTAGRAM</span>
-            <FaArrowRight className="transform -rotate-45 text-xs" />
-          </a>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-          >
-            <span>GITHUB</span>
-            <FaArrowRight className="transform -rotate-45 text-xs" />
-          </a>
-          <a
-            href="https://linkedin.com" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 hover:text-gray-400 transition-colors duration-300"
-          >
-            <span>LINKEDIN</span>
-            <FaArrowRight className="transform -rotate-45 text-xs" />
-          </a>
+      </form>
+    </DashboardPanel>
+  );
+}
+
+function AvailabilityPanel() {
+  return (
+    <DashboardPanel className="mt-3 p-5">
+      <DashboardLabel className="mb-5 text-[11px] font-bold">Currently available for</DashboardLabel>
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-[repeat(4,minmax(0,1fr))_180px]">
+        {availability.map((item) => (
+          <div key={item.label} className="grid grid-cols-[8px_1fr] gap-3 border-white/10 xl:border-r xl:pr-4">
+            <span className="mt-1 h-2 w-2 bg-[#35d07f] shadow-[0_0_8px_rgba(53,208,127,.45)]" />
+            <div>
+              <p className="font-mono text-[10px] font-black uppercase text-white">{item.label}</p>
+              <p className="mt-2 font-mono text-[10px] text-[#9da2a7]">{item.note}</p>
+            </div>
+          </div>
+        ))}
+        <div className="pl-1 font-mono text-[10px] uppercase xl:pl-4">
+          <p className="font-black text-[var(--home-accent)]">Response time</p>
+          <p className="mt-2 text-white">Usually within 24–48 hours</p>
         </div>
       </div>
+    </DashboardPanel>
+  );
+}
 
-      {/* Main Content */}
-      <div className="flex-grow flex items-center justify-center w-full py-16">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-16">
-
-
-
-          {/* Left Side: AI Agent Chat Panel */}
-          <div className="flex items-center justify-center">
-            <motion.div
-              className="w-full max-w-lg border border-gray-600 rounded-lg bg-gray-900 overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.3),0_0_100px_rgba(59,130,246,0.1)]"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Chat Header */}
-                <div className="bg-gray-800 px-4 py-3 border-b border-gray-600">
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-white font-space-grotesk font-semibold">TAD Agent</span>
-                  <span className="text-xs text-gray-400 font-mono">Online</span>
-                </div>
-              </div>
-
-              {/* Chat Messages */}
-              <div className="p-4 space-y-4 h-64 overflow-y-auto">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">AI</span>
-                  </div>
-                  <div className="bg-gray-700 rounded-lg p-3 max-w-xs">
-                    <p className="text-gray-200 text-sm font-space-grotesk">
-                      Hello! I&apos;m here to help with your projects and answer any questions you might have.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">AI</span>
-                  </div>
-                  <div className="bg-gray-700 rounded-lg p-3 max-w-xs">
-                    <p className="text-gray-200 text-sm font-space-grotesk">
-                      Feel free to reach out using the contact information on the right!
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Chat Input */}
-              <div className="border-t border-gray-600 p-4">
-                <div className="flex space-x-2">
-                  <input
-                    type="text"
-                    placeholder="Type your message..."
-                    className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-blue-500"
-                    disabled
-                  />
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50" disabled>
-                    Send
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right Side: Contact Info */}
-          <div className="flex flex-col space-y-8">
-            {/* Current Location */}
-            <motion.div
-              className="flex items-center justify-between border-t border-gray-700 pt-6 px-4 h-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <p className="font-mono text-xs text-gray-500 tracking-widest">LOCATION</p>
-              <div className="text-right">
-                <p className="text-2xl md:text-3xl lg:text-4xl font-space-grotesk font-light text-white">
-                  Washington, DC
-                </p>
-                <p className="text-xs font-mono text-gray-400">
-                 
-                </p>
-              </div>
-            </motion.div>
-
-            {/* <motion.div
-              className="flex items-center justify-between border-t border-gray-700 pt-6 px-4 h-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <p className="font-mono text-xs text-gray-500 tracking-widest">SOCIAL</p>
-
-            </motion.div> */}
-
-
-            <motion.div
-              className="flex items-center justify-between border-t border-gray-700 pt-6 px-4 h-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <p className="font-mono text-xs text-gray-500 tracking-widest">EMAIL</p>
-              <a
-                href="mailto:petercao49@gmail.com"
-                className="text-2xl md:text-3xl lg:text-4xl font-space-grotesk font-light hover:text-gray-300 transition-colors"
-              >
-                petercao49@gmail.com
-              </a>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center justify-between border-t border-gray-700 pt-6 px-4 h-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <p className="font-mono text-xs text-gray-500 tracking-widest">PHONE</p>
-              <a
-                href="tel:5715947597"
-                className="text-2xl md:text-3xl lg:text-4xl font-space-grotesk font-light hover:text-gray-300 transition-colors"
-              >
-               +1 5715947597
-              </a>
-            </motion.div>
-          </div>
+export default function Contact() {
+  return (
+    <section id="contact" className="relative z-30 overflow-hidden bg-[#08090a] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
+      <motion.div className="mx-auto w-full max-w-[1440px]" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.06 }} transition={{ duration: 0.55 }}>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]">
+          <div className="grid min-w-0 content-start gap-3"><ContactIntro /><ContactDirectory /></div>
+          <ContactForm />
         </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="w-full p-8">
-        <div className="border-t border-gray-800 pt-4 grid grid-cols-1 lg:grid-cols-3 gap-4 items-end">
-          <div className="text-center lg:text-left">
-            <p className="font-mono text-xs text-gray-500">
-              © Design & Build by Peter Cao
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <p className="font-mono text-sm text-white">
-              {currentTime} EST
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center lg:items-end">
-            <p className="font-mono text-lg">©2025</p>
-          </div>
+        <AvailabilityPanel />
+        <div className="mt-3 flex items-center justify-between border border-[#494d51] bg-[#090a0b] px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#858b91]">
+          <p>Design &amp; build by Peter Cao / 2026</p>
+          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="inline-flex items-center gap-3 text-white hover:text-[var(--home-accent)]">Back to top <ArrowUp className="h-3.5 w-3.5" /></button>
         </div>
-      </footer>
+      </motion.div>
     </section>
   );
-};
-
-export default Contact;
+}

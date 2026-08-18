@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Orbitron, Space_Grotesk } from "next/font/google";
+import SmoothScroll from "@/components/SmoothScroll";
 
 
 const geistSans = Geist({
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${spaceGrotesk.variable} antialiased`}
       >
+        <SmoothScroll />
         {children}
         <SpeedInsights />
       </body>

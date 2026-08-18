@@ -31,9 +31,9 @@ function Label({ children, className = "" }: React.ComponentProps<typeof Dashboa
 function AboutIntro() {
   return <div className="relative flex min-w-0 flex-col justify-center px-3 py-7 sm:px-6 xl:py-5">
     <CornerMarks />
-    <h2 id="about-title" className="hero-name text-[clamp(3.5rem,5vw,5.25rem)]">ABOUT ME</h2>
-    <p className="mt-4 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.22em] text-[var(--home-accent)]">Get to know me <span className="text-lg text-[#858a90]">+</span></p>
-    <p className="mt-4 max-w-[52ch] font-mono text-[13px] font-medium leading-[1.75] text-[#d1d3d6]">I&apos;m a software engineer who enjoys turning complex problems into clean, reliable web experiences. I recently graduated from Virginia Tech, where I worked on system optimization, automation tools, and user-interface development.</p>
+    <h2 id="about-title" className="hero-name section-title">ABOUT ME</h2>
+    <p className="mt-4 font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">{"// Get to know me"}</p>
+    <p className="mt-5 max-w-[52ch] font-mono text-[13px] font-medium leading-6 text-[#d0d3d6]">I&apos;m a software engineer who enjoys turning complex problems into clean, reliable web experiences. I recently graduated from Virginia Tech, where I worked on system optimization, automation tools, and user-interface development.</p>
   </div>;
 }
 
@@ -122,13 +122,15 @@ function ProjectActivity() {
   </Panel>;
 }
 
+void ProjectActivity;
+
 export default function About() {
-  return <section className="relative z-30 min-h-screen overflow-hidden border-t border-[#34383d] bg-[#08090a] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8" aria-labelledby="about-title">
+  return <section className="relative z-30 min-h-screen overflow-hidden bg-[var(--section-bg)] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8" aria-labelledby="about-title">
     <motion.main className="relative mx-auto w-full max-w-[1440px] space-y-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.55 }}>
       <section className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,35fr)_minmax(0,20fr)_minmax(0,27fr)_minmax(0,18fr)]"><AboutIntro /><QuickStats /><LocationAndWork /><LanguagesPanel /></section>
-      <section className="grid items-start gap-3 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="grid gap-3"><SkillsPanel /><Hobbies /></div>
-        <div className="grid h-full grid-rows-[auto_1fr] gap-3"><LatestNews /><ProjectActivity /></div>
+      <section className="grid gap-3">
+        <SkillsPanel />
+        <div className="grid items-stretch gap-3 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"><Hobbies /><LatestNews /></div>
       </section>
     </motion.main>
   </section>;

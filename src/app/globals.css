@@ -110,18 +110,40 @@ code {
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--home-header-height);
   }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+#about,
+#projects,
+#experience,
+#contact {
+  scroll-margin-top: var(--home-header-height);
 }
 
 
 /* Home-only visual effects */
 :root {
   --home-bg: #08090a;
+  --section-bg: #08090a;
   --home-text: #f2f2f0;
   --home-muted: #92979f;
   --home-border: #34383d;
   --home-accent: #5da7ff;
-  --home-header-height: 88px;
+  --home-header-height: 60px;
   --home-status-height: 0px;
   --home-rail-x: clamp(30px, 3.2vw, 52px);
 }
@@ -197,6 +219,10 @@ code {
   text-shadow:
     0 0 14px rgba(255, 255, 255, 0.28),
     0 0 40px rgba(255, 255, 255, 0.12);
+}
+
+.section-title {
+  font-size: clamp(3.5rem, 6.2vw, 6.5rem);
 }
 
 .hero-bracket {
@@ -288,7 +314,7 @@ code {
 
 @media (max-height: 800px) {
   :root {
-    --home-header-height: 88px;
+    --home-header-height: 60px;
     --home-status-height: 0px;
   }
 
@@ -304,13 +330,13 @@ code {
 
 @media (max-width: 1099px) {
   :root {
-    --home-header-height: 70px;
+    --home-header-height: 56px;
   }
 }
 
 @media (max-width: 600px) {
   :root {
-    --home-header-height: 62px;
+    --home-header-height: 50px;
     --home-status-height: 0px;
   }
 

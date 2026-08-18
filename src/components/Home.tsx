@@ -90,7 +90,7 @@ function HeroActions() {
 
 export default function Home() {
   return (
-    <section className="home-page sticky top-0 grid min-h-[100svh] overflow-hidden bg-[var(--home-bg)] text-[var(--home-text)] [isolation:isolate]" aria-labelledby="home-title">
+    <section className="home-page relative grid min-h-[100svh] overflow-hidden bg-[var(--home-bg)] text-[var(--home-text)] [isolation:isolate]" aria-labelledby="home-title">
       <HeroDecorations />
 
       <main className="home-content z-[2] flex w-[91vw] max-w-[1080px] place-self-center flex-col items-center pb-[calc(var(--home-status-height)+10px)] pt-[calc(var(--home-header-height)+28px)] text-center sm:w-[88vw] sm:pb-[calc(var(--home-status-height)+18px)]">

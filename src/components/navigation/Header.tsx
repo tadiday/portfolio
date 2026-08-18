@@ -12,12 +12,12 @@ const links = [
 export default function Header() {
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-50 h-[var(--home-header-height)] border-b border-white/15 bg-[#070809] px-2 pt-2 min-[1100px]:px-3 min-[1100px]:pt-[14px]"
+      className="fixed inset-x-0 top-0 z-50 h-[var(--home-header-height)] bg-[#070809] px-2 pt-1.5 min-[1100px]:px-3"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55 }}
     >
-      <div className="grid h-[46px] grid-cols-1 sm:h-[62px] min-[1100px]:grid-cols-[28%_46%_26%]">
+      <div className="grid h-[calc(var(--home-header-height)-6px)] grid-cols-1 min-[1100px]:grid-cols-[28%_46%_26%]">
         <div className="hidden min-w-0 grid-cols-[65%_35%] min-[1100px]:grid">
           <div className="relative flex items-center border border-[#56595d] px-5 font-mono text-[11px] uppercase tracking-[0.08em] text-[#bfc1c4]">
             <span className="mr-4 h-1.5 w-1.5 bg-[#e6e7e7]" aria-hidden="true" />

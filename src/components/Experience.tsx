@@ -26,7 +26,7 @@ function ExperienceHeader() {
   return (
     <div className="relative flex min-h-[210px] flex-col justify-center px-4 py-7 sm:px-8 lg:[&>span:first-child]:left-[26px] lg:[&>span:nth-child(3)]:left-[26px] xl:flex-row xl:items-center xl:gap-10">
       <CornerMarks />
-      <h2 className="hero-name text-[clamp(3.8rem,7vw,6.7rem)]">EXPERIENCE</h2>
+      <h2 className="hero-name section-title">EXPERIENCE</h2>
       <div className="mt-5 max-w-[46ch] xl:mt-0">
         <p className="font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">
           {"// Work + academics"}
@@ -195,7 +195,7 @@ export default function Experience() {
   }, [filteredExperiences]);
 
   return (
-    <section id="experience" className="relative z-30 min-h-screen overflow-hidden border-t border-[#34383d] bg-[#08090a] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
+    <section id="experience" className="relative z-30 min-h-screen overflow-hidden bg-[#08090a] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
       <motion.main
         className="mx-auto w-full max-w-[1440px]"
         initial={{ opacity: 0, y: 20 }}
