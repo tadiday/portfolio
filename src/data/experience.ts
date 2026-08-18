@@ -1,4 +1,4 @@
-export type ExperienceKind = "Education" | "Leadership" | "Co-op" | "Research" | "Internship";
+export type ExperienceKind = "Education" | "Leadership" | "Co-op" | "Research" | "Internship" | "Contract" | "Part-time";
 
 export type ExperienceItem = {
   start: string;
@@ -13,6 +13,36 @@ export type ExperienceItem = {
 };
 
 export const experiences: readonly ExperienceItem[] = [
+  {
+    start: "May 2026",
+    end: "Aug 2026",
+    title: "AI Technical Contributor",
+    company: "Handshake AI Fellowship",
+    location: "Remote",
+    type: "Contract",
+    link: "https://joinhandshake.com/",
+    bullets: [
+      "Developed Python solutions for data processing, database recovery, and validation challenges using SQLite, JSON, and automation pipelines while ensuring correctness through comprehensive testing.",
+      "Evaluated multimodal AI model outputs across image, video, and document understanding tasks, identifying reasoning errors, instruction-following failures, and data quality issues.",
+      "Applied detailed evaluation guidelines to produce high-quality annotations and technical justifications, contributing to AI model benchmarking and quality assurance.",
+    ],
+    skills: ["Python", "SQLite", "JSON", "AI Evaluation", "Testing"],
+  },
+  {
+    start: "Jan 2026",
+    end: "Apr 2026",
+    title: "Accounting Assistant",
+    company: "Eden Financial & Accounting Services",
+    location: "Falls Church, VA",
+    type: "Part-time",
+    link: "https://edencenter.com/stores/eden-financial-accounting-services/",
+    bullets: [
+      "Prepared monthly and annual expense reports for business and individual clients, improving record accuracy.",
+      "Entered and categorized more than 50 financial records per month for clients using Excel.",
+      "Reviewed and validated all team data entries, reducing errors and ensuring accurate financial records.",
+    ],
+    skills: ["Microsoft Excel", "Data Entry", "Financial Reporting", "Quality Assurance"],
+  },
   {
     start: "Jan 2026",
     end: "Present",
@@ -30,7 +60,7 @@ export const experiences: readonly ExperienceItem[] = [
     title: "Undergraduate Teaching Assistant",
     company: "Virginia Tech · CS Department",
     location: "Blacksburg, VA",
-    type: "Leadership",
+    type: "Part-time",
     link: "https://cs.vt.edu/",
     bullets: [
       "Hosted office hours, troubleshot technical issues, and provided personalized guidance to students.",
@@ -61,7 +91,7 @@ export const experiences: readonly ExperienceItem[] = [
     company: "Virginia Tech · IDPro",
     location: "Blacksburg, VA",
     type: "Research",
-    link: "https://idpro.enge.vt.edu/",
+    link: "https://idpro.icat.vt.edu/",
     bullets: [
       "Developed an automated trash collection robot with remote monitoring and operation.",
       "Integrated sensors for autonomous navigation, obstacle avoidance, and safe collection.",
@@ -76,7 +106,7 @@ export const experiences: readonly ExperienceItem[] = [
     company: "Virginia Tech · IDPro",
     location: "Blacksburg, VA",
     type: "Research",
-    link: "https://idpro.enge.vt.edu/",
+    link: "https://idpro.icat.vt.edu/",
     bullets: [
       "Designed a Raspberry Pi and Arduino residential toolkit for home automation.",
       "Built a Swift mobile application for remote control and real-time device monitoring.",
@@ -111,5 +141,32 @@ export const experiences: readonly ExperienceItem[] = [
       "Earned Dean’s List recognition and Virginia Tech merit-based scholarships.",
     ],
     skills: ["Algorithms", "AI", "Databases", "Systems"],
+  },
+  {
+    start: "Jun 2021",
+    end: "Aug 2021",
+    title: "Member",
+    company: "Taco Bell",
+    location: "Chantilly, VA · On-site",
+    type: "Part-time",
+    link: "https://www.tacobell.com/",
+    bullets: [
+      "Greeted more than 100 customers daily and communicated effectively to provide excellent service.",
+      "Maintained a friendly environment for employees and customers while supporting additional restaurant responsibilities.",
+    ],
+    skills: ["Customer Service", "Communication", "Teamwork"],
+  },
+  {
+    start: "Aug 2017",
+    end: "Jun 2021",
+    title: "Advanced Studies Diploma",
+    company: "Centreville High School",
+    location: "Clifton, VA",
+    type: "Education",
+    link: "https://centrevillehs.fcps.edu/",
+    bullets: [
+      "Participated in Math Honor Society, Computer Science Honor Society, and Centreville Esports.",
+    ],
+    skills: ["Mathematics", "Computer Science", "Esports"],
   },
 ];

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { BriefcaseBusiness, ChevronDown, Code2, ExternalLink, GraduationCap } from "lucide-react";
+import { ChevronDown, ExternalLink } from "lucide-react";
 import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
 import { experiences, type ExperienceItem, type ExperienceKind } from "@/data/experience";
 
@@ -17,9 +17,14 @@ function getEndTimestamp(value: string) {
   return value === "Present" ? Number.POSITIVE_INFINITY : Date.parse(`1 ${value}`);
 }
 
+function getExperienceYear(experience: ExperienceItem) {
+  const yearSource = experience.end === "Present" ? experience.start : experience.end;
+  return yearSource.match(/\d{4}/)?.[0] ?? "Earlier";
+}
+
 function ExperienceHeader() {
   return (
-    <div className="relative flex min-h-[210px] flex-col justify-center px-4 py-7 sm:px-8 xl:flex-row xl:items-center xl:gap-10">
+    <div className="relative flex min-h-[210px] flex-col justify-center px-4 py-7 sm:px-8 lg:[&>span:first-child]:left-[26px] lg:[&>span:nth-child(3)]:left-[26px] xl:flex-row xl:items-center xl:gap-10">
       <CornerMarks />
       <h2 className="hero-name text-[clamp(3.8rem,7vw,6.7rem)]">EXPERIENCE</h2>
       <div className="mt-5 max-w-[46ch] xl:mt-0">
@@ -105,13 +110,8 @@ function ExperienceDetails({ experience, open, id }: { experience: ExperienceIte
 function ExperienceCard({ experience, index }: { experience: ExperienceItem; index: number }) {
   const [open, setOpen] = useState(false);
   const detailsId = `experience-details-${index}`;
-  const CategoryIcon = experience.type === "Research"
-    ? Code2
-    : experience.type === "Education" || experience.type === "Leadership"
-      ? GraduationCap
-      : BriefcaseBusiness;
   const categoryLabel = experience.type === "Co-op" || experience.type === "Internship"
-    ? "Professional"
+    ? "Internship"
     : experience.type;
 
   return (
@@ -123,27 +123,19 @@ function ExperienceCard({ experience, index }: { experience: ExperienceItem; ind
       transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.2) }}
     >
       <span
-        className={`absolute -left-[53px] top-[62px] z-10 hidden h-3 w-3 -translate-y-1/2 lg:block ${
+        className={`absolute -left-[53px] top-[43px] z-10 hidden h-3 w-3 -translate-y-1/2 lg:block ${
           experience.end === "Present"
             ? "bg-[#35d07f] shadow-[0_0_10px_rgba(53,208,127,.45)]"
             : "bg-[var(--home-accent)] shadow-[0_0_10px_rgba(93,167,255,.35)]"
         }`}
         aria-hidden="true"
       />
-      <span className="absolute -left-[41px] top-[62px] hidden h-px w-[41px] -translate-y-1/2 bg-[#4b5055] lg:block" aria-hidden="true" />
+      <span className="absolute -left-[41px] top-[43px] hidden h-px w-[41px] -translate-y-1/2 bg-[#4b5055] lg:block" aria-hidden="true" />
 
-      <DashboardPanel className="p-5 sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-[100px_88px_minmax(0,1fr)_180px] lg:items-center">
-          <div className="font-mono text-[11px] font-bold uppercase leading-6 text-white lg:flex lg:h-full lg:flex-col lg:justify-center lg:border-r lg:border-white/15 lg:pr-5">
-            <p>{experience.end}</p>
-            <p className="text-[#858b91]">—</p>
-            <p>{experience.start}</p>
-          </div>
-
-          <div className="relative grid h-[76px] w-full place-items-center border border-[#4b5055] text-[#e9ebed]">
-            <CategoryIcon className="h-8 w-8" strokeWidth={1.5} aria-hidden="true" />
-            <span className="absolute left-1.5 top-1.5 h-2 w-2 border-l border-t border-white/55" />
-            <span className="absolute bottom-1.5 right-1.5 h-2 w-2 border-b border-r border-white/55" />
+      <DashboardPanel className="p-4">
+        <div className="grid gap-3 lg:grid-cols-[165px_minmax(0,1fr)_180px] lg:items-center lg:gap-5">
+          <div className="whitespace-nowrap font-mono text-[11px] font-bold uppercase leading-6 text-white lg:flex lg:h-full lg:items-center lg:border-r lg:border-white/15 lg:pr-5">
+            <p>{experience.start} - {experience.end}</p>
           </div>
 
           <div className="min-w-0">
@@ -187,6 +179,20 @@ export default function Experience() {
       .sort((a, b) => getEndTimestamp(b.end) - getEndTimestamp(a.end)),
     [filter],
   );
+  const experiencesByYear = useMemo(() => {
+    return filteredExperiences.reduce<Array<{ year: string; items: ExperienceItem[] }>>((groups, experience) => {
+      const year = getExperienceYear(experience);
+      const currentGroup = groups.at(-1);
+
+      if (currentGroup?.year === year) {
+        currentGroup.items.push(experience);
+      } else {
+        groups.push({ year, items: [experience] });
+      }
+
+      return groups;
+    }, []);
+  }, [filteredExperiences]);
 
   return (
     <section id="experience" className="relative z-30 min-h-screen overflow-hidden border-t border-[#34383d] bg-[#08090a] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
@@ -204,9 +210,33 @@ export default function Experience() {
 
         <div className="relative mt-3 lg:pl-20">
           <div className="absolute bottom-0 left-8 top-0 hidden w-px bg-[#4b5055] lg:block" aria-hidden="true" />
-          <div className="space-y-2">
-            {filteredExperiences.map((experience, index) => (
-              <ExperienceCard key={`${experience.company}-${experience.title}`} experience={experience} index={index} />
+          <div className="space-y-12">
+            {experiencesByYear.map((group, groupIndex) => (
+              <section key={group.year} aria-labelledby={`experience-year-${group.year}`}>
+                <div className="relative mb-4 flex items-center gap-4">
+                  <span className="absolute -left-14 top-1/2 hidden h-4 w-4 -translate-y-1/2 border border-[var(--home-accent)] bg-[#08090a] lg:block" aria-hidden="true" />
+                  <h3
+                    id={`experience-year-${group.year}`}
+                    className="border border-[var(--home-accent)] bg-[var(--home-accent)] px-4 py-1.5 font-mono text-sm font-black leading-6 tracking-[0.12em] text-[#08090a]"
+                  >
+                    {group.year}
+                  </h3>
+                  <span className="h-px flex-1 bg-gradient-to-r from-[#4b5055] to-transparent" aria-hidden="true" />
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#858b91]">
+                    {String(group.items.length).padStart(2, "0")} {group.items.length === 1 ? "entry" : "entries"}
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  {group.items.map((experience, itemIndex) => (
+                    <ExperienceCard
+                      key={`${experience.company}-${experience.title}`}
+                      experience={experience}
+                      index={groupIndex * 10 + itemIndex}
+                    />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </div>
