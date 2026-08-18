@@ -209,7 +209,7 @@ export default function Experience() {
         </header>
 
         <div className="relative mt-3 lg:pl-20">
-          <div className="absolute bottom-0 left-8 top-0 hidden w-px bg-[#4b5055] lg:block" aria-hidden="true" />
+          <div className="absolute bottom-[43px] left-8 top-0 hidden w-px bg-[#4b5055] lg:block" aria-hidden="true" />
           <div className="space-y-12">
             {experiencesByYear.map((group, groupIndex) => (
               <section key={group.year} aria-labelledby={`experience-year-${group.year}`}>

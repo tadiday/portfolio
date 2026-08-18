@@ -1,10 +1,22 @@
-"use client";
-
-import { useState } from "react";
 import AIChatButton from "./AIChatButton";
 import AIChatPanel from "./AIChatPanel";
 
-export default function AIChat() {
-  const [open, setOpen] = useState(false);
-  return <div className="fixed bottom-20 right-4 z-[200] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">{open && <AIChatPanel onClose={() => setOpen(false)} />}<AIChatButton open={open} onClick={() => setOpen((value) => !value)} /></div>;
+export default function AIChat({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  return (
+    <>
+      {open && (
+        <div
+          className="fixed inset-0 z-[300] grid place-items-center bg-black/75 p-3 backdrop-blur-[3px] sm:p-6"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) onOpenChange(false);
+          }}
+        >
+          <AIChatPanel onClose={() => onOpenChange(false)} />
+        </div>
+      )}
+      <div className="fixed bottom-6 right-6 z-[200] min-[1100px]:hidden">
+        <AIChatButton open={open} onClick={() => onOpenChange(!open)} />
+      </div>
+    </>
+  );
 }
