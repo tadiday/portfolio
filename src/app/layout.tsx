@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Orbitron } from "next/font/google";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +17,6 @@ const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-orbitron",
 });
-
 
 export const metadata: Metadata = {
   title: "Peter Cao - Software Engineer",
@@ -38,7 +35,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" href="/assets/logo/logo.png" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable}  antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}
       >
         {children}
         <SpeedInsights />

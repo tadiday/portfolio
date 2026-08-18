@@ -15,21 +15,7 @@
   --color-text-home: #ffffff;      /* muted text */
   --color-text-section: #bebebe;      /* muted text */
 
-  --color-symbol: #bebebe;      /* muted text */
-  --color-bar: #866a44;     /* accents */
-
   --color-line: #524D47;     /* accents */
-  --color-line-2: #524D47;     /* accents */
-
-  --project-button-hover: #868674; /* button hover */
-  --project-button-hover-rgb: 134 134 116;
-  --project-button-hover-2: #bcbcb8; /* button hover */
-  --project-button-hover-2-rgb: 188 188 184;
-
-
-  --experience-symbol: #967A54; 
-  --experience-text: #bebebe; 
-  --experience-mobile-text: #967A54; 
 
 
   --contact-bg: #524D47; /* button hover */
@@ -44,22 +30,9 @@
   --footer-text-hover: #967A54;   /* hover / highlight */
   --color-white: #ffffff;
 
-  /* Typography / sizes */
-  /* --display-xs: 60px;
-  --display-sm: 80px;
-  --display-md: 100px;
-  --display-lg: 120px;
-
-  --text-xs: 12px;
-  --text-sm: 14px;
-  --text-md: 16px;
-  --text-lg: 20px;
-  --text-xl: 25px; */
-
   /* Effects */
   --noise-opacity: 0.12;
 }
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -85,8 +58,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: var(--background);
-  color: var(--foreground); */
 }
 
 code {
@@ -103,42 +74,12 @@ code {
   background-color: var(--color-secondary);
 }
 
-.bg-bar {
-  background-color: var(--color-bar);
-}
-
 .text-color-section {
   color: var(--color-text-section);
 }
 
-.symbol-color {
-  color: var(--color-symbol);
-}
-
 .color-line {
   border-top: 1px solid var(--color-primary);
-}
-
-.color-line-2 {
-  background-color: var(--color-primary);
-}
-
-.project-button-hover {
-  background-color: rgb(var(--project-button-hover-rgb) / 0.7);
-}
-
-.project-button-hover-2 {
-  background-color: rgb(var(--project-button-hover-2-rgb) / 0.5);
-}
-
-.experience-symbol {
-  color: var(--experience-symbol);
-}
-.experience-text {
-  color: var(--experience-text);
-}
-.experience-mobile-text {
-  color: var(--experience-mobile-text);
 }
 
 .contact-button {
@@ -164,9 +105,6 @@ code {
   color: var(--footer-text-hover);
 }
 
-.bg-border {
-  border: 1px solid var(--color-border);
-}
 
 
 @layer base {
@@ -384,21 +322,3 @@ code {
     display: none;
   }
 }
-
-@keyframes scrollLinesUp {
-  0% {
-    background-position-y: 100%;
-  }
-
-  100% {
-    background-position-y: 0%;
-  }
-}
-
-.bg-striped-lines {
-  background: linear-gradient(#fbf6c0, #fbf6c0 3px, transparent 0, transparent 9px);
-  background-size: 100% 7px; 
-  animation: scrollLinesUp 20s linear infinite;
-}
-
-

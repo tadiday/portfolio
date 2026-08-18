@@ -9,33 +9,22 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 
 export default function Main() {
-  // About Section Scaling (Zoom in when entering)
-  const aboutRef = useRef(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: aboutProgress } = useScroll({
     target: aboutRef,
     offset: ["start end", "end start"],
   });
-  const scaleAbout = useTransform(aboutProgress, [0, 0.3], [0.95, 1]); // Scale up at 30%
+  const scaleAbout = useTransform(aboutProgress, [0, 0.3], [0.95, 1]);
 
-  // Experience Section Scaling (Shrink when leaving)
-  const experienceRef = useRef(null);
+  const experienceRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: experienceProgress } = useScroll({
     target: experienceRef,
     offset: ["start end", "end start"],
   });
-  const scaleExperience = useTransform(experienceProgress, [0.7, 1], [1, 0.95]); // Shrink at 70%
-
-  // useEffect(() => {
-  //   if (window.history.scrollRestoration) {
-  //     window.history.scrollRestoration = "manual";
-  //   }
-  //   window.scrollTo(0, 0);
-  // }, []);
+  const scaleExperience = useTransform(experienceProgress, [0.7, 1], [1, 0.95]);
 
   return (
-    <div className="relative w-full max-w-screen text-white ">
-
-      {/* Header */}
+    <div className="relative w-full max-w-screen text-white">
       <Header />
 
       <div id="home" className="grid">

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ExternalLink, FileText, FolderGit2, Gauge, GitBranch, Github, Globe2, Mail, ReceiptText, UtensilsCrossed, X } from "lucide-react";
+import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
 
 type Category = "Web application" | "Mobile application" | "Experiment";
 
@@ -17,16 +18,11 @@ const projects = [
 const filters = ["All projects", "Web application", "Mobile application", "Experiment"] as const;
 type Filter = typeof filters[number];
 
-function Corners() {
-  return <><span className="absolute left-2 top-2 h-2 w-2 border-l border-t border-white/55" /><span className="absolute right-2 top-2 h-2 w-2 border-r border-t border-white/55" /><span className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-white/55" /><span className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-white/55" /></>;
-}
+const Panel = DashboardPanel;
+const Corners = CornerMarks;
 
-function Panel({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`relative min-w-0 border border-[#494d51] bg-[#090a0b] ${className}`}><Corners />{children}</div>;
-}
-
-function Label({ children }: { children: ReactNode }) {
-  return <h3 className="font-mono text-xs font-bold uppercase tracking-[0.08em] text-[var(--home-accent)]">{"// "}{children}</h3>;
+function Label({ children }: React.ComponentProps<typeof DashboardLabel>) {
+  return <DashboardLabel className="text-xs font-bold">{children}</DashboardLabel>;
 }
 
 type ProjectItem = typeof projects[number];

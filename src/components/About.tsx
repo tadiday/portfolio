@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, BriefcaseBusiness, FolderGit2, Gamepad2, Languages, MapPin, Plane } from "lucide-react";
 import { SiDocker, SiGit, SiJavascript, SiJunit5, SiMysql, SiNodedotjs, SiOpenjdk, SiPython, SiReact, SiTypescript } from "react-icons/si";
+import { CornerMarks, DashboardLabel, DashboardPanel } from "@/components/ui/DashboardPrimitives";
 
 const skills = [
   ["React.js", SiReact], ["JavaScript", SiJavascript], ["TypeScript", SiTypescript],
@@ -19,26 +20,17 @@ const hobbies = [
 const learning = [["System design", 7], ["Go (Golang)", 5], ["Kubernetes", 6], ["Next.js", 7]] as const;
 const activity = Array.from({ length: 364 }, (_, index) => (index * 17 + Math.floor(index / 7) * 11) % 4);
 
-function Corners() {
-  return <>
-    <span aria-hidden="true" className="absolute left-2 top-2 h-2 w-2 border-l border-t border-white/55" />
-    <span aria-hidden="true" className="absolute right-2 top-2 h-2 w-2 border-r border-t border-white/55" />
-    <span aria-hidden="true" className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-white/55" />
-    <span aria-hidden="true" className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-white/55" />
-  </>;
+function Panel({ children, className = "" }: React.ComponentProps<typeof DashboardPanel>) {
+  return <DashboardPanel className={`p-5 lg:p-6 ${className}`}>{children}</DashboardPanel>;
 }
 
-function Panel({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`relative min-w-0 border border-[#494d51] bg-[#090a0b] p-5 lg:p-6 ${className}`}><Corners />{children}</div>;
-}
-
-function Label({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <h3 className={`font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--home-accent)] ${className}`}>{"// "}{children}</h3>;
+function Label({ children, className = "" }: React.ComponentProps<typeof DashboardLabel>) {
+  return <DashboardLabel className={`text-[11px] font-semibold ${className}`}>{children}</DashboardLabel>;
 }
 
 function AboutIntro() {
   return <div className="relative flex min-w-0 flex-col justify-center px-3 py-7 sm:px-6 xl:py-5">
-    <Corners />
+    <CornerMarks />
     <h2 id="about-title" className="hero-name text-[clamp(3.5rem,5vw,5.25rem)]">ABOUT ME</h2>
     <p className="mt-4 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.22em] text-[var(--home-accent)]">Get to know me <span className="text-lg text-[#858a90]">+</span></p>
     <p className="mt-4 max-w-[52ch] font-mono text-[13px] font-medium leading-[1.75] text-[#d1d3d6]">I&apos;m a software engineer who enjoys turning complex problems into clean, reliable web experiences. I recently graduated from Virginia Tech, where I worked on system optimization, automation tools, and user-interface development.</p>
