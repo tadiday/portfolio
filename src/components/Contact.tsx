@@ -34,7 +34,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="bg-black text-white min-h-screen w-full flex flex-col font-sans"
+      className="relative z-30 min-h-screen w-full overflow-hidden border-t border-[#34383d] bg-black text-white flex flex-col font-sans pt-[var(--home-header-height)]"
     >
       {/* Header with Contact Title and Social Links */}
       <div className="w-full px-8 pt-8">
