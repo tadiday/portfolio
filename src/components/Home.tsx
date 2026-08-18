@@ -14,9 +14,19 @@ function HeroDecorations() {
       <div className="hero-texture" aria-hidden="true" />
       <div className="hero-hud hidden sm:block" aria-hidden="true">
         <span className="hero-crosshair hero-crosshair-left">+</span>
+        <span className="hero-crosshair hero-crosshair-right">+</span>
         <span className="hero-crosshair hero-crosshair-top">+</span>
-        <span className="hero-crosshair hero-crosshair-bottom">+</span>
+        <span className="hero-scroll-cue">
+          <motion.span
+            className="block"
+            animate={{ y: [-7, 7, -7], opacity: [0.55, 1, 0.55] }}
+            transition={{ duration: 1.1, ease: "easeInOut", repeat: Infinity }}
+          >
+            <span className="hero-scroll-cue-shape" />
+          </motion.span>
+        </span>
         <span className="hero-ticks" />
+        <span className="hero-ticks hero-ticks-right" />
       </div>
     </>
   );
@@ -106,11 +116,7 @@ export default function Home() {
         <HeroActions />
       </main>
 
-      <div className="scroll-indicator hidden sm:flex" aria-hidden="true">
-        <span>Scroll</span>
-        <span className="mt-2 h-7 w-px bg-[#a5a8ad]" />
-        <span className="h-[5px] w-[5px] rounded-full bg-[var(--home-text)]" />
-      </div>
+
     </section>
   );
 }

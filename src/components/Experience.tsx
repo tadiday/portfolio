@@ -195,7 +195,7 @@ export default function Experience() {
   }, [filteredExperiences]);
 
   return (
-    <section id="experience" className="relative z-30 min-h-screen overflow-hidden bg-[#08090a] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
+    <section id="experience" className="relative z-30 min-h-screen overflow-hidden bg-[var(--background)] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[var(--text)] sm:px-6 lg:px-8">
       <motion.main
         className="mx-auto w-full max-w-[1440px]"
         initial={{ opacity: 0, y: 20 }}
@@ -214,7 +214,7 @@ export default function Experience() {
             {experiencesByYear.map((group, groupIndex) => (
               <section key={group.year} aria-labelledby={`experience-year-${group.year}`}>
                 <div className="relative mb-4 flex items-center gap-4">
-                  <span className="absolute -left-14 top-1/2 hidden h-4 w-4 -translate-y-1/2 border border-[var(--home-accent)] bg-[#08090a] lg:block" aria-hidden="true" />
+                  <span className="absolute -left-14 top-1/2 hidden h-4 w-4 -translate-y-1/2 border border-[var(--accent)] bg-[var(--background)] lg:block" aria-hidden="true" />
                   <h3
                     id={`experience-year-${group.year}`}
                     className="border border-[var(--home-accent)] bg-[var(--home-accent)] px-4 py-1.5 font-mono text-sm font-black leading-6 tracking-[0.12em] text-[#08090a]"

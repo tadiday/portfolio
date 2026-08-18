@@ -20,7 +20,7 @@ const availability = [
   { label: "Collaborations", note: "Open to ideas" },
 ] as const;
 
-const inputClassName = "w-full border border-[#3d4146] bg-[#08090a] px-3 py-3 font-mono text-[13px] text-white outline-none transition-colors placeholder:text-[#626970] focus:border-[var(--home-accent)]";
+const inputClassName = "w-full border border-[var(--border)] bg-[var(--background)] px-3 py-3 font-mono text-[13px] text-[var(--text)] outline-none transition-colors placeholder:text-[var(--text-muted)] focus:border-[var(--accent)]";
 
 function ContactIntro() {
   return (
@@ -155,14 +155,14 @@ function AvailabilityPanel() {
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative z-30 overflow-hidden bg-[#08090a] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[#e8e9e9] sm:px-6 lg:px-8">
+    <section id="contact" className="relative z-30 overflow-hidden bg-[var(--background)] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[var(--text)] sm:px-6 lg:px-8">
       <motion.div className="mx-auto w-full max-w-[1440px]" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.06 }} transition={{ duration: 0.55 }}>
         <div className="grid gap-4 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]">
           <div className="grid min-w-0 content-start gap-3"><ContactIntro /><ContactDirectory /></div>
           <ContactForm />
         </div>
         <AvailabilityPanel />
-        <div className="mt-3 flex items-center justify-between border border-[#494d51] bg-[#090a0b] px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#858b91]">
+        <div className="mt-3 flex items-center justify-between border border-[var(--border-strong)] bg-[var(--surface)] px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">
           <p>Design &amp; build by Peter Cao / 2026</p>
           <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="inline-flex items-center gap-3 text-white hover:text-[var(--home-accent)]">Back to top <ArrowUp className="h-3.5 w-3.5" /></button>
         </div>

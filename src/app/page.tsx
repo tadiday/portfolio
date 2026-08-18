@@ -62,7 +62,7 @@ export default function Main() {
   const [aiOpen, setAiOpen] = useState(false);
 
   return (
-    <div className="relative w-full max-w-screen bg-[var(--section-bg)] text-white">
+    <div className="relative w-full max-w-screen bg-[var(--section-bg)] text-[var(--text)]">
       <Header aiOpen={aiOpen} onAIToggle={() => setAiOpen((open) => !open)} />
 
       <div id="home" className="grid bg-[var(--section-bg)]">
