@@ -31,7 +31,7 @@ function ExperienceHeader() {
         <p className="font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">
           {"// Work + academics"}
         </p>
-        <p className="mt-5 font-mono text-[13px] font-medium leading-6 text-[#d0d3d6]">
+        <p className="mt-5 font-mono text-[13px] font-medium leading-6 text-[var(--text-secondary)]">
           Professional roles, research, teaching, and academic milestones.
         </p>
       </div>
@@ -61,8 +61,8 @@ function ExperienceFilters({ selectedFilter, onSelect }: ExperienceFiltersProps)
               onClick={() => onSelect(filter)}
               className={`flex w-full items-center justify-between px-3 py-2 font-mono text-[10px] font-bold uppercase transition-colors ${
                 selectedFilter === filter
-                  ? "bg-[var(--home-accent)] text-[#08090a]"
-                  : "text-[#d8dade] hover:bg-white/5"
+                  ? "bg-[var(--home-accent)] text-[var(--on-accent)]"
+                  : "text-[var(--text-secondary)] hover:bg-[var(--hover-surface)]"
               }`}
             >
               <span>{filter}</span>
@@ -84,11 +84,11 @@ function ExperienceDetails({ experience, open, id }: { experience: ExperienceIte
       }`}
     >
       <div className="overflow-hidden">
-        <div className="border-t border-white/10 pt-5">
+        <div className="border-t border-[var(--border-muted)] pt-5">
           <DashboardLabel className="mb-3 text-[10px] font-bold">Contributions</DashboardLabel>
           <ul className="space-y-2">
             {experience.bullets.map((bullet) => (
-              <li key={bullet} className="flex gap-3 text-[13px] font-medium leading-5 text-[#d0d3d6]">
+              <li key={bullet} className="flex gap-3 text-[13px] font-medium leading-5 text-[var(--text-secondary)]">
                 <span className="text-[var(--home-accent)]">+</span>
                 {bullet}
               </li>
@@ -96,7 +96,7 @@ function ExperienceDetails({ experience, open, id }: { experience: ExperienceIte
           </ul>
           <div className="mt-4 flex flex-wrap gap-2">
             {experience.skills.map((skill) => (
-              <span key={skill} className="border border-[#3d4146] px-2 py-1 font-mono text-[10px] font-bold uppercase text-[#dde0e2]">
+              <span key={skill} className="border border-[#3d4146] px-2 py-1 font-mono text-[10px] font-bold uppercase text-[var(--text-secondary)]">
                 {skill}
               </span>
             ))}
@@ -134,24 +134,24 @@ function ExperienceCard({ experience, index }: { experience: ExperienceItem; ind
 
       <DashboardPanel className="p-4">
         <div className="grid gap-3 lg:grid-cols-[165px_minmax(0,1fr)_180px] lg:items-center lg:gap-5">
-          <div className="whitespace-nowrap font-mono text-[11px] font-bold uppercase leading-6 text-white lg:flex lg:h-full lg:items-center lg:border-r lg:border-white/15 lg:pr-5">
+          <div className="whitespace-nowrap font-mono text-[11px] font-bold uppercase leading-6 text-[var(--text-primary)] lg:flex lg:h-full lg:items-center lg:border-r lg:border-[var(--border-muted)] lg:pr-5">
             <p>{experience.start} - {experience.end}</p>
           </div>
 
           <div className="min-w-0">
-            <h3 className="text-xl font-bold text-white">{experience.title}</h3>
+            <h3 className="text-xl font-bold text-[var(--text-primary)]">{experience.title}</h3>
             <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] font-bold uppercase tracking-[0.05em]">
-              <a href={experience.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[var(--home-accent)] hover:text-white">
+              <a href={experience.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[var(--home-accent)] hover:text-[var(--text-primary)]">
                 {experience.company}
                 <ExternalLink className="h-3 w-3" />
               </a>
-              <span className="text-[#858b91]">/</span>
-              <span className="text-[#c0c4c8]">{experience.location}</span>
+              <span className="text-[var(--text-muted)]">/</span>
+              <span className="text-[var(--text-secondary)]">{experience.location}</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-4 border-white/10 font-mono uppercase lg:border-l lg:pl-5">
-            <span className="inline-block border border-[#4b5055] px-3 py-2 text-[10px] font-bold text-white">{categoryLabel}</span>
+          <div className="flex items-center justify-between gap-4 border-[var(--border-muted)] font-mono uppercase lg:border-l lg:pl-5">
+            <span className="inline-block border border-[#4b5055] px-3 py-2 text-[10px] font-bold text-[var(--text-primary)]">{categoryLabel}</span>
             <button
               type="button"
               onClick={() => setOpen((current) => !current)}
@@ -217,12 +217,12 @@ export default function Experience() {
                   <span className="absolute -left-14 top-1/2 hidden h-4 w-4 -translate-y-1/2 border border-[var(--accent)] bg-[var(--background)] lg:block" aria-hidden="true" />
                   <h3
                     id={`experience-year-${group.year}`}
-                    className="border border-[var(--home-accent)] bg-[var(--home-accent)] px-4 py-1.5 font-mono text-sm font-black leading-6 tracking-[0.12em] text-[#08090a]"
+                    className="border border-[var(--home-accent)] bg-[var(--home-accent)] px-4 py-1.5 font-mono text-sm font-black leading-6 tracking-[0.12em] text-[var(--on-accent)]"
                   >
                     {group.year}
                   </h3>
                   <span className="h-px flex-1 bg-gradient-to-r from-[#4b5055] to-transparent" aria-hidden="true" />
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#858b91]">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">
                     {String(group.items.length).padStart(2, "0")} {group.items.length === 1 ? "entry" : "entries"}
                   </span>
                 </div>

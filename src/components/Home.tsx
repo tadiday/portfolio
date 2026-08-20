@@ -65,7 +65,7 @@ function HeroTitle() {
 }
 
 function HeroActions() {
-  const buttonBase = "group relative flex h-[46px] w-full items-center justify-between border border-[#85888d] px-[26px] font-mono text-xs uppercase tracking-[0.06em] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
+  const buttonBase = "group relative flex h-[46px] w-full items-center justify-between border border-[var(--border)] px-[26px] font-mono text-xs uppercase tracking-[0.06em] shadow-[var(--button-shadow)] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
 
   const CornerMarks = ({ dark = false }: { dark?: boolean }) => {
     const color = dark ? "border-[#171819]" : "border-[#e7e8e8]";
@@ -90,7 +90,7 @@ function HeroActions() {
         <CornerMarks dark />
         View my work <ArrowRight className="w-[17px]" aria-hidden="true" />
       </a>
-      <a className={`${buttonBase} bg-[rgba(8,9,10,0.55)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`} href="/assets/documents/resume.pdf" download>
+      <a className={`${buttonBase} bg-[var(--surface)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`} href="/assets/documents/resume.pdf" download>
         <CornerMarks />
         Download resume <ArrowDown className="w-[17px]" aria-hidden="true" />
       </a>
@@ -106,7 +106,7 @@ export default function Home() {
       <main className="home-content z-[2] flex w-[91vw] max-w-[1080px] place-self-center flex-col items-center pb-[calc(var(--home-status-height)+10px)] pt-[calc(var(--home-header-height)+28px)] text-center sm:w-[88vw] sm:pb-[calc(var(--home-status-height)+18px)]">
         <HeroTitle />
         <motion.p
-          className="mt-[clamp(20px,3vh,34px)] w-[min(340px,90vw)] font-mono text-[clamp(11px,1.05vw,15px)] leading-[1.65] tracking-[0.025em] text-[#b7babf] sm:w-auto sm:leading-[1.8]"
+          className="mt-[clamp(20px,3vh,34px)] w-[min(340px,90vw)] font-mono text-[clamp(11px,1.05vw,15px)] leading-[1.65] tracking-[0.025em] text-[var(--text-secondary)] sm:w-auto sm:leading-[1.8]"
           {...reveal}
           transition={{ delay: 0.65, duration: 0.5 }}
         >

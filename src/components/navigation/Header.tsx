@@ -21,8 +21,8 @@ type HeaderProps = {
 function BuildIdentifier() {
   return (
     <div className="hidden min-w-0 grid-cols-[65%_35%] min-[1100px]:grid">
-      <div className="relative flex items-center border border-[#56595d] px-5 font-mono text-[11px] uppercase tracking-[0.08em] text-[#bfc1c4]">
-        <span className="mr-4 h-1.5 w-1.5 bg-[#e6e7e7]" aria-hidden="true" />
+      <div className="relative flex items-center border border-[var(--border-strong)] px-5 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--header-text)]">
+        <span className="mr-4 h-1.5 w-1.5 bg-[var(--text)]" aria-hidden="true" />
         Portfolio_build: V1.1_
         <span className="absolute left-1.5 top-1.5 text-[8px] leading-none text-[#ff3947]" aria-hidden="true">✦</span>
         <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r border-t border-[#d8d9da]" aria-hidden="true" />
@@ -36,7 +36,7 @@ function BuildIdentifier() {
 function DividerPattern() {
   return (
     <div
-      className="flex h-full items-center overflow-hidden border-b border-white/15 px-[6%] font-mono text-[21px] italic tracking-[-0.28em] text-[#94989d]"
+      className="flex h-full items-center overflow-hidden border-b border-[var(--border-muted)] px-[6%] font-mono text-[21px] italic tracking-[-0.28em] text-[var(--text-muted)]"
       aria-hidden="true"
     >
       {"////////"}
@@ -47,7 +47,7 @@ function DividerPattern() {
 function PrimaryNavigation({ activeSection, onNavigate }: { activeSection: string; onNavigate: (section: string) => void }) {
   return (
     <nav className="h-full" aria-label="Primary navigation">
-      <ul className="grid h-full grid-cols-5 border-y border-r border-[#56595d]">
+      <ul className="grid h-full grid-cols-5 border-y border-r border-[var(--border-strong)]">
         {navigationLinks.map(({ label, href }, index) => {
           const sectionId = href.slice(1);
           const isActive = activeSection === sectionId;
@@ -58,9 +58,9 @@ function PrimaryNavigation({ activeSection, onNavigate }: { activeSection: strin
                 href={href}
                 onClick={() => onNavigate(sectionId)}
                 aria-current={isActive ? "page" : undefined}
-                className={`group relative flex h-full flex-col justify-center border-l border-[#56595d] px-2 font-mono uppercase transition-colors duration-150 min-[1100px]:px-4 ${
+                className={`group relative flex h-full flex-col justify-center border-l border-[var(--border-strong)] px-2 font-mono uppercase transition-colors duration-150 min-[1100px]:px-4 ${
                   isActive
-                    ? "bg-[var(--text)] text-[var(--background)]"
+                    ? "bg-[var(--accent)] text-[var(--on-accent)]"
                     : "bg-[var(--header-bg)] text-[var(--header-text)] hover:bg-[var(--surface-raised)] hover:text-[var(--text)]"
                 }`}
               >
@@ -72,8 +72,8 @@ function PrimaryNavigation({ activeSection, onNavigate }: { activeSection: strin
                 </span>
                 {isActive && (
                   <>
-                    <span className="absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 border-[#171819]" />
-                    <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 border-[#171819]" />
+                    <span className="absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 border-[var(--on-accent)]" />
+                    <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 border-[var(--on-accent)]" />
                   </>
                 )}
               </Link>
@@ -99,18 +99,18 @@ function AILauncher({ open, onToggle }: { open: boolean; onToggle: () => void })
         onClick={onToggle}
         aria-expanded={open}
         aria-label={`${open ? "Close" : "Open"} Peter AI`}
-        className="group relative flex items-center justify-between border border-[#56595d] px-4 text-left font-mono uppercase text-[#c7c9cc] transition-colors hover:border-[var(--accent)]"
+        className="group relative flex items-center justify-between border border-[var(--border-strong)] px-4 text-left font-mono uppercase text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]"
       >
         <span className="flex items-center gap-3">
           <span className="grid h-8 w-8 place-items-center border border-[var(--accent)] text-[10px] font-black text-[var(--accent)]">AI</span>
           <span className="leading-[1.5]">
-            <span className="block text-[10px] font-bold tracking-[0.1em] text-white">Peter AI</span>
-            <span className="block text-[8px] tracking-[0.08em] text-[#858b91]">Ask about my work</span>
+            <span className="block text-[10px] font-bold tracking-[0.1em] text-[var(--text-primary)]">Peter AI</span>
+            <span className="block text-[8px] tracking-[0.08em] text-[var(--text-muted)]">Ask about my work</span>
           </span>
         </span>
         <span className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 bg-[var(--success)]" />
-          <span className="grid h-8 w-8 place-items-center border border-[#777b80] text-xl text-white group-hover:border-[var(--accent)] group-hover:text-[var(--accent)]">
+          <span className="grid h-8 w-8 place-items-center border border-[#777b80] text-xl text-[var(--text-primary)] group-hover:border-[var(--accent)] group-hover:text-[var(--accent)]">
             {open ? "×" : "+"}
           </span>
         </span>

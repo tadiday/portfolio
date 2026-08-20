@@ -7,10 +7,10 @@ type ClassNameProps = {
 export function CornerMarks() {
   return (
     <>
-      <span aria-hidden="true" className="absolute left-2 top-2 h-2 w-2 border-l border-t border-white/55" />
-      <span aria-hidden="true" className="absolute right-2 top-2 h-2 w-2 border-r border-t border-white/55" />
-      <span aria-hidden="true" className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-white/55" />
-      <span aria-hidden="true" className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-white/55" />
+      <span aria-hidden="true" className="absolute left-2 top-2 h-2 w-2 border-l border-t border-[var(--border-strong)]" />
+      <span aria-hidden="true" className="absolute right-2 top-2 h-2 w-2 border-r border-t border-[var(--border-strong)]" />
+      <span aria-hidden="true" className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-[var(--border-strong)]" />
+      <span aria-hidden="true" className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-[var(--border-strong)]" />
     </>
   );
 }

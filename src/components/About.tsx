@@ -63,7 +63,7 @@ function TabButton({ active, children, onClick }: { active: boolean; children: R
       className={`px-3 py-2 text-[10px] font-semibold tracking-[0.07em] ${
         active
           ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--background)] hover:text-[var(--background)]"
-          : "text-[#b7bbc0]"
+          : "text-[var(--text-secondary)]"
       }`}
       onClick={onClick}
     >
@@ -97,15 +97,15 @@ function QuickStats() {
       <Label>Quick stats</Label>
       <div className="mt-4">
         {stats.map(([label, value]) => (
-          <div key={label} className="flex items-center justify-between border-b border-white/10 py-2.5 font-mono uppercase">
+          <div key={label} className="flex items-center justify-between border-b border-[var(--border-muted)] py-2.5 font-mono uppercase">
             <span className="text-xs font-semibold text-[var(--text-soft)]">{label}</span>
-            <span className="text-base font-bold text-white">{value}</span>
+            <span className="text-base font-bold text-[var(--text-primary)]">{value}</span>
           </div>
         ))}
       </div>
       <div className="mt-5 border-l-2 border-[var(--accent)] pl-3 font-mono uppercase">
-        <p className="text-[10px] font-semibold tracking-[0.08em] text-[#b7bbc0]">Currently pursuing</p>
-        <p className="mt-1 text-[13px] font-bold text-white">M.S. Computer Science</p>
+        <p className="text-[10px] font-semibold tracking-[0.08em] text-[var(--text-secondary)]">Currently pursuing</p>
+        <p className="mt-1 text-[13px] font-bold text-[var(--text-primary)]">M.S. Computer Science</p>
       </div>
     </Panel>
   );
@@ -115,18 +115,18 @@ function LocationAndWork() {
   return (
     <Panel className="flex h-full flex-col">
       <div className="grid grid-cols-2 gap-4">
-        <div className="border-r border-white/10 pr-4">
+        <div className="border-r border-[var(--border-muted)] pr-4">
           <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-[var(--text-soft)]">
             <MapPin className="h-4 w-4 text-[var(--accent)]" aria-hidden="true" /> Location
           </p>
-          <p className="mt-4 text-lg font-bold leading-tight text-white">Washington, DC</p>
-          <p className="mt-1 text-[15px] text-[#b7bbc0]">United States</p>
+          <p className="mt-4 text-lg font-bold leading-tight text-[var(--text-primary)]">Washington, DC</p>
+          <p className="mt-1 text-[15px] text-[var(--text-secondary)]">United States</p>
         </div>
         <div>
           <p className="font-mono text-xs font-bold uppercase text-[var(--text-soft)]">Work style</p>
           <div className="mt-4 space-y-3">
             {["Remote", "Hybrid", "On-site"].map((style) => (
-              <div key={style} className="flex items-center justify-between text-sm font-bold text-white">
+              <div key={style} className="flex items-center justify-between text-sm font-bold text-[var(--text-primary)]">
                 <span>{style}</span>
                 <span className="h-2.5 w-2.5 bg-[var(--success)]" aria-label="Available" />
               </div>
@@ -136,7 +136,7 @@ function LocationAndWork() {
       </div>
       <div className="mt-auto border border-[#3d5368] px-3 py-3">
         <p className="font-mono text-[11px] font-bold uppercase text-[var(--accent)]">Availability</p>
-        <div className="mt-2 flex flex-wrap gap-2 font-mono text-[9px] font-semibold uppercase text-[#d5d7da]">
+        <div className="mt-2 flex flex-wrap gap-2 font-mono text-[9px] font-semibold uppercase text-[var(--text-secondary)]">
           <span className="border border-[#3d5368] px-2 py-1">Open to relocation</span>
           <span className="border border-[#3d5368] px-2 py-1">ET (UTC−5)</span>
         </div>
@@ -151,15 +151,15 @@ function LanguagesPanel() {
       <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-[var(--text-soft)]">
         <Languages className="h-4 w-4 text-[var(--accent)]" aria-hidden="true" /> Languages
       </p>
-      <div className="mt-4 divide-y divide-white/10">
+      <div className="mt-4 divide-y divide-[var(--border-muted)]">
         {[["English", "Fluent"], ["Vietnamese", "Native"]].map(([language, level]) => (
           <div key={language} className="flex items-center justify-between gap-3 py-3">
-            <span className="text-base font-bold text-white">{language}</span>
+            <span className="text-base font-bold text-[var(--text-primary)]">{language}</span>
             <span className="font-mono text-[10px] font-semibold uppercase text-[var(--accent)]">{level}</span>
           </div>
         ))}
       </div>
-      <p className="mt-auto border-t border-white/10 pt-3 font-mono text-[10px] font-semibold uppercase text-[var(--text-soft)]">
+      <p className="mt-auto border-t border-[var(--border-muted)] pt-3 font-mono text-[10px] font-semibold uppercase text-[var(--text-soft)]">
         Bilingual communication
       </p>
     </Panel>
@@ -172,17 +172,17 @@ function LatestNews() {
 
   return (
     <Panel className="min-h-[190px]">
-      <div className="flex items-center gap-1 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-1 border-b border-[var(--border-muted)] pb-3">
         <TabButton active={isProject} onClick={() => setActiveTab("project")}>Latest project</TabButton>
         <TabButton active={!isProject} onClick={() => setActiveTab("experience")}>Latest experience</TabButton>
       </div>
       <div className="grid min-h-[104px] items-center gap-4 pt-4 sm:grid-cols-[68px_44px_minmax(0,1fr)]">
-        <p className="font-mono text-xs uppercase text-white">{isProject ? "Aug 2026" : "May 2025"}</p>
+        <p className="font-mono text-xs uppercase text-[var(--text-primary)]">{isProject ? "Aug 2026" : "May 2025"}</p>
         <div className="grid h-11 w-11 place-items-center border border-[#36597a] text-[var(--accent)]">
           {isProject ? <FolderGit2 className="h-5 w-5" /> : <BriefcaseBusiness className="h-5 w-5" />}
         </div>
         <div className="min-w-0">
-          <h3 className="text-base font-bold text-white sm:text-lg">
+          <h3 className="text-base font-bold text-[var(--text-primary)] sm:text-lg">
             {isProject ? "The Odd One" : "Undergraduate Teaching Assistant"}
           </h3>
           <p className="mt-1 font-mono text-[9px] font-semibold uppercase text-[var(--accent)]">
@@ -204,7 +204,7 @@ function SkillsPanel() {
 
   return (
     <Panel>
-      <div className="flex items-center gap-1 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-1 border-b border-[var(--border-muted)] pb-3">
         <TabButton active={activeTab === "skills"} onClick={() => setActiveTab("skills")}>Top skills</TabButton>
         <TabButton active={activeTab === "learning"} onClick={() => setActiveTab("learning")}>Currently learning</TabButton>
       </div>
@@ -212,8 +212,8 @@ function SkillsPanel() {
         <div className="mt-4 grid min-h-[472px] grid-cols-2 content-start gap-2 md:min-h-[376px] md:grid-cols-3 xl:min-h-[184px] xl:grid-cols-5">
           {skills.map(([label, Icon]) => (
             <div key={label} className="relative grid h-[88px] place-items-center border border-[var(--border-strong)] p-3">
-              <Icon className="text-3xl text-white" aria-hidden="true" />
-              <span className="font-mono text-[10px] font-bold uppercase text-white">{label}</span>
+              <Icon className="text-3xl text-[var(--text-primary)]" aria-hidden="true" />
+              <span className="font-mono text-[10px] font-bold uppercase text-[var(--text-primary)]">{label}</span>
               <CornerMarks />
             </div>
           ))}
@@ -222,7 +222,7 @@ function SkillsPanel() {
         <div className="mt-4 grid min-h-[472px] grid-cols-2 content-start gap-2 md:min-h-[376px] md:grid-cols-4 xl:min-h-[184px]">
           {learningTopics.map(([label, progress]) => (
             <div key={label} className="relative min-h-[88px] border border-[var(--border)] px-3 py-4">
-              <p className="font-mono text-[10px] font-semibold uppercase text-white">{label}</p>
+              <p className="font-mono text-[10px] font-semibold uppercase text-[var(--text-primary)]">{label}</p>
               <div className="mt-5 grid grid-cols-10 gap-1">
                 {Array.from({ length: 10 }, (_, index) => (
                   <span key={index} className={`h-1 ${index < progress ? "bg-[var(--accent)]" : "bg-[#30343a]"}`} />
@@ -244,10 +244,10 @@ function Hobbies() {
       <div className="mt-4 grid gap-2 md:grid-cols-3">
         {hobbies.map(([label, description, Icon]) => (
           <div key={label} className="relative flex min-h-16 items-center gap-3 border border-[var(--border)] px-3 py-2">
-            <Icon className="h-5 w-5 shrink-0 text-[#c5c8cc]" strokeWidth={1.5} aria-hidden="true" />
+            <Icon className="h-5 w-5 shrink-0 text-[var(--text-secondary)]" strokeWidth={1.5} aria-hidden="true" />
             <div className="min-w-0">
-              <p className="text-xs font-bold text-white">{label}</p>
-              <p className="mt-1 text-[10px] font-medium leading-4 text-[#b7bbc0]">{description}</p>
+              <p className="text-xs font-bold text-[var(--text-primary)]">{label}</p>
+              <p className="mt-1 text-[10px] font-medium leading-4 text-[var(--text-secondary)]">{description}</p>
             </div>
             <span className="absolute right-2 top-2 font-mono text-[11px] text-[var(--accent)]">↓</span>
           </div>
@@ -260,7 +260,7 @@ function Hobbies() {
 export default function About() {
   return (
     <section
-      className="relative z-30 min-h-screen overflow-hidden bg-[var(--section-bg)] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-white sm:px-6 lg:px-8"
+      className="relative z-30 min-h-screen overflow-hidden bg-[var(--section-bg)] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[var(--text-primary)] sm:px-6 lg:px-8"
       aria-labelledby="about-title"
     >
       <motion.main

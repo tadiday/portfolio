@@ -10,7 +10,7 @@ export default function ChatMessage({ message }: { message: Message }) {
             Peter AI
           </p>
         )}
-        <p className={`whitespace-pre-wrap text-sm leading-6 ${assistant ? "text-[#d7dade]" : "font-medium text-white"}`}>
+        <p className={`whitespace-pre-wrap text-sm leading-6 ${assistant ? "text-[var(--text-secondary)]" : "font-medium text-[var(--text-primary)]"}`}>
           {message.content}
         </p>
       </div>
