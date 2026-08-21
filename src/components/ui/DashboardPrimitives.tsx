@@ -15,6 +15,20 @@ export function CornerMarks() {
   );
 }
 
+export const popupTriggerClassName =
+  "group relative cursor-pointer outline-none transition-[transform,background-color,border-color] duration-150 ease-out hover:-translate-y-0.5 hover:bg-[var(--hover-surface-subtle)] focus-visible:-translate-y-0.5 focus-visible:bg-[var(--hover-surface)]";
+
+export function PopupTriggerCorners() {
+  return (
+    <>
+      <span className="pointer-events-none absolute left-1 top-1 h-2.5 w-2.5 border-l border-t border-[var(--accent)] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true" />
+      <span className="pointer-events-none absolute right-1 top-1 h-2.5 w-2.5 border-r border-t border-[var(--accent)] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true" />
+      <span className="pointer-events-none absolute bottom-1 left-1 h-2.5 w-2.5 border-b border-l border-[var(--accent)] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true" />
+      <span className="pointer-events-none absolute bottom-1 right-1 h-2.5 w-2.5 border-b border-r border-[var(--accent)] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true" />
+    </>
+  );
+}
+
 type DashboardPanelProps = ClassNameProps & {
   children: ReactNode;
 };

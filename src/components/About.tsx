@@ -23,6 +23,8 @@ import {
   DashboardButton,
   DashboardLabel,
   DashboardPanel,
+  PopupTriggerCorners,
+  popupTriggerClassName,
 } from "@/components/ui/DashboardPrimitives";
 import ContributionActivity from "@/components/activity/ContributionActivity";
 import { experiences } from "@/data/experience";
@@ -276,7 +278,8 @@ function Hobbies() {
         <Label>Hobbies</Label>
         <div className="mt-3 grid flex-1 gap-2 sm:grid-cols-3 xl:grid-cols-1 xl:grid-rows-3">
           {hobbies.map((hobby) => (
-            <button key={hobby.label} type="button" onClick={() => setActiveHobby(hobby)} className="group flex min-h-[52px] items-center gap-4 border border-[var(--border-muted)] px-4 py-3 text-left transition-colors hover:border-[var(--accent)] hover:bg-[var(--hover-surface-subtle)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-[var(--accent)]">
+            <button key={hobby.label} type="button" onClick={() => setActiveHobby(hobby)} className={`${popupTriggerClassName} flex min-h-[52px] items-center gap-4 border border-[var(--border-muted)] px-4 py-3 text-left hover:border-[var(--accent)] focus-visible:border-[var(--accent)]`}>
+              <PopupTriggerCorners />
               <hobby.Icon className="h-5 w-5 shrink-0 text-[var(--accent)]" strokeWidth={1.5} aria-hidden="true" />
             <div className="min-w-0">
                 <p className="font-mono text-xs font-bold uppercase text-[var(--text-primary)]">{hobby.label}</p>
