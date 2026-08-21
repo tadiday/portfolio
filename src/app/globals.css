@@ -91,7 +91,7 @@ html.lenis body {
 .hero-texture,
 .hero-hud {
   position: absolute;
-  inset: var(--home-header-height) 0 var(--home-status-height);
+  inset: 0 0 var(--home-status-height);
   pointer-events: none;
 }
 
@@ -136,7 +136,7 @@ html.lenis body {
 
 .home-page::after {
   position: absolute;
-  inset: var(--home-header-height) 0 var(--home-status-height);
+  inset: 0 0 var(--home-status-height);
   z-index: -1;
   content: "";
   pointer-events: none;
@@ -157,11 +157,12 @@ html.lenis body {
 
 .hero-name {
   color: var(--home-text);
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-stretch: condensed;
-  font-weight: 900;
-  line-height: 0.82;
-  letter-spacing: 0.015em;
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  -webkit-text-stroke: clamp(1px, 0.12vw, 2px) var(--home-text);
+  paint-order: stroke fill;
   white-space: nowrap;
   text-shadow:
     0 0 14px rgba(255, 255, 255, 0.28),
@@ -213,12 +214,6 @@ html.lenis body {
   font-family: var(--font-geist-mono);
   font-size: 25px;
   font-weight: 200;
-}
-
-.hero-crosshair-left {
-  top: 12%;
-  left: var(--home-rail-x);
-  transform: translateX(-50%);
 }
 
 :root[data-theme="light"] {
@@ -321,12 +316,6 @@ html.lenis body {
     );
 }
 
-.hero-crosshair-right {
-  top: 12%;
-  right: var(--home-rail-x);
-  transform: translateX(50%);
-}
-
 .hero-crosshair-top {
   top: 13%;
   left: 50%;
@@ -349,6 +338,18 @@ html.lenis body {
   filter: drop-shadow(0 0 6px var(--accent-glow));
   transform: rotate(45deg);
   will-change: transform, opacity;
+}
+
+.hero-crosshair-left {
+  top: 12%;
+  left: var(--home-rail-x);
+  transform: translateX(-50%);
+}
+
+.hero-crosshair-right {
+  top: 12%;
+  right: var(--home-rail-x);
+  transform: translateX(50%);
 }
 
 .hero-ticks {
@@ -409,4 +410,5 @@ html.lenis body {
   .hero-bracket {
     display: none;
   }
+
 }

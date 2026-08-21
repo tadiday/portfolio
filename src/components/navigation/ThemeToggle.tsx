@@ -53,7 +53,7 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
       aria-label={`Switch to ${nextThemeLabel} mode`}
       title={`Switch to ${nextThemeLabel} mode`}
       className={`group relative grid place-items-center border border-[var(--border-strong)] bg-[var(--header-bg)] text-[var(--header-text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] ${
-        mobile ? "size-13" : "size-8"
+        mobile ? "size-13" : "size-10"
       }`}
     >
       <Icon

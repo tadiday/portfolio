@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Shrink } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import {
   PopupTriggerCorners,
@@ -24,40 +25,19 @@ type HeaderProps = {
 
 function BuildIdentifier() {
   return (
-    <div className="hidden min-w-0 grid-cols-[65%_35%] min-[1100px]:grid">
-      <div className="relative flex items-center border border-[var(--border-strong)] px-5 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--header-text)]">
-        <span
-          className="mr-4 h-1.5 w-1.5 bg-[var(--text)]"
-          aria-hidden="true"
-        />
-        Portfolio_build: V1.1_
-        <span
-          className="absolute left-1.5 top-1.5 text-[8px] leading-none text-[#ff3947]"
-          aria-hidden="true"
-        >
-          ✦
-        </span>
-        <span
-          className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r border-t border-[#d8d9da]"
-          aria-hidden="true"
-        />
-        <span
-          className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b border-r border-[#d8d9da]"
-          aria-hidden="true"
-        />
-      </div>
-      <DividerPattern />
-    </div>
-  );
-}
-
-function DividerPattern() {
-  return (
-    <div
-      className="flex h-full items-center overflow-hidden border-b border-[var(--border-muted)] px-[6%] font-mono text-[21px] italic tracking-[-0.28em] text-[var(--text-muted)]"
-      aria-hidden="true"
-    >
-      {"////////"}
+    <div className="relative hidden min-w-0 items-center border border-[var(--border-strong)] bg-[var(--header-bg)] px-4 font-mono uppercase text-[var(--header-text)] min-[1100px]:flex">
+      <span className="mr-3 size-1.5 bg-[var(--accent)]" aria-hidden="true" />
+      <span className="truncate text-[10px] tracking-[0.1em]">
+        Portfolio / 2026
+      </span>
+      <span
+        className="absolute left-1.5 top-1.5 size-1.5 border-l border-t border-[var(--accent)]"
+        aria-hidden="true"
+      />
+      <span
+        className="absolute bottom-1.5 right-1.5 size-1.5 border-b border-r border-[var(--header-text)]"
+        aria-hidden="true"
+      />
     </div>
   );
 }
@@ -85,7 +65,7 @@ function PrimaryNavigation({
                 className={`group relative flex h-full flex-col justify-center border-l border-[var(--border-strong)] px-2 font-mono uppercase transition-colors duration-150 min-[1100px]:px-4 ${
                   isActive
                     ? "bg-[var(--accent)] text-[var(--on-accent)]"
-                    : "bg-[var(--header-bg)] text-[var(--header-text)] hover:bg-[var(--surface-raised)] hover:text-[var(--text)]"
+                    : "bg-[var(--header-bg)] text-[var(--header-text)] hover:z-10 hover:bg-[var(--surface-raised)] hover:text-[var(--accent)] hover:shadow-[inset_0_0_0_1px_var(--accent)]"
                 }`}
               >
                 <span className="mb-0.5 text-[7px] font-semibold leading-none tracking-[0.12em] opacity-70 min-[1100px]:mb-1 min-[1100px]:text-[10px]">
@@ -117,41 +97,35 @@ function AILauncher({
   onToggle: () => void;
 }) {
   return (
-    <div className="hidden min-w-0 grid-cols-[42%_58%] min-[1100px]:grid">
-      <div className="relative min-w-0">
-        <DividerPattern />
-        <div className="absolute right-2 top-1/2 -translate-y-1/2">
-          <ThemeToggle />
-        </div>
-      </div>
+    <div className="hidden items-center justify-end gap-2 border-y border-r border-[var(--border-strong)] bg-[var(--header-bg)] px-3 min-[1100px]:flex">
+      <button
+        type="button"
+        disabled
+        aria-label="Compact view coming soon"
+        title="Compact view — coming soon"
+        className="group relative grid size-10 place-items-center border border-[var(--border-strong)] bg-[var(--header-bg)] text-[var(--header-text)] opacity-60"
+      >
+        <Shrink className="size-4" strokeWidth={1.6} aria-hidden="true" />
+        <span
+          className="absolute left-1 top-1 size-1.5 border-l border-t border-current"
+          aria-hidden="true"
+        />
+        <span
+          className="absolute bottom-1 right-1 size-1.5 border-b border-r border-current"
+          aria-hidden="true"
+        />
+      </button>
+      <ThemeToggle />
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-label={`${open ? "Close" : "Open"} Peter AI`}
-        className={`${popupTriggerClassName} flex items-center justify-between border border-[var(--border-strong)] px-4 text-left font-mono uppercase text-[var(--text-secondary)] hover:border-[var(--accent)]`}
+        title={`${open ? "Close" : "Open"} Peter AI`}
+        className={`${popupTriggerClassName} grid size-10 place-items-center border border-[var(--accent)] bg-[var(--header-bg)] font-mono text-[11px] font-black uppercase tracking-[0.12em] text-[var(--accent)] hover:bg-[var(--surface-raised)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]`}
       >
         <PopupTriggerCorners />
-        <span className="flex items-center gap-3">
-          <span className="grid h-8 w-8 place-items-center border border-[var(--accent)] text-[10px] font-black text-[var(--accent)]">
-            AI
-          </span>
-          <span className="leading-[1.5]">
-            <span className="block text-[10px] font-bold tracking-[0.1em] text-[var(--text-primary)]">
-              Peter AI
-            </span>
-            <span className="block text-[8px] tracking-[0.08em] text-[var(--text-muted)]">
-              Ask about my work
-            </span>
-          </span>
-        </span>
-        <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 bg-[var(--success)]" />
-          <span className="grid h-8 w-8 place-items-center border border-[#777b80] text-xl text-[var(--text-primary)] group-hover:border-[var(--accent)] group-hover:text-[var(--accent)]">
-            {open ? "×" : "+"}
-          </span>
-        </span>
-        <span className="absolute bottom-0 right-0 h-0 w-0 border-b-[8px] border-l-[8px] border-b-[#dfe0e1] border-l-transparent" />
+        {open ? "X" : "AI"}
       </button>
     </div>
   );
@@ -197,12 +171,12 @@ export default function Header({ aiOpen, onAIToggle }: HeaderProps) {
 
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-50 h-[var(--home-header-height)] bg-[var(--header-bg)] px-2 pt-1.5 min-[1100px]:px-3"
+      className="fixed inset-x-0 top-0 z-50 h-[var(--home-header-height)] bg-transparent px-2 pt-1.5 min-[1100px]:px-3"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55 }}
     >
-      <div className="grid h-[calc(var(--home-header-height)-6px)] grid-cols-1 min-[1100px]:grid-cols-[28%_46%_26%]">
+      <div className="mx-auto grid h-[calc(var(--home-header-height)-6px)] w-full max-w-[1440px] grid-cols-1 min-[1100px]:grid-cols-[220px_minmax(0,1fr)_220px]">
         <BuildIdentifier />
         <PrimaryNavigation
           activeSection={activeSection}
