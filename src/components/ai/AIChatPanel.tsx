@@ -112,7 +112,7 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Peter's AI assistant"
-      className="relative flex h-[min(720px,calc(100svh-2rem))] w-[min(1000px,calc(100vw-1.5rem))] flex-col overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)] text-white shadow-[0_30px_100px_rgba(0,0,0,.8)]"
+      className="relative flex h-[min(720px,calc(100svh-2rem))] w-[min(1000px,calc(100vw-1.5rem))] flex-col overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--text)] shadow-[var(--panel-shadow)]"
     >
       <CornerMarks />
       <header className="flex items-center gap-3 border-b border-[var(--border)] px-5 py-4 sm:px-8">
@@ -121,7 +121,7 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
         </h2>
         <span className="hidden items-center gap-2 font-mono text-[10px] font-bold uppercase text-[var(--accent)] sm:flex">
           Online
-          <i className="size-2 bg-[var(--success)] shadow-[0_0_8px_rgba(53,208,127,.5)]" />
+          <i className="size-2 bg-[var(--success)] shadow-[0_0_8px_var(--success-glow)]" />
         </span>
         <DashboardButton
           onClick={() => setMessages([welcomeMessage])}
@@ -137,7 +137,7 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
 
       <div className="grid min-h-0 flex-1 md:grid-cols-[310px_1fr]">
         <aside className="border-b border-[var(--border)] p-5 md:border-b-0 md:border-r md:p-8">
-          <h3 className="font-mono text-2xl font-bold uppercase tracking-[0.03em] text-white">
+          <h3 className="font-mono text-2xl font-bold uppercase tracking-[0.03em] text-[var(--text-primary)]">
             Ask me anything<span className="text-[var(--accent)]">._</span>
           </h3>
           <p className="mt-3 max-w-[25ch] font-mono text-xs leading-5 text-[var(--text-muted)]">
@@ -158,7 +158,7 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
           </div>
 
           <form onSubmit={handleSubmit} className="p-4 pt-0 sm:p-8 sm:pt-0">
-            <div className="flex min-h-14 border border-[var(--border)] bg-[var(--background)] focus-within:border-[#737980]">
+            <div className="flex min-h-14 border border-[var(--border)] bg-[var(--background)] focus-within:border-[var(--border-strong)]">
               <textarea
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
@@ -166,18 +166,18 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
                 maxLength={1000}
                 rows={1}
                 placeholder="Ask me anything..."
-                className="max-h-28 min-h-14 min-w-0 flex-1 resize-none bg-transparent px-4 py-[18px] font-mono text-sm leading-5 outline-none placeholder:text-[#a7acb1]"
+                className="max-h-28 min-h-14 min-w-0 flex-1 resize-none bg-transparent px-4 py-[18px] font-mono text-sm leading-5 outline-none placeholder:text-[var(--input-placeholder)]"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
                 aria-label="Send message"
-                className="relative grid w-14 shrink-0 place-items-center border-l border-[#d6d8da] bg-[#f4f4f2] text-[var(--background)] transition-colors hover:bg-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-40 before:absolute before:left-1 before:top-1 before:size-2 before:border-l before:border-t before:border-current after:absolute after:bottom-1 after:right-1 after:size-2 after:border-b after:border-r after:border-current"
+                className="relative grid w-14 shrink-0 place-items-center border-l border-[var(--border)] bg-[var(--text)] text-[var(--background)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--on-accent)] disabled:cursor-not-allowed disabled:opacity-40 before:absolute before:left-1 before:top-1 before:size-2 before:border-l before:border-t before:border-current after:absolute after:bottom-1 after:right-1 after:size-2 after:border-b after:border-r after:border-current"
               >
                 <ArrowRight size={21} strokeWidth={1.6} />
               </button>
             </div>
-            <p className="pt-2 font-mono text-[8px] uppercase tracking-[0.08em] text-[#626970]">Powered by Peter AI</p>
+            <p className="pt-2 font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Powered by Peter AI</p>
           </form>
         </div>
       </div>
