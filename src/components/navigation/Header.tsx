@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import {
+  PopupTriggerCorners,
+  popupTriggerClassName,
+} from "@/components/ui/DashboardPrimitives";
 
 const navigationLinks = [
   { label: "Home", href: "#home" },
@@ -22,11 +26,25 @@ function BuildIdentifier() {
   return (
     <div className="hidden min-w-0 grid-cols-[65%_35%] min-[1100px]:grid">
       <div className="relative flex items-center border border-[var(--border-strong)] px-5 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--header-text)]">
-        <span className="mr-4 h-1.5 w-1.5 bg-[var(--text)]" aria-hidden="true" />
+        <span
+          className="mr-4 h-1.5 w-1.5 bg-[var(--text)]"
+          aria-hidden="true"
+        />
         Portfolio_build: V1.1_
-        <span className="absolute left-1.5 top-1.5 text-[8px] leading-none text-[#ff3947]" aria-hidden="true">✦</span>
-        <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r border-t border-[#d8d9da]" aria-hidden="true" />
-        <span className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b border-r border-[#d8d9da]" aria-hidden="true" />
+        <span
+          className="absolute left-1.5 top-1.5 text-[8px] leading-none text-[#ff3947]"
+          aria-hidden="true"
+        >
+          ✦
+        </span>
+        <span
+          className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r border-t border-[#d8d9da]"
+          aria-hidden="true"
+        />
+        <span
+          className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b border-r border-[#d8d9da]"
+          aria-hidden="true"
+        />
       </div>
       <DividerPattern />
     </div>
@@ -44,7 +62,13 @@ function DividerPattern() {
   );
 }
 
-function PrimaryNavigation({ activeSection, onNavigate }: { activeSection: string; onNavigate: (section: string) => void }) {
+function PrimaryNavigation({
+  activeSection,
+  onNavigate,
+}: {
+  activeSection: string;
+  onNavigate: (section: string) => void;
+}) {
   return (
     <nav className="h-full" aria-label="Primary navigation">
       <ul className="grid h-full grid-cols-5 border-y border-r border-[var(--border-strong)]">
@@ -85,7 +109,13 @@ function PrimaryNavigation({ activeSection, onNavigate }: { activeSection: strin
   );
 }
 
-function AILauncher({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+function AILauncher({
+  open,
+  onToggle,
+}: {
+  open: boolean;
+  onToggle: () => void;
+}) {
   return (
     <div className="hidden min-w-0 grid-cols-[42%_58%] min-[1100px]:grid">
       <div className="relative min-w-0">
@@ -99,13 +129,20 @@ function AILauncher({ open, onToggle }: { open: boolean; onToggle: () => void })
         onClick={onToggle}
         aria-expanded={open}
         aria-label={`${open ? "Close" : "Open"} Peter AI`}
-        className="group relative flex items-center justify-between border border-[var(--border-strong)] px-4 text-left font-mono uppercase text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]"
+        className={`${popupTriggerClassName} flex items-center justify-between border border-[var(--border-strong)] px-4 text-left font-mono uppercase text-[var(--text-secondary)] hover:border-[var(--accent)]`}
       >
+        <PopupTriggerCorners />
         <span className="flex items-center gap-3">
-          <span className="grid h-8 w-8 place-items-center border border-[var(--accent)] text-[10px] font-black text-[var(--accent)]">AI</span>
+          <span className="grid h-8 w-8 place-items-center border border-[var(--accent)] text-[10px] font-black text-[var(--accent)]">
+            AI
+          </span>
           <span className="leading-[1.5]">
-            <span className="block text-[10px] font-bold tracking-[0.1em] text-[var(--text-primary)]">Peter AI</span>
-            <span className="block text-[8px] tracking-[0.08em] text-[var(--text-muted)]">Ask about my work</span>
+            <span className="block text-[10px] font-bold tracking-[0.1em] text-[var(--text-primary)]">
+              Peter AI
+            </span>
+            <span className="block text-[8px] tracking-[0.08em] text-[var(--text-muted)]">
+              Ask about my work
+            </span>
           </span>
         </span>
         <span className="flex items-center gap-2">
@@ -167,7 +204,10 @@ export default function Header({ aiOpen, onAIToggle }: HeaderProps) {
     >
       <div className="grid h-[calc(var(--home-header-height)-6px)] grid-cols-1 min-[1100px]:grid-cols-[28%_46%_26%]">
         <BuildIdentifier />
-        <PrimaryNavigation activeSection={activeSection} onNavigate={setActiveSection} />
+        <PrimaryNavigation
+          activeSection={activeSection}
+          onNavigate={setActiveSection}
+        />
         <AILauncher open={aiOpen} onToggle={onAIToggle} />
       </div>
     </motion.header>

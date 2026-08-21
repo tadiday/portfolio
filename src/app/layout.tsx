@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Orbitron, Space_Grotesk } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
-
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,17 +13,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  variable: "--font-orbitron",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-});
-
 
 export const metadata: Metadata = {
   title: "Peter Cao - Software Engineer",
@@ -39,7 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="max-w-screen bg-home" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="max-w-screen bg-[var(--background)]"
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" type="image/png" href="/assets/logo/logo.png" />
         <script
@@ -49,7 +40,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SmoothScroll />
         {children}

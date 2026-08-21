@@ -1,14 +1,11 @@
 @import "tailwindcss";
 @config "../../tailwind.config.mjs";
-/* or .ts or .mjs depending on your setup */
-@tailwind utilities;
 
 :root {
   --background: #08090a;
   --foreground: #f2f2f0;
   --surface: #090a0b;
   --surface-raised: #0f1113;
-  --surface-elevated: #0f1113;
   --border: #3d4146;
   --border-strong: #565b61;
   --border-muted: rgba(255, 255, 255, 0.1);
@@ -18,8 +15,6 @@
   --text-soft: #d0d3d6;
   --text-muted: #92979f;
   --accent: #5da7ff;
-  --accent-strong: #398de8;
-  --accent-soft: #193655;
   --success: #35d07f;
   --header-bg: #070809;
   --header-text: #d8d9da;
@@ -32,28 +27,8 @@
   --success-glow: rgba(53, 208, 127, 0.5);
   --panel-shadow: 0 30px 100px rgba(0, 0, 0, 0.8);
   --button-shadow: 0 0 24px rgba(0, 0, 0, 0.6);
-  --interaction-duration: 150ms;
-  --interaction-easing: ease-out;
-
-  /* Legacy aliases retained for older, inactive components. */
-  --color-primary: #524d47;
-  --color-secondary: var(--background);
-  --color-border: #524d47;
-  --color-text-home: var(--text);
-  --color-text-section: #bebebe;
-  --color-line: #524d47;
-  --contact-bg: #524d47;
-  --contact-bg-2: #080807;
-  --contact-button: #866a44;
-  --contact-button-hover: #524d47;
-  --contact-button-hover-rgb: 82 77 71;
-  --contact-border: #524d47;
-  --contact-border-focus: #967a54;
-  --footer-text: #80776d;
-  --footer-text-hover: #967a54;
-  --color-white: #ffffff;
-  --noise-opacity: 0.12;
 }
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -61,69 +36,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  .sm\:color-border {
-    border-top: 1px solid var(--color-border);
-  }
-}
-
 body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-/* colors */
-.bg-home {
-  background-color: var(--color-primary);
-}
-
-.bg-section {
-  background-color: var(--color-secondary);
-}
-
-.text-color-section {
-  color: var(--color-text-section);
-}
-
-.color-line {
-  border-top: 1px solid var(--color-primary);
-}
-
-.contact-button {
-  background-color: var(--contact-button);
-}
-
-.contact-button-hover {
-  background-color: var(--contact-button-hover);
-}
-
-.contact-border {
-  border: 1px solid var(--contact-border);
-}
-
-.contact-border-focus {
-  border: 1px solid var(--contact-border-focus);
-}
-
-.footer-text {
-  color: var(--footer-text);
-}
-.footer-text-hover {
-  color: var(--footer-text-hover);
-}
-
-
 
 @layer base {
   html {
@@ -152,14 +74,12 @@ html.lenis body {
   scroll-margin-top: var(--home-header-height);
 }
 
-
 /* Home-only visual effects */
 :root {
   --home-bg: var(--background);
   --section-bg: var(--background);
   --home-text: var(--text);
   --home-muted: var(--text-muted);
-  --home-border: var(--border);
   --home-accent: var(--accent);
   --home-header-height: 60px;
   --home-status-height: 0px;
@@ -221,8 +141,17 @@ html.lenis body {
   content: "";
   pointer-events: none;
   background:
-    radial-gradient(ellipse 43% 40% at 50% 48%, rgba(255, 255, 255, 0.085), transparent 72%),
-    radial-gradient(ellipse at center, transparent 34%, rgba(0, 0, 0, 0.2) 72%, rgba(0, 0, 0, 0.54) 100%),
+    radial-gradient(
+      ellipse 43% 40% at 50% 48%,
+      rgba(255, 255, 255, 0.085),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 34%,
+      rgba(0, 0, 0, 0.2) 72%,
+      rgba(0, 0, 0, 0.54) 100%
+    ),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.012), rgba(0, 0, 0, 0.18));
 }
 
@@ -278,21 +207,6 @@ html.lenis body {
   border-bottom: 1px solid;
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: calc(var(--home-status-height) + 54px);
-  left: var(--home-rail-x);
-  z-index: 3;
-  flex-direction: column;
-  align-items: center;
-  color: #a5a8ad;
-  font-family: var(--font-geist-mono);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transform: translateX(-50%);
-}
-
 .hero-crosshair {
   position: absolute;
   color: rgba(242, 242, 240, 0.5);
@@ -312,7 +226,6 @@ html.lenis body {
   --foreground: #171714;
   --surface: #f1ecdf;
   --surface-raised: #ddd6c5;
-  --surface-elevated: #f7f2e7;
   --border: #8b877c;
   --border-strong: #68645b;
   --border-muted: #b8b1a2;
@@ -322,8 +235,6 @@ html.lenis body {
   --text-soft: #47443d;
   --text-muted: #666157;
   --accent: #e4572e;
-  --accent-strong: #c93c20;
-  --accent-soft: #f2c6a8;
   --success: #247a4b;
   --header-bg: #ddd6c5;
   --header-text: #36342f;
@@ -338,60 +249,30 @@ html.lenis body {
   --button-shadow: 3px 3px 0 rgba(104, 100, 91, 0.35);
 }
 
-:root[data-theme="light"] .text-white {
-  color: var(--text) !important;
+/* Preserve the light palette for the few intentional dark-theme utility colors. */
+:root[data-theme="light"]
+  :is(
+    [class~="border-[#34383d]"],
+    [class~="border-[#3d5368]"],
+    [class~="border-[#44494e]"],
+    [class~="border-[#4b5055]"],
+    [class~="border-[#565b61]"],
+    [class~="border-[#777b80]"]
+  ) {
+  border-color: var(--border) !important;
 }
-
-/* Theme bridges for legacy utility colors. These keep the dark palette byte-for-byte
-   intact while older component markup is migrated to the semantic tokens above. */
-:root[data-theme="light"] :is(
-  [class~="text-[#d0d3d6]"], [class~="text-[#d5d7da]"],
-  [class~="text-[#d7dadd]"], [class~="text-[#d7dade]"],
-  [class~="text-[#d8dade]"], [class~="text-[#d9dcdf]"],
-  [class~="text-[#dde0e2]"], [class~="text-[#c0c4c8]"],
-  [class~="text-[#c5c8cc]"], [class~="text-[#c7c9cc]"],
-  [class~="text-[#bfc1c4]"]
-) { color: var(--text-primary) !important; }
-
-:root[data-theme="light"] :is(
-  [class~="text-[#b4b8bd]"], [class~="text-[#b7babf]"],
-  [class~="text-[#b7bbc0]"], [class~="text-[#b8bdc2]"],
-  [class~="text-[#aeb3b8]"], [class~="text-[#9ba0a6]"],
-  [class~="text-[#9da2a7]"], [class~="text-[#94989d]"],
-  [class~="text-[#8f959b]"], [class~="text-[#858b91]"],
-  [class~="text-[#626970]"]
-) { color: var(--text-secondary) !important; }
-
-:root[data-theme="light"] :is(
-  [class~="border-[#34383d]"], [class~="border-[#36597a]"],
-  [class~="border-[#3d4146]"], [class~="border-[#3d5368]"],
-  [class~="border-[#44494e]"], [class~="border-[#4b5055]"],
-  [class~="border-[#56595d]"], [class~="border-[#737980]"],
-  [class~="border-[#777b80]"], [class~="border-[#85888d]"]
-) { border-color: var(--border) !important; }
-
-:root[data-theme="light"] :is(
-  [class~="border-white/10"], [class~="border-white/15"],
-  [class~="divide-white/10"]
-) { border-color: var(--border-muted) !important; }
-
-:root[data-theme="light"] :is([class~="bg-white/5"], [class~="hover:bg-white/5"]:hover) {
-  background-color: var(--hover-surface) !important;
-}
-
-:root[data-theme="light"] :is(
-  [class~="hover:bg-white/[0.02]"]:hover,
-  [class~="hover:bg-white/[0.025]"]:hover,
-  [class~="focus-visible:bg-white/[0.04]"]:focus-visible
-) { background-color: var(--hover-surface-subtle) !important; }
 
 :root[data-theme="light"] [class~="bg-black/75"],
-:root[data-theme="light"] [class~="bg-black/85"] { background-color: var(--overlay) !important; }
+:root[data-theme="light"] [class~="bg-black/85"] {
+  background-color: var(--overlay) !important;
+}
 
-:root[data-theme="light"] [class~="bg-[#0b0d0f]"] { background-color: var(--surface-raised) !important; }
-:root[data-theme="light"] [class~="bg-[#30343a]"] { background-color: var(--border-muted) !important; }
-:root[data-theme="light"] [class~="from-[#4b5055]"] { --tw-gradient-from: var(--border) var(--tw-gradient-from-position) !important; }
-:root[data-theme="light"] [class~="placeholder:text-[#a7acb1]"]::placeholder { color: var(--input-placeholder) !important; }
+:root[data-theme="light"] [class~="bg-[#0b0d0f]"] {
+  background-color: var(--surface-raised) !important;
+}
+:root[data-theme="light"] [class~="from-[#4b5055]"] {
+  --tw-gradient-from: var(--border) var(--tw-gradient-from-position) !important;
+}
 
 :root[data-theme="light"] .hero-name {
   text-shadow:
@@ -403,8 +284,18 @@ html.lenis body {
   opacity: 1;
   filter: none;
   background-image:
-    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(104, 100, 91, 0.22) calc(50% - 0.5px), rgba(104, 100, 91, 0.22) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    linear-gradient(90deg, rgba(247, 242, 231, 0.2) 0 50%, rgba(104, 100, 91, 0.045) 50% 100%);
+    linear-gradient(
+      90deg,
+      transparent calc(50% - 0.5px),
+      rgba(104, 100, 91, 0.22) calc(50% - 0.5px),
+      rgba(104, 100, 91, 0.22) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(
+      90deg,
+      rgba(247, 242, 231, 0.2) 0 50%,
+      rgba(104, 100, 91, 0.045) 50% 100%
+    );
 }
 
 :root[data-theme="light"] .hero-texture {
@@ -413,9 +304,21 @@ html.lenis body {
 
 :root[data-theme="light"] .home-page::after {
   background:
-    radial-gradient(ellipse 43% 40% at 50% 48%, rgba(247, 242, 231, 0.7), transparent 72%),
-    radial-gradient(ellipse at center, transparent 45%, rgba(85, 82, 73, 0.1) 100%),
-    linear-gradient(to bottom, rgba(247, 242, 231, 0.1), rgba(201, 60, 32, 0.025));
+    radial-gradient(
+      ellipse 43% 40% at 50% 48%,
+      rgba(247, 242, 231, 0.7),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 45%,
+      rgba(85, 82, 73, 0.1) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(247, 242, 231, 0.1),
+      rgba(201, 60, 32, 0.025)
+    );
 }
 
 .hero-crosshair-right {
@@ -455,7 +358,11 @@ html.lenis body {
   left: var(--home-rail-x);
   width: 4px;
   opacity: 0.5;
-  background: repeating-linear-gradient(to bottom, #a5a8ad 0 1px, transparent 1px 10px);
+  background: repeating-linear-gradient(
+    to bottom,
+    #a5a8ad 0 1px,
+    transparent 1px 10px
+  );
   transform: translateX(-50%);
 }
 
@@ -494,7 +401,9 @@ html.lenis body {
   }
 
   .hero-grid {
-    background-size: 72px 100%, 144px 100%;
+    background-size:
+      72px 100%,
+      144px 100%;
   }
 
   .hero-bracket {

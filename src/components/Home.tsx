@@ -41,13 +41,28 @@ function HeroTitle() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span className="hero-bracket hero-bracket-top-left" aria-hidden="true" />
-        <span className="hero-bracket hero-bracket-top-right" aria-hidden="true" />
-        <h1 id="home-title" className="hero-name text-[clamp(3.6rem,20vw,6rem)] sm:text-[clamp(4rem,11.2vw,10.75rem)]">
+        <span
+          className="hero-bracket hero-bracket-top-left"
+          aria-hidden="true"
+        />
+        <span
+          className="hero-bracket hero-bracket-top-right"
+          aria-hidden="true"
+        />
+        <h1
+          id="home-title"
+          className="hero-name text-[clamp(3.6rem,20vw,6rem)] sm:text-[clamp(4rem,11.2vw,10.75rem)]"
+        >
           PETER CAO
         </h1>
-        <span className="hero-bracket hero-bracket-bottom-left" aria-hidden="true" />
-        <span className="hero-bracket hero-bracket-bottom-right" aria-hidden="true" />
+        <span
+          className="hero-bracket hero-bracket-bottom-left"
+          aria-hidden="true"
+        />
+        <span
+          className="hero-bracket hero-bracket-bottom-right"
+          aria-hidden="true"
+        />
       </motion.div>
 
       <motion.p
@@ -56,26 +71,49 @@ function HeroTitle() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <span className="text-lg tracking-normal text-[var(--home-muted)]" aria-hidden="true">+</span>
+        <span
+          className="text-lg tracking-normal text-[var(--home-muted)]"
+          aria-hidden="true"
+        >
+          +
+        </span>
         Software Engineer
-        <span className="text-lg tracking-normal text-[var(--home-muted)]" aria-hidden="true">+</span>
+        <span
+          className="text-lg tracking-normal text-[var(--home-muted)]"
+          aria-hidden="true"
+        >
+          +
+        </span>
       </motion.p>
     </>
   );
 }
 
 function HeroActions() {
-  const buttonBase = "group relative flex h-[46px] w-full items-center justify-between border border-[var(--border)] px-[26px] font-mono text-xs uppercase tracking-[0.06em] shadow-[var(--button-shadow)] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
+  const buttonBase =
+    "group relative flex h-[46px] w-full items-center justify-between border border-[var(--border)] px-[26px] font-mono text-xs uppercase tracking-[0.06em] shadow-[var(--button-shadow)] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
 
   const CornerMarks = ({ dark = false }: { dark?: boolean }) => {
     const color = dark ? "border-[#171819]" : "border-[#e7e8e8]";
 
     return (
       <>
-        <span className={`absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 ${color}`} aria-hidden="true" />
-        <span className={`absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 ${color}`} aria-hidden="true" />
-        <span className={`absolute bottom-1.5 left-1.5 h-1.5 w-1.5 border-b-2 border-l-2 ${color}`} aria-hidden="true" />
-        <span className={`absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b-2 border-r-2 ${color}`} aria-hidden="true" />
+        <span
+          className={`absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 ${color}`}
+          aria-hidden="true"
+        />
+        <span
+          className={`absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 ${color}`}
+          aria-hidden="true"
+        />
+        <span
+          className={`absolute bottom-1.5 left-1.5 h-1.5 w-1.5 border-b-2 border-l-2 ${color}`}
+          aria-hidden="true"
+        />
+        <span
+          className={`absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b-2 border-r-2 ${color}`}
+          aria-hidden="true"
+        />
       </>
     );
   };
@@ -86,11 +124,18 @@ function HeroActions() {
       {...reveal}
       transition={{ delay: 0.8, duration: 0.5 }}
     >
-      <a className={`${buttonBase} bg-[var(--home-text)] text-[var(--home-bg)] hover:bg-[var(--home-accent)] hover:text-[var(--home-text)]`} href="#projects">
+      <a
+        className={`${buttonBase} bg-[var(--home-text)] text-[var(--home-bg)] hover:bg-[var(--home-accent)] hover:text-[var(--home-text)]`}
+        href="#projects"
+      >
         <CornerMarks dark />
         View my work <ArrowRight className="w-[17px]" aria-hidden="true" />
       </a>
-      <a className={`${buttonBase} bg-[var(--surface)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`} href="/assets/documents/resume.pdf" download>
+      <a
+        className={`${buttonBase} bg-[var(--surface)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`}
+        href="/assets/documents/resume.pdf"
+        download
+      >
         <CornerMarks />
         Download resume <ArrowDown className="w-[17px]" aria-hidden="true" />
       </a>
@@ -100,7 +145,10 @@ function HeroActions() {
 
 export default function Home() {
   return (
-    <section className="home-page relative grid min-h-[100svh] overflow-hidden bg-[var(--home-bg)] text-[var(--home-text)] [isolation:isolate]" aria-labelledby="home-title">
+    <section
+      className="home-page relative grid min-h-[100svh] overflow-hidden bg-[var(--home-bg)] text-[var(--home-text)] [isolation:isolate]"
+      aria-labelledby="home-title"
+    >
       <HeroDecorations />
 
       <main className="home-content z-[2] flex w-[91vw] max-w-[1080px] place-self-center flex-col items-center pb-[calc(var(--home-status-height)+10px)] pt-[calc(var(--home-header-height)+28px)] text-center sm:w-[88vw] sm:pb-[calc(var(--home-status-height)+18px)]">
@@ -111,12 +159,11 @@ export default function Home() {
           transition={{ delay: 0.65, duration: 0.5 }}
         >
           I build robust, scalable, and beautiful web applications
-          <br className="hidden sm:block" /> with a focus on clean code and great user experiences.
+          <br className="hidden sm:block" /> with a focus on clean code and
+          great user experiences.
         </motion.p>
         <HeroActions />
       </main>
-
-
     </section>
   );
 }

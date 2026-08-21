@@ -11,7 +11,10 @@ type SuggestedQuestionsProps = {
   onSelect: (question: string) => void;
 };
 
-export default function SuggestedQuestions({ disabled, onSelect }: SuggestedQuestionsProps) {
+export default function SuggestedQuestions({
+  disabled,
+  onSelect,
+}: SuggestedQuestionsProps) {
   return (
     <div className="grid gap-1.5">
       <p className="mb-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">

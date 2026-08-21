@@ -1,4 +1,11 @@
-export type ExperienceKind = "Education" | "Leadership" | "Co-op" | "Research" | "Internship" | "Contract" | "Part-time";
+export type ExperienceKind =
+  | "Education"
+  | "Leadership"
+  | "Co-op"
+  | "Research"
+  | "Internship"
+  | "Contract"
+  | "Part-time";
 
 export type ExperienceItem = {
   start: string;
@@ -41,7 +48,12 @@ export const experiences: readonly ExperienceItem[] = [
       "Entered and categorized more than 50 financial records per month for clients using Excel.",
       "Reviewed and validated all team data entries, reducing errors and ensuring accurate financial records.",
     ],
-    skills: ["Microsoft Excel", "Data Entry", "Financial Reporting", "Quality Assurance"],
+    skills: [
+      "Microsoft Excel",
+      "Data Entry",
+      "Financial Reporting",
+      "Quality Assurance",
+    ],
   },
   {
     start: "Jan 2026",

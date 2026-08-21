@@ -1,6 +1,14 @@
 export type ActivityLevel = 0 | 1 | 2 | 3 | 4;
-export type ActivityDay = { date: string; count: number; level: ActivityLevel };
-export type ActivityWeek = { days: ActivityDay[] };
+export type ActivityDay = {
+  date: string;
+  count: number;
+  level: ActivityLevel;
+};
+
+export type ActivityWeek = {
+  days: ActivityDay[];
+};
+
 export type GitHubActivity = {
   username: string;
   totalContributions: number;
@@ -10,23 +18,24 @@ export type GitHubActivity = {
   weeks: ActivityWeek[];
 };
 export type LeetCodeActivity = {
-  username: string; totalSubmissions: number; totalActiveDays: number; totalSolved: number;
-  easySolved: number; mediumSolved: number; hardSolved: number; streak: number; weeks: ActivityWeek[];
+  username: string;
+  totalSubmissions: number;
+  totalActiveDays: number;
+  totalSolved: number;
+  easySolved: number;
+  mediumSolved: number;
+  hardSolved: number;
+  streak: number;
+  weeks: ActivityWeek[];
 };
 
 export const levelStyles: Record<ActivityLevel, string> = {
-  0: "var(--border-muted)", 1: "color-mix(in srgb, var(--accent) 28%, transparent)",
-  2: "color-mix(in srgb, var(--accent) 48%, transparent)", 3: "color-mix(in srgb, var(--accent) 70%, transparent)", 4: "var(--accent)",
+  0: "var(--border-muted)",
+  1: "color-mix(in srgb, var(--accent) 28%, transparent)",
+  2: "color-mix(in srgb, var(--accent) 48%, transparent)",
+  3: "color-mix(in srgb, var(--accent) 70%, transparent)",
+  4: "var(--accent)",
 };
-
-export function getCurrentStreak(weeks: ActivityWeek[], now = new Date()): number {
-  const counts = new Map(weeks.flatMap((week) => week.days).map((day) => [day.date, day.count]));
-  const cursor = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  if ((counts.get(cursor.toISOString().slice(0, 10)) ?? 0) === 0) cursor.setUTCDate(cursor.getUTCDate() - 1);
-  let streak = 0;
-  while ((counts.get(cursor.toISOString().slice(0, 10)) ?? 0) > 0) { streak += 1; cursor.setUTCDate(cursor.getUTCDate() - 1); }
-  return streak;
-}
 
 export function getMonthLabels(weeks: ActivityWeek[]) {
   let previousMonth = -1;
@@ -37,6 +46,14 @@ export function getMonthLabels(weeks: ActivityWeek[]) {
     const month = date.getUTCMonth();
     if (month === previousMonth) return [];
     previousMonth = month;
-    return [{ label: date.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" }), weekIndex }];
+    return [
+      {
+        label: date.toLocaleDateString("en-US", {
+          month: "short",
+          timeZone: "UTC",
+        }),
+        weekIndex,
+      },
+    ];
   });
 }

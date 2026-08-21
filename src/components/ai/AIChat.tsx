@@ -2,7 +2,13 @@ import AIChatButton from "./AIChatButton";
 import AIChatPanel from "./AIChatPanel";
 import ThemeToggle from "@/components/navigation/ThemeToggle";
 
-export default function AIChat({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export default function AIChat({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   return (
     <>
       {open && (

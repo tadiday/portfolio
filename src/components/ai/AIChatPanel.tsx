@@ -2,14 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, RotateCcw, X } from "lucide-react";
-import { CornerMarks, DashboardButton } from "@/components/ui/DashboardPrimitives";
+import {
+  CornerMarks,
+  DashboardButton,
+} from "@/components/ui/DashboardPrimitives";
+import { useEscapeKey } from "@/hooks/useEscapeKey";
 import type { ChatMessage as Message } from "@/lib/ai/types";
 import ChatMessage from "./ChatMessage";
 import SuggestedQuestions from "./SuggestedQuestions";
 
 const welcomeMessage: Message = {
   role: "assistant",
-  content: "Hey! I'm Peter's AI assistant. Ask me about his experience, projects, skills, or education.",
+  content:
+    "Hey! I'm Peter's AI assistant. Ask me about his experience, projects, skills, or education.",
 };
 
 type AIChatPanelProps = {
@@ -45,14 +50,7 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [onClose]);
+  useEscapeKey(true, onClose);
 
   async function sendMessage(text = input) {
     const content = text.trim();
@@ -73,13 +71,19 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
         body: JSON.stringify({ message: content, history }),
         signal: controller.signal,
       });
-      const data = (await response.json()) as { answer?: string; error?: string };
+      const data = (await response.json()) as {
+        answer?: string;
+        error?: string;
+      };
 
       if (!response.ok || !data.answer) {
         throw new Error(data.error || "Could not get an answer.");
       }
 
-      setMessages((current) => [...current, { role: "assistant", content: data.answer! }]);
+      setMessages((current) => [
+        ...current,
+        { role: "assistant", content: data.answer! },
+      ]);
     } catch (error) {
       const errorMessage =
         error instanceof Error && error.name === "AbortError"
@@ -88,7 +92,10 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
             ? error.message
             : "Something went wrong. Please try again.";
 
-      setMessages((current) => [...current, { role: "assistant", content: errorMessage }]);
+      setMessages((current) => [
+        ...current,
+        { role: "assistant", content: errorMessage },
+      ]);
     } finally {
       clearTimeout(timeout);
       setLoading(false);
@@ -130,7 +137,11 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
         >
           <RotateCcw size={16} />
         </DashboardButton>
-        <DashboardButton onClick={onClose} aria-label="Close assistant" className="grid size-9 place-items-center text-[var(--text-muted)]">
+        <DashboardButton
+          onClick={onClose}
+          aria-label="Close assistant"
+          className="grid size-9 place-items-center text-[var(--text-muted)]"
+        >
           <X size={17} />
         </DashboardButton>
       </header>
@@ -141,7 +152,8 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
             Ask me anything<span className="text-[var(--accent)]">._</span>
           </h3>
           <p className="mt-3 max-w-[25ch] font-mono text-xs leading-5 text-[var(--text-muted)]">
-            I can answer questions about my projects, experience, skills, and more.
+            I can answer questions about my projects, experience, skills, and
+            more.
           </p>
           <div className="mt-6">
             <SuggestedQuestions onSelect={sendMessage} disabled={loading} />
@@ -149,7 +161,10 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
         </aside>
 
         <div className="flex min-h-0 flex-col">
-          <div className="flex-1 space-y-4 overflow-y-auto p-5 sm:p-8" aria-live="polite">
+          <div
+            className="flex-1 space-y-4 overflow-y-auto p-5 sm:p-8"
+            aria-live="polite"
+          >
             {messages.map((message, index) => (
               <ChatMessage key={`${message.role}-${index}`} message={message} />
             ))}
@@ -177,7 +192,9 @@ export default function AIChatPanel({ onClose }: AIChatPanelProps) {
                 <ArrowRight size={21} strokeWidth={1.6} />
               </button>
             </div>
-            <p className="pt-2 font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Powered by Peter AI</p>
+            <p className="pt-2 font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
+              Powered by Peter AI
+            </p>
           </form>
         </div>
       </div>
