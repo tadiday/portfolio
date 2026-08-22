@@ -29,12 +29,21 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Contract",
     link: "https://joinhandshake.com/",
     bullets: [
-      "Developed Python solutions for data processing, database recovery, and validation challenges using SQLite, JSON, and automation pipelines while ensuring correctness through comprehensive testing.",
-      "Evaluated multimodal AI model outputs across image, video, and document understanding tasks, identifying reasoning errors, instruction-following failures, and data quality issues.",
-      "Applied detailed evaluation guidelines to produce high-quality annotations and technical justifications, contributing to AI model benchmarking and quality assurance.",
+      "Developed Python solutions for data processing, database recovery, validation, and automation tasks using SQLite, JSON, and structured datasets.",
+      "Evaluated multimodal AI model outputs across image, video, document, and reasoning tasks, identifying instruction-following failures, reasoning errors, and data quality issues.",
+      "Designed and executed tests to verify solution correctness, edge cases, and expected outputs before submission.",
+      "Applied detailed evaluation rubrics to compare model responses and produce technical justifications for AI model benchmarking and quality assurance.",
     ],
-    skills: ["Python", "SQLite", "JSON", "AI Evaluation", "Testing"],
+    skills: [
+      "Python",
+      "SQLite",
+      "JSON",
+      "AI Evaluation",
+      "Data Processing",
+      "Testing",
+    ],
   },
+
   {
     start: "Jan 2026",
     end: "Apr 2026",
@@ -44,9 +53,10 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Part-time",
     link: "https://edencenter.com/stores/eden-financial-accounting-services/",
     bullets: [
-      "Prepared monthly and annual expense reports for business and individual clients, improving record accuracy.",
-      "Entered and categorized more than 50 financial records per month for clients using Excel.",
-      "Reviewed and validated all team data entries, reducing errors and ensuring accurate financial records.",
+      "Prepared monthly and annual expense reports for individual and business clients, organizing financial information into clear and accurate records.",
+      "Entered, categorized, and maintained 50+ financial transactions and records each month using Microsoft Excel.",
+      "Reviewed financial records for missing, incorrect, or inconsistent information before reports were finalized.",
+      "Organized and validated client expense data to maintain accurate and consistent financial records.",
     ],
     skills: [
       "Microsoft Excel",
@@ -55,6 +65,7 @@ export const experiences: readonly ExperienceItem[] = [
       "Quality Assurance",
     ],
   },
+
   {
     start: "Jan 2026",
     end: "Present",
@@ -63,9 +74,17 @@ export const experiences: readonly ExperienceItem[] = [
     location: "Fairfax, VA",
     type: "Education",
     link: "https://cs.gmu.edu/",
-    bullets: ["Currently pursuing a Master of Science in Computer Science."],
-    skills: ["Computer Science"],
+    bullets: [
+      "Pursuing a Master of Science in Computer Science with interests in artificial intelligence, computer vision, graphics, and software systems.",
+    ],
+    skills: [
+      "Computer Science",
+      "Artificial Intelligence",
+      "Computer Vision",
+      "Systems",
+    ],
   },
+
   {
     start: "May 2023",
     end: "May 2025",
@@ -75,12 +94,22 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Part-time",
     link: "https://cs.vt.edu/",
     bullets: [
-      "Hosted office hours, troubleshot technical issues, and provided personalized guidance to students.",
-      "Supported Computer Organization, Computer Systems, and Comparative Languages courses.",
-      "Facilitated online discussions to strengthen student engagement and understanding.",
+      "Mentored more than 100 students across Computer Organization, Computer Systems, and Comparative Languages courses.",
+      "Hosted office hours and provided one-on-one debugging support for programming assignments involving C, x86 assembly, RISC-V, Rust, and Haskell.",
+      "Helped students troubleshoot low-level programming, memory, assembly, systems, and programming-language concepts.",
+      "Facilitated online course discussions and answered technical questions to reinforce concepts outside the classroom.",
     ],
-    skills: ["C", "x86", "RISC-V", "Rust", "Haskell"],
+    skills: [
+      "C",
+      "x86",
+      "RISC-V",
+      "Rust",
+      "Haskell",
+      "Debugging",
+      "Mentoring",
+    ],
   },
+
   {
     start: "Aug 2024",
     end: "Dec 2024",
@@ -90,12 +119,23 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Co-op",
     link: "https://www.peraton.com/",
     bullets: [
-      "Contributed to the development and maintenance of a cyber-threat intelligence platform.",
-      "Improved build processes, resolved issues, and updated dependencies to strengthen reliability.",
-      "Collaborated across teams to document and deliver secure functionality improvements.",
+      "Contributed to the development and maintenance of a cyber-threat intelligence platform using Java and containerized services.",
+      "Diagnosed and resolved CI/CD build failures involving Maven and JUnit, improving build reliability and reducing deployment friction.",
+      "Resolved more than 100 dependency vulnerabilities by identifying outdated packages and upgrading affected dependencies.",
+      "Supported the migration of Apache Kafka from ZooKeeper-based coordination to KRaft, removing legacy configuration and validating the updated deployment.",
+      "Worked with Docker and Docker Compose to configure, test, and troubleshoot services across the development environment.",
     ],
-    skills: ["Java", "JavaScript", "Maven", "JUnit", "Docker"],
+    skills: [
+      "Java",
+      "Maven",
+      "JUnit",
+      "Docker",
+      "Docker Compose",
+      "Apache Kafka",
+      "GitLab CI/CD",
+    ],
   },
+
   {
     start: "Jan 2024",
     end: "Dec 2024",
@@ -105,12 +145,21 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Research",
     link: "https://idpro.icat.vt.edu/",
     bullets: [
-      "Developed an automated trash collection robot with remote monitoring and operation.",
-      "Integrated sensors for autonomous navigation, obstacle avoidance, and safe collection.",
-      "Researched path-planning algorithms to improve functionality and reliability.",
+      "Developed a robotic system designed to automate trash collection in rural environments.",
+      "Built Python and ROS components for robot control, sensor integration, and autonomous operation.",
+      "Integrated computer vision and hardware components using OpenCV and Raspberry Pi for environmental perception and remote monitoring.",
+      "Researched navigation, obstacle avoidance, and path-planning approaches to improve autonomous operation and reliability.",
     ],
-    skills: ["Python", "ROS", "OpenCV", "Raspberry Pi"],
+    skills: [
+      "Python",
+      "ROS",
+      "OpenCV",
+      "Raspberry Pi",
+      "Robotics",
+      "Computer Vision",
+    ],
   },
+
   {
     start: "Sep 2023",
     end: "Dec 2023",
@@ -120,11 +169,21 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Research",
     link: "https://idpro.icat.vt.edu/",
     bullets: [
-      "Designed a Raspberry Pi and Arduino residential toolkit for home automation.",
-      "Built a Swift mobile application for remote control and real-time device monitoring.",
+      "Developed a low-cost smart-home research toolkit using Raspberry Pi, Arduino, and connected sensors.",
+      "Integrated RFID-based components for identifying and interacting with objects in the smart-home environment.",
+      "Built a Swift mobile application for remote device control and real-time monitoring.",
+      "Connected physical hardware with the mobile interface to support experimentation with accessible smart-home technologies.",
     ],
-    skills: ["Swift", "Arduino", "Raspberry Pi", "Xcode"],
+    skills: [
+      "Swift",
+      "Arduino",
+      "Raspberry Pi",
+      "RFID",
+      "Xcode",
+      "IoT",
+    ],
   },
+
   {
     start: "Sep 2023",
     end: "Nov 2023",
@@ -134,12 +193,21 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Internship",
     link: "https://cardisle.com/",
     bullets: [
-      "Added website features and improved interface layouts for a more engaging experience.",
-      "Redesigned search, button, and page interactions using Alpine.js.",
-      "Built Playwright tests to verify functionality and reliability.",
+      "Developed and improved production-facing web interfaces using HTML, CSS, JavaScript, and Alpine.js.",
+      "Modernized existing Alpine.js components and fixed front-end issues across existing pages.",
+      "Improved search, button, layout, and page interactions to create a more consistent user experience.",
+      "Built Playwright automated tests to verify important user flows and prevent regressions after interface changes.",
     ],
-    skills: ["Alpine.js", "Playwright", "Node.js", "CSS"],
+    skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Alpine.js",
+      "Playwright",
+      "Frontend Development",
+    ],
   },
+
   {
     start: "Aug 2021",
     end: "May 2025",
@@ -149,25 +217,38 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Education",
     link: "https://cs.vt.edu/",
     bullets: [
-      "Studied algorithms, artificial intelligence, databases, web development, graphics, networks, and computer systems.",
-      "Earned Dean’s List recognition and Virginia Tech merit-based scholarships.",
+      "Completed coursework in data structures and algorithms, artificial intelligence, databases, web development, computer graphics, networks, and computer systems.",
+      "Earned Dean's List recognition across multiple semesters while completing research, teaching, internship, and software engineering experiences.",
     ],
-    skills: ["Algorithms", "AI", "Databases", "Systems"],
+    skills: [
+      "Algorithms",
+      "Artificial Intelligence",
+      "Databases",
+      "Computer Systems",
+      "Software Engineering",
+    ],
   },
+
   {
     start: "Jun 2021",
     end: "Aug 2021",
-    title: "Member",
+    title: "Team Member",
     company: "Taco Bell",
-    location: "Chantilly, VA · On-site",
+    location: "Chantilly, VA",
     type: "Part-time",
     link: "https://www.tacobell.com/",
     bullets: [
-      "Greeted more than 100 customers daily and communicated effectively to provide excellent service.",
-      "Maintained a friendly environment for employees and customers while supporting additional restaurant responsibilities.",
+      "Served more than 100 customers per day while meeting a two-minute drive-through service target in a fast-paced environment.",
+      "Collaborated with team members to maintain efficient service during high-volume periods.",
+      "Developed early experience in customer service, communication, teamwork, and working under time constraints.",
     ],
-    skills: ["Customer Service", "Communication", "Teamwork"],
+    skills: [
+      "Customer Service",
+      "Communication",
+      "Teamwork",
+    ],
   },
+
   {
     start: "Aug 2017",
     end: "Jun 2021",
@@ -179,6 +260,10 @@ export const experiences: readonly ExperienceItem[] = [
     bullets: [
       "Participated in Math Honor Society, Computer Science Honor Society, and Centreville Esports.",
     ],
-    skills: ["Mathematics", "Computer Science", "Esports"],
+    skills: [
+      "Mathematics",
+      "Computer Science",
+      "Esports",
+    ],
   },
 ];

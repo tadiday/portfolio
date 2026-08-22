@@ -81,7 +81,7 @@ function ContactDirectory() {
             rel={href.startsWith("http") ? "noreferrer" : undefined}
             className="group grid grid-cols-[36px_70px_minmax(0,1fr)_20px] items-center gap-3 border-t border-[var(--border-muted)] py-2.5 first:border-t-0"
           >
-            <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[var(--text-secondary)] group-hover:border-[var(--home-accent)] group-hover:text-[var(--home-accent)]">
+            <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[var(--home-accent)] group-hover:border-[var(--home-accent)]">
               <Icon className="h-4 w-4" strokeWidth={1.5} />
             </span>
             <span className="font-mono text-[10px] font-black uppercase text-[var(--text-primary)]">
@@ -94,7 +94,7 @@ function ContactDirectory() {
           </a>
         ))}
         <div className="grid grid-cols-[36px_70px_minmax(0,1fr)] items-center gap-3 border-t border-[var(--border-muted)] py-2.5">
-          <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[var(--text-secondary)]">
+          <span className="grid h-8 w-8 place-items-center border border-[#4b5055] text-[var(--home-accent)]">
             <MapPin className="h-4 w-4" strokeWidth={1.5} />
           </span>
           <span className="font-mono text-[10px] font-black uppercase text-[var(--text-primary)]">

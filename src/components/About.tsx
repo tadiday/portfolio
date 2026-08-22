@@ -4,7 +4,6 @@ import { useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   BookOpen,
-  Languages,
   MapPin,
   Music2,
   Plane,
@@ -157,15 +156,15 @@ function TabButton({
 
 function AboutIntro() {
   return (
-    <div className="relative flex min-w-0 flex-col justify-center px-3 py-7 sm:px-6 xl:py-5">
+    <div className="relative flex min-w-0 flex-col justify-center px-4 py-6 sm:px-7 xl:py-5">
       <CornerMarks />
       <h2 id="about-title" className="hero-name section-title">
-        ABOUT ME
+        ABOUT
       </h2>
       <p className="mt-4 font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--accent)]">
         {"// Get to know me"}
       </p>
-      <p className="mt-5 max-w-[52ch] font-mono text-[13px] font-medium leading-6 text-[var(--text-soft)]">
+      <p className="mt-4 max-w-[52ch] font-mono text-[13px] font-medium leading-6 text-[var(--text-soft)]">
         I&apos;m a software engineer who enjoys turning complex problems into
         clean, reliable web experiences. I recently graduated from Virginia
         Tech, where I worked on system optimization, automation tools, and
@@ -183,7 +182,7 @@ function QuickStats() {
   ];
 
   return (
-    <Panel className="h-full">
+    <Panel className="h-full p-4 lg:p-5">
       <Label>Quick stats</Label>
       <div className="mt-4">
         {stats.map(([label, value]) => (
@@ -212,91 +211,76 @@ function QuickStats() {
   );
 }
 
-function LocationAndWork() {
+function ProfilePanel() {
   return (
-    <Panel className="flex h-full flex-col">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="border-r border-[var(--border-muted)] pr-4">
-          <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-[var(--text-soft)]">
-            <MapPin
-              className="h-4 w-4 text-[var(--accent)]"
-              aria-hidden="true"
-            />{" "}
-            Location
-          </p>
-          <p className="mt-4 text-lg font-bold leading-tight text-[var(--text-primary)]">
-            Washington, DC
-          </p>
-          <p className="mt-1 text-[15px] text-[var(--text-secondary)]">
-            United States
-          </p>
-        </div>
-        <div>
-          <p className="font-mono text-xs font-bold uppercase text-[var(--text-soft)]">
-            Work style
-          </p>
-          <div className="mt-4 space-y-3">
-            {["Remote", "Hybrid", "On-site"].map((style) => (
-              <div
-                key={style}
-                className="flex items-center justify-between text-sm font-bold text-[var(--text-primary)]"
-              >
-                <span>{style}</span>
-                <span
-                  className="h-2.5 w-2.5 bg-[var(--success)]"
-                  aria-label="Available"
-                />
-              </div>
-            ))}
+    <Panel className="h-full p-4 md:col-span-2 lg:p-5 xl:col-span-1">
+      <Label>Profile</Label>
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-4">
+          <MapPin
+            className="h-8 w-8 shrink-0 text-[var(--accent)]"
+            strokeWidth={1.6}
+            aria-hidden="true"
+          />
+          <div>
+            <p className="text-lg font-bold leading-tight text-[var(--text-primary)]">
+              Washington, DC
+            </p>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">
+              United States
+            </p>
           </div>
         </div>
-      </div>
-      <div className="mt-auto border border-[#3d5368] px-3 py-3">
-        <p className="font-mono text-[11px] font-bold uppercase text-[var(--accent)]">
-          Availability
-        </p>
-        <div className="mt-2 flex flex-wrap gap-2 font-mono text-[9px] font-semibold uppercase text-[var(--text-secondary)]">
-          <span className="border border-[#3d5368] px-2 py-1">
-            Open to relocation
-          </span>
-          <span className="border border-[#3d5368] px-2 py-1">ET (UTC−5)</span>
+        <div className="flex shrink-0 items-center justify-center gap-2 border border-[#3d5368] px-4 py-2.5 font-mono text-[10px] font-bold uppercase text-[var(--accent)]">
+          <Plane className="h-3.5 w-3.5" aria-hidden="true" />
+          <span>Open to relocation</span>
         </div>
       </div>
-    </Panel>
-  );
-}
 
-function LanguagesPanel() {
-  return (
-    <Panel className="flex h-full flex-col">
-      <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-[var(--text-soft)]">
-        <Languages
-          className="h-4 w-4 text-[var(--accent)]"
-          aria-hidden="true"
-        />{" "}
-        Languages
-      </p>
-      <div className="mt-4 divide-y divide-[var(--border-muted)]">
-        {[
-          ["English", "Fluent"],
-          ["Vietnamese", "Native"],
-        ].map(([language, level]) => (
-          <div
-            key={language}
-            className="flex items-center justify-between gap-3 py-3"
-          >
-            <span className="text-base font-bold text-[var(--text-primary)]">
-              {language}
-            </span>
-            <span className="font-mono text-[10px] font-semibold uppercase text-[var(--accent)]">
-              {level}
-            </span>
-          </div>
-        ))}
+      <div className="mt-4 border-t border-[var(--border-muted)] pt-3">
+        <p className="font-mono text-[10px] font-bold uppercase text-[var(--text-soft)]">
+          Work style
+        </p>
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          {["Remote", "Hybrid", "On-site"].map((style) => (
+            <div
+              key={style}
+              className="flex items-center justify-center gap-2 border border-[var(--border-strong)] px-2 py-1.5 font-mono text-[9px] font-bold uppercase text-[var(--text-primary)]"
+            >
+              <span>{style}</span>
+              <span
+                className="h-2 w-2 shrink-0 bg-[var(--success)]"
+                aria-label="Available"
+              />
+            </div>
+          ))}
+        </div>
       </div>
-      <p className="mt-auto border-t border-[var(--border-muted)] pt-3 font-mono text-[10px] font-semibold uppercase text-[var(--text-soft)]">
-        Bilingual communication
-      </p>
+
+      <div className="mt-3 border-t border-[var(--border-muted)] pt-3">
+        <p className="font-mono text-[10px] font-bold uppercase text-[var(--text-soft)]">
+          Languages
+        </p>
+        <div className="mt-2">
+          {[
+            ["English", "Fluent"],
+            ["Vietnamese", "Native"],
+          ].map(([language, level]) => (
+            <div
+              key={language}
+              className="flex items-center justify-between py-1.5"
+            >
+              <span className="text-sm font-bold text-[var(--text-primary)]">
+                {language}
+              </span>
+              <span className="font-mono text-[9px] font-bold uppercase text-[var(--accent)]">
+                {level}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </Panel>
   );
 }
@@ -334,7 +318,7 @@ function LatestNews() {
           <p className="mt-2 line-clamp-2 text-xs font-medium leading-5 text-[var(--text-soft)]">
             {isProject
               ? "I recently created The Odd One, the newest addition to my growing collection of software projects."
-              : latestExperience.bullets[0]}
+              : "Evaluated multimodal AI model outputs and developed Python solutions, ensuring correctness through comprehensive testing."}
           </p>
         </div>
       </div>
@@ -369,7 +353,7 @@ function SkillsPanel() {
               className="relative grid h-[60px] place-items-center border border-[var(--border-strong)] p-2"
             >
               <Icon
-                className="text-xl text-[var(--text-primary)]"
+                className="text-xl text-[var(--accent)]"
                 aria-hidden="true"
               />
               <span className="font-mono text-[10px] font-bold uppercase text-[var(--text-primary)]">
@@ -387,7 +371,7 @@ function SkillsPanel() {
               className="relative grid h-[60px] place-items-center border border-[var(--border-strong)] p-2"
             >
               <Icon
-                className="text-xl text-[var(--text-primary)]"
+                className="text-xl text-[var(--accent)]"
                 aria-hidden="true"
               />
               <span className="font-mono text-[10px] font-bold uppercase text-[var(--text-primary)]">
@@ -520,19 +504,18 @@ export default function About() {
       aria-labelledby="about-title"
     >
       <motion.main
-        className="relative mx-auto w-full max-w-[1440px] space-y-3"
+        className="relative mx-auto w-full max-w-[1440px] space-y-5"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.08 }}
         transition={{ duration: 0.55 }}
       >
-        <section className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,35fr)_minmax(0,20fr)_minmax(0,27fr)_minmax(0,18fr)]">
+        <section className="grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-[minmax(0,42fr)_minmax(0,20fr)_minmax(0,38fr)]">
           <AboutIntro />
           <QuickStats />
-          <LocationAndWork />
-          <LanguagesPanel />
+          <ProfilePanel />
         </section>
-        <section className="grid items-stretch gap-3 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:grid-rows-[230px_auto]">
+        <section className="grid items-stretch gap-5 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:grid-rows-[230px_auto]">
           <SkillsPanel />
           <LatestNews />
           <ContributionActivity />

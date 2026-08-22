@@ -402,10 +402,10 @@ export default function Projects() {
         transition={{ duration: 0.55 }}
       >
         <section className="grid gap-3 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.95fr)] xl:grid-cols-[minmax(0,1.5fr)_minmax(0,.7fr)_minmax(0,.7fr)]">
-          <div className="relative flex min-h-[205px] flex-col justify-center px-4 py-7 sm:px-8 xl:flex-row xl:items-center xl:gap-10">
+          <div className="relative flex min-h-[205px] min-w-0 flex-col justify-center px-4 py-7 sm:px-8">
             <CornerMarks />
             <h2 className="hero-name section-title">PROJECTS</h2>
-            <div className="mt-5 max-w-[34ch] xl:mt-0">
+            <div className="mt-5 max-w-[52ch]">
               <p className="font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--home-accent)]">
                 {"// Things I've built"}
               </p>
@@ -448,11 +448,11 @@ export default function Projects() {
                 rel="noreferrer"
                 className="group flex items-center gap-3 py-3 text-[var(--text-primary)] hover:text-[var(--home-accent)]"
               >
-                <Github className="h-4 w-4" aria-hidden="true" />
+                <Github className="h-4 w-4 text-[var(--home-accent)]" aria-hidden="true" />
                 <span className="font-mono text-[11px] font-bold uppercase">
                   GitHub profile
                 </span>
-                <ExternalLink className="ml-auto h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ExternalLink className="ml-auto h-3.5 w-3.5 text-[var(--home-accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
               <a
                 href="/assets/documents/resume.pdf"
@@ -460,21 +460,21 @@ export default function Projects() {
                 rel="noreferrer"
                 className="group flex items-center gap-3 py-3 text-[var(--text-primary)] hover:text-[var(--home-accent)]"
               >
-                <FileText className="h-4 w-4" aria-hidden="true" />
+                <FileText className="h-4 w-4 text-[var(--home-accent)]" aria-hidden="true" />
                 <span className="font-mono text-[11px] font-bold uppercase">
                   View résumé
                 </span>
-                <ArrowRight className="ml-auto h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-auto h-3.5 w-3.5 text-[var(--home-accent)] transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#contact"
                 className="group flex items-center gap-3 py-3 text-[var(--text-primary)] hover:text-[var(--home-accent)]"
               >
-                <Mail className="h-4 w-4" aria-hidden="true" />
+                <Mail className="h-4 w-4 text-[var(--home-accent)]" aria-hidden="true" />
                 <span className="font-mono text-[11px] font-bold uppercase">
                   Start a conversation
                 </span>
-                <ArrowRight className="ml-auto h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-auto h-3.5 w-3.5 text-[var(--home-accent)] transition-transform group-hover:translate-x-1" />
               </a>
             </div>
           </DashboardPanel>
