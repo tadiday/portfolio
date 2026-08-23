@@ -11,10 +11,13 @@ type SuggestedQuestionsProps = {
   onSelect: (question: string) => void;
 };
 
-export default function SuggestedQuestions({ disabled, onSelect }: SuggestedQuestionsProps) {
+export default function SuggestedQuestions({
+  disabled,
+  onSelect,
+}: SuggestedQuestionsProps) {
   return (
     <div className="grid gap-1.5">
-      <p className="mb-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#626970]">
+      <p className="mb-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
         Suggested queries
       </p>
       {questions.map((question) => (
@@ -23,7 +26,7 @@ export default function SuggestedQuestions({ disabled, onSelect }: SuggestedQues
           type="button"
           disabled={disabled}
           onClick={() => onSelect(question)}
-          className="group flex items-center gap-3 border border-[var(--border)] px-3 py-2.5 text-left font-mono text-xs leading-5 text-[#aeb3b8] transition-colors hover:border-[var(--accent)] hover:text-white disabled:opacity-40"
+          className="group flex items-center gap-3 border border-[var(--border)] px-3 py-2.5 text-left font-mono text-xs leading-5 text-[var(--text-muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--text-primary)] disabled:opacity-40"
         >
           <span className="text-[var(--accent)]">↗</span>
           <span>{question}</span>

@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Chakra_Petch, Geist, Geist_Mono } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Orbitron, Space_Grotesk } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
-
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,21 +14,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const orbitron = Orbitron({
+const chakraPetch = Chakra_Petch({
+  variable: "--font-chakra-petch",
   subsets: ["latin"],
-  variable: "--font-orbitron",
+  weight: "700",
 });
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-});
-
 
 export const metadata: Metadata = {
   title: "Peter Cao - Software Engineer",
   description:
-    "Peter Cao - An upcoming software engineer passionate about building scalable software, solving complex problems, and creating innovative solutions. Available for hire May 2025.",
+    "Peter Cao is a software engineer focused on scalable software, thoughtful user experiences, and practical products.",
+  icons: { icon: "/assets/logo/logo.png" },
 };
 
 export default function RootLayout({
@@ -39,9 +33,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="max-w-screen bg-home" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="max-w-screen bg-[var(--background)]"
+      suppressHydrationWarning
+    >
       <head>
-        <link rel="icon" type="image/png" href="/assets/logo/logo.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('portfolio-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})()`,
@@ -49,7 +46,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${chakraPetch.variable} antialiased`}
       >
         <SmoothScroll />
         {children}

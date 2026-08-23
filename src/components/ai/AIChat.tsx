@@ -2,12 +2,18 @@ import AIChatButton from "./AIChatButton";
 import AIChatPanel from "./AIChatPanel";
 import ThemeToggle from "@/components/navigation/ThemeToggle";
 
-export default function AIChat({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export default function AIChat({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   return (
     <>
       {open && (
         <div
-          className="fixed inset-0 z-[300] grid place-items-center bg-black/75 p-3 backdrop-blur-[3px] sm:p-6"
+          className="fixed inset-0 z-[300] grid place-items-center bg-[var(--overlay)] p-3 backdrop-blur-[3px] sm:p-6"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) onOpenChange(false);
           }}

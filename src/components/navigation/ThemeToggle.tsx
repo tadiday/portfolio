@@ -9,7 +9,9 @@ function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   document.documentElement.style.colorScheme = theme;
   localStorage.setItem("portfolio-theme", theme);
-  window.dispatchEvent(new CustomEvent("portfolio-theme-change", { detail: theme }));
+  window.dispatchEvent(
+    new CustomEvent("portfolio-theme-change", { detail: theme }),
+  );
 }
 
 export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
@@ -17,7 +19,11 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("portfolio-theme") as Theme | null;
-    const initialTheme = storedTheme ?? (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    const initialTheme =
+      storedTheme ??
+      (window.matchMedia("(prefers-color-scheme: light)").matches
+        ? "light"
+        : "dark");
 
     setTheme(initialTheme);
     applyTheme(initialTheme);
@@ -27,7 +33,8 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
     }
 
     window.addEventListener("portfolio-theme-change", syncTheme);
-    return () => window.removeEventListener("portfolio-theme-change", syncTheme);
+    return () =>
+      window.removeEventListener("portfolio-theme-change", syncTheme);
   }, []);
 
   function toggleTheme() {
@@ -46,12 +53,22 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
       aria-label={`Switch to ${nextThemeLabel} mode`}
       title={`Switch to ${nextThemeLabel} mode`}
       className={`group relative grid place-items-center border border-[var(--border-strong)] bg-[var(--header-bg)] text-[var(--header-text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] ${
-        mobile ? "size-13" : "size-8"
+        mobile ? "size-13" : "size-10"
       }`}
     >
-      <Icon className={mobile ? "size-5" : "size-4"} strokeWidth={1.6} aria-hidden="true" />
-      <span className="absolute left-1 top-1 size-1.5 border-l border-t border-current" aria-hidden="true" />
-      <span className="absolute bottom-1 right-1 size-1.5 border-b border-r border-current" aria-hidden="true" />
+      <Icon
+        className={mobile ? "size-5" : "size-4"}
+        strokeWidth={1.6}
+        aria-hidden="true"
+      />
+      <span
+        className="absolute left-1 top-1 size-1.5 border-l border-t border-current"
+        aria-hidden="true"
+      />
+      <span
+        className="absolute bottom-1 right-1 size-1.5 border-b border-r border-current"
+        aria-hidden="true"
+      />
     </button>
   );
 }
