@@ -5,7 +5,7 @@ import {
   useScroll,
   useTransform,
   type MotionValue,
-} from "framer-motion";
+} from "motion/react";
 import Header from "@/components/navigation/Header";
 import Home from "@/components/Home";
 import About from "@/components/About";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   Archive,
   ArrowLeft,
@@ -27,130 +27,24 @@ import {
   PopupTriggerCorners,
   popupTriggerClassName,
 } from "@/components/ui/DashboardPrimitives";
+import {
+  archivedProjects,
+  projects as projectData,
+  type ProjectIcon,
+} from "@/data/projects";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 
-type Category = "Web application" | "Mobile application" | "Experiment";
+const projectIcons = {
+  folder: FolderGit2,
+  globe: Globe2,
+  gauge: Gauge,
+  receipt: ReceiptText,
+} satisfies Record<ProjectIcon, typeof FolderGit2>;
 
-const projects = [
-  {
-    title: "The Odd One",
-    date: "2026",
-    category: "Web application" as Category,
-    kind: "Personal project",
-    role: "Full-stack developer",
-    description:
-      "A real-time multiplayer party game where players answer prompts and try to find the imposter.",
-    tech: ["Vue 3", "TypeScript", "Node.js", "WebSockets", "Tailwind"],
-    features: [
-      "Real-time multiplayer rooms",
-      "Multiple game phases and voting",
-      "Randomized roles and room settings",
-    ],
-    challenge:
-      "Keeping every player synchronized through reconnects and rapid game-state changes.",
-    learning:
-      "Designing event-driven systems and predictable multiplayer state.",
-    github: "",
-    website: "",
-    preview: "",
-    Icon: FolderGit2,
-  },
-  {
-    title: "Web Portfolio",
-    date: "2025",
-    category: "Web application" as Category,
-    kind: "Personal project",
-    role: "Designer & developer",
-    description:
-      "A responsive portfolio built to showcase projects, experience, and research through a focused interactive interface.",
-    tech: ["React.js", "TypeScript", "Next.js", "Tailwind", "Motion"],
-    features: [
-      "Responsive section layouts",
-      "Interactive project presentation",
-      "Motion and technical UI details",
-    ],
-    challenge:
-      "Balancing expressive visuals with performance, accessibility, and responsive behavior.",
-    learning:
-      "Building a consistent design system and reusable component architecture.",
-    github: "https://github.com/tadiday/Website-Portfolio",
-    website: "https://peter-cao.com",
-    preview: "/assets/gif/webport.mp4",
-    Icon: Globe2,
-  },
-  {
-    title: "Traffic Dashboard",
-    date: "2025",
-    category: "Web application" as Category,
-    kind: "Academic project",
-    role: "Full-stack developer",
-    description:
-      "An interactive traffic visualization dashboard with authentication, data uploads, and dynamic environment displays.",
-    tech: ["React.js", "Node.js", "Express", "MySQL", "Chart.js"],
-    features: [
-      "Secure user authentication",
-      "Traffic-data upload workflow",
-      "Interactive charts and environments",
-    ],
-    challenge:
-      "Transforming complex simulation output into clear, responsive visualizations.",
-    learning:
-      "Data visualization, API design, and performance-focused rendering.",
-    github: "https://github.com/tadiday/Traffic_Dashboard",
-    website: "",
-    preview: "/assets/gif/traffic.mp4",
-    Icon: Gauge,
-  },
-  {
-    title: "Simplisplit",
-    date: "2024",
-    category: "Mobile application" as Category,
-    kind: "Product project",
-    role: "Mobile developer",
-    description:
-      "A mobile app that scans bills and helps groups split costs with friends quickly and accurately.",
-    tech: ["React Native", "Python", "Flask", "Tailwind"],
-    features: [
-      "Receipt scanning workflow",
-      "Itemized group splitting",
-      "Mobile-first interaction design",
-    ],
-    challenge:
-      "Turning imperfect receipt data into a simple and understandable splitting flow.",
-    learning: "Mobile UX, API integration, and resilient input handling.",
-    github: "",
-    website: "",
-    preview: "/assets/gif/simplisplit.mp4",
-    Icon: ReceiptText,
-  },
-];
-
-const archivedProjects = [
-  {
-    title: "eCommerce Website",
-    year: "2024",
-    category: "Web application",
-    href: "https://github.com/tadiday/eCommerce-Website",
-  },
-  {
-    title: "Todo List",
-    year: "2023",
-    category: "Web application",
-    href: "https://github.com/tadiday/Todo-List",
-  },
-  {
-    title: "Predict Bullying Model",
-    year: "2023",
-    category: "Machine learning",
-    href: "https://github.com/tadiday/Predict-Bullying-Model",
-  },
-  {
-    title: "Food Swipe",
-    year: "2022",
-    category: "Experiment",
-    href: "https://github.com/tadiday/Food-Swipe",
-  },
-] as const;
+const projects = projectData.map((project) => ({
+  ...project,
+  Icon: projectIcons[project.icon],
+}));
 
 const filters = [
   "All projects",
@@ -174,9 +68,11 @@ function ProjectModal({
   project: ProjectItem;
   onClose: () => void;
 }) {
+  const projectNumber = projects.findIndex((item) => item.title === project.title) + 1;
+
   return (
     <div
-      className="fixed inset-0 z-[100] grid place-items-center bg-black/85 px-3 pb-3 pt-[calc(var(--home-header-height)+12px)] sm:px-6 sm:pb-6"
+      className="fixed inset-0 z-[100] grid place-items-center bg-black/85 p-3 backdrop-blur-sm sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-modal-title"
@@ -184,84 +80,108 @@ function ProjectModal({
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="relative max-h-[calc(100svh-var(--home-header-height)-24px)] w-full max-w-[1280px] overflow-y-auto border border-[var(--border-strong)] bg-[var(--background)] px-5 pb-5 pt-16 text-[var(--text)] sm:px-7 sm:pb-7 sm:pt-16">
+      <motion.div
+        className="relative max-h-[calc(100svh-24px)] w-full max-w-[1320px] overflow-y-auto border border-[var(--border-strong)] bg-[var(--background)] px-5 pb-5 pt-16 text-[var(--text)] shadow-[var(--panel-shadow)] sm:max-h-[calc(100svh-48px)] sm:px-7 sm:pb-7"
+        initial={{ opacity: 0, y: 16, scale: 0.99 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+      >
         <CornerMarks />
         <button
           type="button"
           onClick={onClose}
           aria-label="Close project details"
-          className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center border border-[var(--border-strong)] bg-[var(--background)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+          className="group absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center border border-[var(--border)] bg-[var(--surface)] transition-colors duration-150 hover:border-[var(--accent)] hover:bg-[var(--hover-surface)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4 transition-transform duration-150 group-hover:rotate-90" />
         </button>
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,.72fr)_minmax(0,1.28fr)]">
-          <div className="min-w-0 pr-2">
-            <p className="font-mono text-[10px] font-bold text-[var(--home-accent)]">
-              01
-            </p>
+        <div className="grid gap-7 lg:h-[590px] lg:grid-cols-[minmax(0,.68fr)_minmax(0,1.32fr)]">
+          <div className="min-w-0 lg:overflow-y-auto lg:border-r lg:border-[var(--border-muted)] lg:pb-6 lg:pr-7 [scrollbar-color:var(--border-strong)_transparent] [scrollbar-width:thin]">
+            <div className="flex items-center gap-3 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
+              <span className="text-[var(--home-accent)]">Project dossier</span>
+              <span className="h-px w-6 bg-[var(--border)]" aria-hidden="true" />
+              <span>
+                {String(projectNumber).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+              </span>
+            </div>
             <h2
               id="project-modal-title"
-              className="mt-3 text-3xl font-bold sm:text-4xl"
+              className="mt-4 font-[var(--font-chakra-petch)] text-[clamp(2.3rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.035em]"
             >
               {project.title}
             </h2>
             <p className="mt-3 font-mono text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--home-accent)]">
               {project.category} · {project.kind}
             </p>
-            <p className="mt-5 text-sm font-medium leading-6 text-[var(--text-secondary)]">
+            <p className="mt-5 max-w-[52ch] text-sm font-medium leading-6 text-[var(--text-secondary)]">
               {project.description}
             </p>
-            <div className="mt-6 border-t border-[var(--border-muted)] pt-5">
+            <div className="mt-7 border-t border-[var(--border-muted)] pt-5">
               <Label>Technologies</Label>
               <div className="mt-3 flex flex-wrap gap-2">
                 {project.tech.map((tech) => (
                   <DashboardTag
                     key={tech}
-                    className="border-[#44494e] py-1.5 text-[9px] font-semibold text-[var(--text-secondary)]"
+                    className="bg-[var(--surface)] py-1.5 text-[9px] font-semibold text-[var(--text-secondary)]"
                   >
                     {tech}
                   </DashboardTag>
                 ))}
               </div>
             </div>
-            <div className="mt-6">
+            <div className="mt-7 border-t border-[var(--border-muted)] pt-5">
               <Label>Key features</Label>
-              <ul className="mt-3 space-y-2">
-                {project.features.map((feature) => (
+              <ul className="mt-3 grid gap-2">
+                {project.features.map((feature, index) => (
                   <li
                     key={feature}
-                    className="flex gap-3 text-xs leading-5 text-[var(--text-secondary)]"
+                    className="grid grid-cols-[24px_1fr] items-center border border-[var(--border-muted)] bg-[var(--surface)] px-3 py-2.5 text-xs leading-5 text-[var(--text-secondary)]"
                   >
-                    <span className="text-[var(--home-accent)]">+</span>
+                    <span className="font-mono text-[9px] font-bold text-[var(--home-accent)]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     {feature}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div>
+            <div className="mt-7 grid gap-px overflow-hidden border border-[var(--border-muted)] bg-[var(--border-muted)] sm:grid-cols-2">
+              <div className="bg-[var(--background)] p-4">
                 <Label>Challenge</Label>
-                <p className="mt-2 text-xs leading-5 text-[var(--text-secondary)]">
+                <p className="mt-3 text-xs leading-5 text-[var(--text-secondary)]">
                   {project.challenge}
                 </p>
               </div>
-              <div>
+              <div className="bg-[var(--background)] p-4">
                 <Label>Learning</Label>
-                <p className="mt-2 text-xs leading-5 text-[var(--text-secondary)]">
+                <p className="mt-3 text-xs leading-5 text-[var(--text-secondary)]">
                   {project.learning}
                 </p>
               </div>
             </div>
           </div>
-          <div className="flex min-w-0 flex-col">
-            <div className="relative grid min-h-[300px] flex-1 place-items-center overflow-hidden border border-[#4b5055] bg-[#0b0d0f] sm:min-h-[430px]">
+          <div className="min-w-0 self-start bg-[var(--surface)] p-3 sm:p-4">
+            <div className="mb-3 flex items-center justify-between font-mono text-[8px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
+              <span>{project.preview ? "Live preview / MP4" : "Project preview"}</span>
+              <span className="flex items-center gap-2">
+                <span
+                  className={`h-1.5 w-1.5 ${
+                    project.preview
+                      ? "bg-[var(--success)] shadow-[0_0_7px_var(--success-glow)]"
+                      : "bg-[var(--text-muted)]"
+                  }`}
+                />
+                {project.preview ? "Online" : "Pending"}
+              </span>
+            </div>
+            <div className="relative grid aspect-video w-full place-items-center overflow-hidden border border-[var(--border-strong)] bg-[#0b0d0f]">
               {project.preview ? (
                 <video
                   autoPlay
                   muted
                   loop
                   playsInline
-                  className="h-full max-h-[560px] w-full object-contain"
+                  className="absolute inset-0 h-full w-full object-contain"
                 >
                   <source src={project.preview} type="video/mp4" />
                 </video>
@@ -278,24 +198,24 @@ function ProjectModal({
               )}
               <CornerMarks />
             </div>
-            <div className="grid gap-4 border-x border-b border-[#4b5055] p-4 font-mono uppercase sm:grid-cols-3">
-              <div>
+            <div className="grid gap-px border-x border-b border-[var(--border-strong)] bg-[var(--border-muted)] font-mono uppercase sm:grid-cols-[.7fr_1.1fr_1.3fr]">
+              <div className="bg-[var(--background)] p-4">
                 <p className="text-[8px] text-[var(--text-muted)]">Date</p>
                 <p className="mt-1 text-[11px] font-bold">{project.date}</p>
               </div>
-              <div>
+              <div className="bg-[var(--background)] p-4">
                 <p className="text-[8px] text-[var(--text-muted)]">Role</p>
                 <p className="mt-1 text-[11px] font-bold">{project.role}</p>
               </div>
-              <div className="flex items-end gap-4 sm:justify-end">
+              <div className="flex items-center gap-2 bg-[var(--background)] p-3 sm:justify-end">
                 {project.website && (
                   <a
                     href={project.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[10px] font-bold text-[var(--home-accent)]"
+                    className="inline-flex h-9 items-center gap-2 border border-[var(--accent)] bg-[var(--accent)] px-3 text-[9px] font-bold text-[var(--on-accent)] transition-opacity hover:opacity-85"
                   >
-                    View live →
+                    View live <ArrowRight className="h-3 w-3" />
                   </a>
                 )}
                 {project.github && (
@@ -303,16 +223,16 @@ function ProjectModal({
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[10px] font-bold text-[var(--text-primary)]"
+                    className="inline-flex h-9 items-center gap-2 border border-[var(--border)] px-3 text-[9px] font-bold text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
                   >
-                    GitHub ↗
+                    <Github className="h-3 w-3" /> GitHub
                   </a>
                 )}
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -394,7 +314,7 @@ export default function Projects() {
       id="projects"
       className="relative z-30 min-h-screen overflow-hidden bg-[var(--background)] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[var(--text)] sm:px-6 lg:px-8"
     >
-      <motion.main
+      <motion.div
         className="mx-auto w-full max-w-[1440px] space-y-3"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -579,7 +499,7 @@ export default function Projects() {
         </DashboardPanel>
 
         <ProjectArchive />
-      </motion.main>
+      </motion.div>
       {selected && (
         <ProjectModal project={selected} onClose={() => setSelected(null)} />
       )}

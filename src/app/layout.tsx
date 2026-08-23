@@ -23,7 +23,8 @@ const chakraPetch = Chakra_Petch({
 export const metadata: Metadata = {
   title: "Peter Cao - Software Engineer",
   description:
-    "Peter Cao - An upcoming software engineer passionate about building scalable software, solving complex problems, and creating innovative solutions. Available for hire May 2025.",
+    "Peter Cao is a software engineer focused on scalable software, thoughtful user experiences, and practical products.",
+  icons: { icon: "/assets/logo/logo.png" },
 };
 
 export default function RootLayout({
@@ -38,7 +39,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" type="image/png" href="/assets/logo/logo.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('portfolio-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})()`,

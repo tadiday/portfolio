@@ -1,6 +1,0 @@
-[
-  {"name":"Web-Portfolio","year":"2025","description":"Peter's personal portfolio for showcasing projects, experience, and research.","technologies":["React.js","TypeScript","Tailwind CSS","Next.js","Node.js","Framer Motion"],"github":"https://github.com/tadiday/Website-Portfolio","website":"https://peter-cao.com"},
-  {"name":"Traffic Dashboard","year":"2025","description":"A Traffic Visualization Dashboard for the Virginia Tech Transportation Institute that turns complex simulation data into interactive visualizations, with authentication, data upload, and dynamic traffic environment displays.","technologies":["React.js","Chart.js","Express.js","Node.js","Docker","MySQL"],"github":"https://github.com/tadiday/Traffic_Dashboard"},
-  {"name":"Simplisplit","year":"2024","description":"A mobile app that scans bills and lets users split costs with friends; listed as available through the App Store.","technologies":["React Native","Tailwind CSS","Python","Flask"],"github":"Private","website":"Private"},
-  {"name":"Food Swipe","year":"2022","description":"A Tinder-inspired restaurant discovery app where users swipe to explore local restaurants tailored to their location.","technologies":["React.js","TypeScript","Tailwind CSS","Next.js","Node.js","Google Maps API","Framer Motion"],"github":"https://github.com/tadiday/Food-Swipe","website":"Private"}
-]

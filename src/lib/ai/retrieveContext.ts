@@ -1,7 +1,6 @@
 import profile from "@/data/profile.json";
-import education from "@/data/education.json";
-import experience from "@/data/experience.json";
-import projects from "@/data/projects.json";
+import { experiences } from "@/data/experience";
+import { archivedProjects, projects } from "@/data/projects";
 import skills from "@/data/skills.json";
 import type { ChatMessage } from "./types";
 
@@ -9,18 +8,15 @@ type Document = { id: string; text: string };
 
 const documents: Document[] = [
   { id: "profile", text: JSON.stringify(profile) },
-  ...education.map((item, index) => ({
-    id: `education-${index}`,
-    text: JSON.stringify(item),
-  })),
-  ...experience.map((item, index) => ({
-    id: `experience-${index}`,
+  ...experiences.map((item, index) => ({
+    id: `${item.type.toLowerCase()}-${index}`,
     text: JSON.stringify(item),
   })),
   ...projects.map((item, index) => ({
     id: `project-${index}`,
     text: JSON.stringify(item),
   })),
+  { id: "project-archive", text: JSON.stringify(archivedProjects) },
   { id: "skills", text: JSON.stringify(skills) },
 ];
 

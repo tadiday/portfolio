@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import {
   CornerMarks,
@@ -271,7 +271,7 @@ export default function Experience() {
       id="experience"
       className="relative z-30 min-h-screen overflow-hidden bg-[var(--background)] px-4 pb-10 pt-[calc(var(--home-header-height)+32px)] text-[var(--text)] sm:px-6 lg:px-8"
     >
-      <motion.main
+      <motion.div
         className="mx-auto w-full max-w-[1440px]"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -328,7 +328,7 @@ export default function Experience() {
             ))}
           </div>
         </div>
-      </motion.main>
+      </motion.div>
     </section>
   );
 }

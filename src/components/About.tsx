@@ -1,13 +1,16 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   BookOpen,
+  Building2,
+  Laptop,
   MapPin,
   Music2,
   Plane,
   RadioTower,
+  Users,
   X,
 } from "lucide-react";
 import {
@@ -212,26 +215,32 @@ function QuickStats() {
 }
 
 function ProfilePanel() {
+  const workStyles = [
+    ["Remote", Laptop],
+    ["Hybrid", Users],
+    ["On-site", Building2],
+  ] as const;
+
   return (
     <Panel className="h-full p-4 md:col-span-2 lg:p-5 xl:col-span-1">
-      <Label>Profile</Label>
+      <Label className="text-xs">Profile</Label>
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <MapPin
             className="h-8 w-8 shrink-0 text-[var(--accent)]"
-            strokeWidth={1.6}
+            strokeWidth={1.5}
             aria-hidden="true"
           />
           <div>
-            <p className="text-lg font-bold leading-tight text-[var(--text-primary)]">
+            <p className="font-mono text-lg font-bold leading-tight text-[var(--text-primary)]">
               Washington, DC
             </p>
-            <p className="mt-1 text-sm text-[var(--text-secondary)]">
+            <p className="mt-1 font-mono text-xs text-[var(--text-secondary)]">
               United States
             </p>
           </div>
         </div>
-        <div className="flex shrink-0 items-center justify-center gap-2 border border-[#3d5368] px-4 py-2.5 font-mono text-[10px] font-bold uppercase text-[var(--accent)]">
+        <div className="flex shrink-0 items-center justify-center gap-2 border border-[var(--border-strong)] bg-[var(--surface-raised)] px-3 py-2.5 font-mono text-[8px] font-bold uppercase tracking-[0.06em] text-[var(--accent)]">
           <Plane className="h-3.5 w-3.5" aria-hidden="true" />
           <span>Open to relocation</span>
         </div>
@@ -241,15 +250,16 @@ function ProfilePanel() {
         <p className="font-mono text-[10px] font-bold uppercase text-[var(--text-soft)]">
           Work style
         </p>
-        <div className="mt-2 grid grid-cols-3 gap-2">
-          {["Remote", "Hybrid", "On-site"].map((style) => (
+        <div className="mt-2.5 grid grid-cols-3 gap-2">
+          {workStyles.map(([style, Icon]) => (
             <div
               key={style}
-              className="flex items-center justify-center gap-2 border border-[var(--border-strong)] px-2 py-1.5 font-mono text-[9px] font-bold uppercase text-[var(--text-primary)]"
+              className="flex min-h-10 items-center justify-center gap-1.5 border border-[var(--border-strong)] bg-[var(--surface)] px-2 py-1.5 font-mono text-[8px] font-bold uppercase text-[var(--text-primary)]"
             >
+              <Icon className="hidden h-3.5 w-3.5 text-[var(--accent)] sm:block" strokeWidth={1.5} aria-hidden="true" />
               <span>{style}</span>
               <span
-                className="h-2 w-2 shrink-0 bg-[var(--success)]"
+                className="h-1.5 w-1.5 shrink-0 bg-[var(--success)] shadow-[0_0_6px_var(--success-glow)]"
                 aria-label="Available"
               />
             </div>
@@ -261,16 +271,16 @@ function ProfilePanel() {
         <p className="font-mono text-[10px] font-bold uppercase text-[var(--text-soft)]">
           Languages
         </p>
-        <div className="mt-2">
+        <div className="mt-2 grid gap-1.5">
           {[
             ["English", "Fluent"],
             ["Vietnamese", "Native"],
           ].map(([language, level]) => (
             <div
               key={language}
-              className="flex items-center justify-between py-1.5"
+              className="flex min-h-9 items-center justify-between border border-[var(--border)] border-l-2 border-l-[var(--accent)] bg-[var(--surface)] px-3 py-1.5"
             >
-              <span className="text-sm font-bold text-[var(--text-primary)]">
+              <span className="text-xs font-bold text-[var(--text-primary)]">
                 {language}
               </span>
               <span className="font-mono text-[9px] font-bold uppercase text-[var(--accent)]">
@@ -503,7 +513,7 @@ export default function About() {
       className="relative z-30 min-h-screen overflow-hidden bg-[var(--section-bg)] px-4 pb-8 pt-[calc(var(--home-header-height)+32px)] text-[var(--text-primary)] sm:px-6 lg:px-8"
       aria-labelledby="about-title"
     >
-      <motion.main
+      <motion.div
         className="relative mx-auto w-full max-w-[1440px] space-y-5"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -521,7 +531,7 @@ export default function About() {
           <ContributionActivity />
           <Hobbies />
         </section>
-      </motion.main>
+      </motion.div>
     </section>
   );
 }

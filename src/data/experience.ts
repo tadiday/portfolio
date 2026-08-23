@@ -75,12 +75,13 @@ export const experiences: readonly ExperienceItem[] = [
     type: "Education",
     link: "https://cs.gmu.edu/",
     bullets: [
-      "Pursuing a Master of Science in Computer Science with interests in artificial intelligence, computer vision, graphics, and software systems.",
+      "Pursuing a Master of Science in Computer Science with interests in artificial intelligence, computer vision, graphics, and machine learning.",
     ],
     skills: [
       "Computer Science",
       "Artificial Intelligence",
       "Computer Vision",
+      "Machine Learning",
       "Systems",
     ],
   },

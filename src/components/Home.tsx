@@ -1,10 +1,21 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ArrowDown, ArrowRight } from "lucide-react";
 
 const reveal = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
 };
+
+function ButtonCornerMarks() {
+  return (
+    <>
+      <span className="absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 border-current" aria-hidden="true" />
+      <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 border-current" aria-hidden="true" />
+      <span className="absolute bottom-1.5 left-1.5 h-1.5 w-1.5 border-b-2 border-l-2 border-current" aria-hidden="true" />
+      <span className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b-2 border-r-2 border-current" aria-hidden="true" />
+    </>
+  );
+}
 
 function HeroDecorations() {
   return (
@@ -86,20 +97,14 @@ function HeroDivider() {
 
 function HeroActions() {
   const buttonBase = "group relative flex h-[46px] w-full items-center justify-between border border-[var(--border)] px-[26px] font-mono text-xs uppercase tracking-[0.06em] shadow-[var(--button-shadow)] transition duration-150 hover:-translate-y-0.5 hover:border-[var(--home-accent)] sm:h-[54px] sm:w-[clamp(200px,17vw,250px)]";
-  const CornerMarks = () => <>
-    <span className="absolute left-1.5 top-1.5 h-1.5 w-1.5 border-l-2 border-t-2 border-current" aria-hidden="true" />
-    <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 border-r-2 border-t-2 border-current" aria-hidden="true" />
-    <span className="absolute bottom-1.5 left-1.5 h-1.5 w-1.5 border-b-2 border-l-2 border-current" aria-hidden="true" />
-    <span className="absolute bottom-1.5 right-1.5 h-1.5 w-1.5 border-b-2 border-r-2 border-current" aria-hidden="true" />
-  </>;
 
   return (
     <motion.div className="mt-[clamp(22px,3.4vh,38px)] flex w-[min(280px,90vw)] flex-col gap-3 sm:w-auto sm:flex-row sm:gap-7" {...reveal} transition={{ delay: 0.8, duration: 0.5 }}>
       <a className={`${buttonBase} bg-[var(--home-text)] text-[var(--home-bg)] hover:bg-[var(--home-accent)] hover:text-[var(--home-text)]`} href="#projects">
-        <CornerMarks />View my work <ArrowRight className="w-[17px]" aria-hidden="true" />
+        <ButtonCornerMarks />View my work <ArrowRight className="w-[17px]" aria-hidden="true" />
       </a>
       <a className={`${buttonBase} bg-[var(--surface)] text-[var(--home-text)] hover:bg-[var(--home-text)] hover:text-[var(--home-bg)]`} href="/assets/documents/resume.pdf" download>
-        <CornerMarks />Download resume <ArrowDown className="w-[17px]" aria-hidden="true" />
+        <ButtonCornerMarks />Download resume <ArrowDown className="w-[17px]" aria-hidden="true" />
       </a>
     </motion.div>
   );
