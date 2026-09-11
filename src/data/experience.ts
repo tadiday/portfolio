@@ -4,6 +4,7 @@ export type ExperienceKind =
   | "Co-op"
   | "Research"
   | "Internship"
+  | "Part-time internship"
   | "Contract"
   | "Part-time";
 
@@ -21,18 +22,30 @@ export type ExperienceItem = {
 
 export const experiences: readonly ExperienceItem[] = [
   {
+    start: "Sep 2026",
+    end: "Present",
+    title: "Student Trainee (Information Technology)",
+    company: "U.S. Government Accountability Office (GAO)",
+    location: "Washington, DC",
+    type: "Internship",
+    link: "https://www.gao.gov/",
+    bullets: [
+      "Part-time information technology internship (GS-2299-7) at the U.S. Government Accountability Office in Washington, DC, starting September 2026.",
+    ],
+    skills: [],
+  },
+
+  {
     start: "May 2026",
-    end: "Aug 2026",
+    end: "Sep 2026",
     title: "AI Technical Contributor",
     company: "Handshake AI Fellowship",
     location: "Remote",
     type: "Contract",
     link: "https://joinhandshake.com/",
     bullets: [
-      "Developed Python solutions for data processing, database recovery, validation, and automation tasks using SQLite, JSON, and structured datasets.",
-      "Evaluated multimodal AI model outputs across image, video, document, and reasoning tasks, identifying instruction-following failures, reasoning errors, and data quality issues.",
-      "Designed and executed tests to verify solution correctness, edge cases, and expected outputs before submission.",
-      "Applied detailed evaluation rubrics to compare model responses and produce technical justifications for AI model benchmarking and quality assurance.",
+      "Developed and tested Python solutions for data processing, database recovery, and validation workflows using SQLite, JSON, and automated pipelines.",
+      "Evaluated 1000+ tasks for multimodal AI systems across image, video, and document-understanding tasks, identifying reasoning failures and data-quality issues to improve model reliability.",
     ],
     skills: [
       "Python",
