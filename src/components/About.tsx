@@ -323,12 +323,12 @@ function LatestNews() {
           <p className="mt-1 font-mono text-[9px] font-semibold uppercase text-[var(--accent)]">
             {isProject
               ? "Personal project · Latest release · Aug 2026"
-              : `${latestExperience.company} · ${latestExperience.type} · May 2026 – Aug 2026`}
+              : `${latestExperience.company} · ${latestExperience.type} · ${latestExperience.start} – ${latestExperience.end}`}
           </p>
           <p className="mt-2 line-clamp-2 text-xs font-medium leading-5 text-[var(--text-soft)]">
             {isProject
               ? "I recently created The Odd One, the newest addition to my growing collection of software projects."
-              : "Evaluated multimodal AI model outputs and developed Python solutions, ensuring correctness through comprehensive testing."}
+              : latestExperience.bullets[0]}
           </p>
         </div>
       </div>
